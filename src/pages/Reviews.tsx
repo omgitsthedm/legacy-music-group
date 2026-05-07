@@ -5,7 +5,7 @@ import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
-import { reviews } from '../lib/data'
+import { reviews, contact } from '../lib/data'
 import {
   buildAggregateRatingSchema,
   buildBreadcrumbSchema,
@@ -14,13 +14,14 @@ import {
 
 export default function Reviews() {
   const { openBooking } = useContext(BookingContext)
-  const avgRating =
-    reviews.reduce((sum, r) => sum + r.rating, 0) / Math.max(1, reviews.length)
+  // Real Google Business Profile aggregate stats (sourced 2026-05-07)
+  const avgRating = contact.rating.value
+  const ratingCount = contact.rating.count
 
   useSeo({
-    title: 'Reviews — What Artists Say About Recording at Legacy',
+    title: 'Reviews — 4.4★ on Google · 128 Reviews',
     description:
-      'Reviews from artists, producers, podcasters, and voice actors who have recorded at Legacy Music Group in Deep Ellum, Dallas.',
+      'Legacy Music Group is rated 4.4 stars across 128 Google reviews. Read what artists, producers, podcasters, and voice actors say about recording at our Deep Ellum studio.',
     path: '/reviews',
   })
 
@@ -29,8 +30,8 @@ export default function Reviews() {
       <JsonLd
         id="reviews-aggregate"
         data={buildAggregateRatingSchema({
-          ratingValue: Number(avgRating.toFixed(1)),
-          reviewCount: reviews.length,
+          ratingValue: avgRating,
+          reviewCount: ratingCount,
         })}
       />
       <JsonLd
@@ -65,24 +66,37 @@ export default function Reviews() {
             >
               Reviews
             </h1>
-            <div className="mt-6 inline-flex items-center gap-3 bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-full px-5 py-2.5">
+            <div className="mt-6 inline-flex items-center gap-3 bg-[#111111] border border-[rgba(232,163,61,0.25)] rounded-full px-5 py-2.5">
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((n) => (
                   <Star
                     key={n}
                     size={14}
-                    fill={n <= avgRating ? '#E8A33D' : 'transparent'}
-                    className={n <= avgRating ? 'text-[#E8A33D]' : 'text-[rgba(232,163,61,0.4)]'}
+                    fill={n <= Math.round(avgRating) ? '#E8A33D' : 'transparent'}
+                    className={
+                      n <= Math.round(avgRating)
+                        ? 'text-[#E8A33D]'
+                        : 'text-[rgba(232,163,61,0.4)]'
+                    }
                   />
                 ))}
               </div>
-              <span className="font-body text-[0.85rem] text-[#F5F0E8]">
-                {avgRating.toFixed(1)} · {reviews.length} reviews
+              <span className="font-body text-[0.9rem] text-[#F5F0E8]">
+                <strong>{avgRating.toFixed(1)}</strong> · {ratingCount} Google reviews
               </span>
             </div>
-            <p className="font-body text-[0.85rem] text-[#A38F7B] mt-4 max-w-[480px] mx-auto">
-              Reviews shown are placeholders for design preview. Real reviews wire from
-              Google Business Profile at launch.
+            <p className="font-body text-[0.85rem] text-[#A38F7B] mt-4 max-w-[520px] mx-auto leading-[1.6]">
+              Aggregate rating reflects all {ratingCount} verified Google reviews. Three
+              recent highlights below — the full list lives on{' '}
+              <a
+                href="https://www.google.com/search?q=Legacy+Music+Group+Dallas"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#E8A33D] hover:underline"
+              >
+                Legacy's Google Business Profile
+              </a>
+              .
             </p>
           </ScrollReveal>
         </div>

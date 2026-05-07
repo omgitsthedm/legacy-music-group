@@ -226,6 +226,9 @@ export default function Contact() {
               </div>
             </ScrollReveal>
           </div>
+          <p className="font-body text-[0.8rem] text-[#A38F7B] text-center mt-8">
+            {contact.parkingNote}
+          </p>
         </div>
       </section>
 

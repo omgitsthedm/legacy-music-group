@@ -2,8 +2,10 @@ import { SITE } from './seo'
 
 const BUSINESS = {
   legalName: 'Legacy Music Group',
+  // Description mirrored from the owner's Google Business Profile copy
+  // for consistency with the Knowledge Graph entity.
   description:
-    'Dallas\' #1 full-service recording studio and production company. Recording, mixing, mastering, custom production, and artist development in Deep Ellum.',
+    'Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right. Artists, producers, and engineers find this setting perfect for quality professional work.',
   address: {
     street: '2815 Main St, Suite A',
     city: 'Dallas',
@@ -20,7 +22,7 @@ const BUSINESS = {
     longitude: -96.7780,
   },
   priceRange: '$$',
-  // PLACEHOLDER: real founding year not surfaced on legacymusicgroup.com.
+  // PLACEHOLDER: real founding year not surfaced on legacymusicgroup.com or GBP.
   // Estimated from team tenure (10-yr veteran owner). Confirm with owner.
   founded: '2014',
   sameAs: [
@@ -28,6 +30,7 @@ const BUSINESS = {
     'https://www.facebook.com/theLegacymusicgroup/',
     'https://twitter.com/LegacyMusicGrp',
     'https://www.youtube.com/c/LegacyMusicGroup',
+    'https://www.linkedin.com/company/legacymusicgroup',
   ],
 } as const
 
@@ -89,14 +92,22 @@ export const localBusinessSchema = {
     { '@type': 'City', name: 'Frisco' },
     { '@type': 'City', name: 'Richardson' },
   ],
-  // PLACEHOLDER: real hours not surfaced on legacymusicgroup.com.
-  // Hours below are reasonable assumption — confirm with owner.
+  // Real hours sourced from Google Business Profile 2026-05-07.
+  // Open every day 10:00 to 01:00 (1am the next day).
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
       opens: '10:00',
-      closes: '22:00',
+      closes: '01:00',
     },
   ],
   foundingDate: BUSINESS.founded,
@@ -116,13 +127,13 @@ export const localBusinessSchema = {
       name: 'Studio Session',
     },
   },
-  // PLACEHOLDER: aggregate rating wires up from real Google reviews via API.
-  // Hardcoded scaffold so the JSON-LD shape is correct on launch — replace
-  // values once we have 5+ verified reviews. See PLACEHOLDERS.md §Reviews.
+  // Real aggregate rating snapshot from Google Business Profile 2026-05-07.
+  // Will be replaced by live GBP API integration on launch (Netlify Function
+  // pattern, similar to Calendly availability proxy).
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '0',
+    ratingValue: '4.4',
+    reviewCount: '128',
     bestRating: '5',
     worstRating: '1',
   },

@@ -6,7 +6,7 @@ import ScrollReveal from '../components/ScrollReveal'
 import Quickbook from '../components/Quickbook'
 import NewsletterSignup from '../components/NewsletterSignup'
 import { useSeo } from '../lib/seo'
-import { engineers, reviews, blogPosts, pressMentions } from '../lib/data'
+import { engineers, reviews, blogPosts, pressMentions, contact } from '../lib/data'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -339,12 +339,35 @@ export default function Home() {
       <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1100px]">
           <ScrollReveal className="mb-12">
-            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-              What artists say
-            </span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-              Real reviews from real sessions.
-            </h2>
+            <div className="flex items-end justify-between flex-wrap gap-4">
+              <div>
+                <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+                  What artists say
+                </span>
+                <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+                  Real reviews from real sessions.
+                </h2>
+              </div>
+              <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(232,163,61,0.25)] rounded-full px-4 py-2">
+                <div className="flex items-center gap-0.5">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <Star
+                      key={n}
+                      size={12}
+                      fill={n <= Math.round(contact.rating.value) ? '#E8A33D' : 'transparent'}
+                      className={
+                        n <= Math.round(contact.rating.value)
+                          ? 'text-[#E8A33D]'
+                          : 'text-[rgba(232,163,61,0.4)]'
+                      }
+                    />
+                  ))}
+                </div>
+                <span className="font-body text-[0.85rem] text-[#F5F0E8]">
+                  <strong>{contact.rating.value.toFixed(1)}</strong> · {contact.rating.count} Google reviews
+                </span>
+              </div>
+            </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

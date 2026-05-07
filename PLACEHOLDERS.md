@@ -26,9 +26,7 @@ These were placeholders and are now real. Documenting here so future sessions do
 
 ### Operating Hours
 
-`src/lib/data.ts` `contact.hours` and `src/lib/schemas.ts` `openingHoursSpecification`. The live site does NOT publish hours. Currently using "Mon–Sat, by appointment" as display + 10am–10pm Mon–Sat in schema.
-
-**Needs:** real published hours from owner, including any Sunday availability and holiday closures.
+✅ **NOW REAL** — sourced from Google Business Profile 2026-05-07. Open every day 10am–1am (1am the following day). Reflected in `contact.hours` ("Open daily · 10am–1am") and `localBusinessSchema.openingHoursSpecification` (all 7 days, 10:00–01:00).
 
 ### Founding Year
 
@@ -54,9 +52,9 @@ These were placeholders and are now real. Documenting here so future sessions do
 
 ### AggregateRating
 
-`src/lib/schemas.ts` `localBusinessSchema.aggregateRating`. Currently hardcoded as `5.0 / 0 reviews`. We have 3 real reviews on the homepage but no real aggregate count.
+✅ **NOW REAL (snapshot)** — sourced from Google Business Profile 2026-05-07. Currently hardcoded as **4.4 stars / 128 reviews** in `contact.rating`, `localBusinessSchema.aggregateRating`, and rendered on `/reviews` and homepage reviews preview. Reviews.tsx page metadata also reflects "Reviews — 4.4★ on Google · 128 Reviews."
 
-**Needs:** Google Business Profile API integration (Netlify Function pattern, similar to Calendly availability). On launch: `aggregateRating` and the `/reviews` page render real-time data from GBP.
+**Still needed for live wiring:** Google Business Profile API integration (Netlify Function pattern, similar to Calendly availability) so the count and rating refresh automatically as reviews accumulate. Until that lands, the values are a static snapshot — update `contact.rating` periodically.
 
 ### Google Business Profile
 

@@ -52,15 +52,26 @@ export const contact = {
   email: 'info@legacymusicgroup.com',
   addressLine1: '2815 Main St, Suite A',
   addressLine2: 'Dallas, TX 75226',
-  // PLACEHOLDER: hours are not on the public site. Confirm with owner.
-  hours: 'Mon–Sat, by appointment',
+  // Real hours sourced from Google Business Profile 2026-05-07
+  hours: 'Open daily · 10am–1am',
   responseTime: 'We reply within 24hrs',
   parkingNote: 'Metered street parking 6pm–midnight at $0.25 / 30 min.',
+  // Owner-written tagline pulled from Google Business Profile
+  ownerTagline:
+    'Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right.',
+  // Real Google Business Profile rating snapshot — 2026-05-07.
+  // Will be replaced by live GBP API integration on launch.
+  rating: {
+    value: 4.4,
+    count: 128,
+  },
   social: {
     instagram: 'https://www.instagram.com/legacymusicgroup/',
     facebook: 'https://www.facebook.com/theLegacymusicgroup/',
     twitter: 'https://twitter.com/LegacyMusicGrp',
     youtube: 'https://www.youtube.com/c/LegacyMusicGroup',
+    // PLACEHOLDER: LinkedIn URL exists per GBP profile but exact URL needed
+    linkedin: 'https://www.linkedin.com/company/legacymusicgroup',
   },
 }
 

@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Quote } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
 import { buildBreadcrumbSchema } from '../lib/schemas'
+import { contact } from '../lib/data'
 
 const galleryImages = [
   '/images/studio-control-room.jpg',
@@ -143,6 +144,30 @@ export default function Studio() {
               </div>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* Owner-written quote (sourced from Google Business Profile) */}
+      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
+        <div className="mx-auto max-w-[800px]">
+          <ScrollReveal>
+            <div className="flex items-start gap-4">
+              <Quote
+                size={32}
+                className="text-[#E8A33D] shrink-0 mt-1 -scale-x-100"
+                aria-hidden
+              />
+              <p
+                data-speakable
+                className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.5] text-[#F5F0E8]"
+              >
+                {contact.ownerTagline}
+              </p>
+            </div>
+            <p className="font-body text-[0.8rem] uppercase tracking-[2px] text-[#A38F7B] mt-5 ml-12">
+              — From Legacy Music Group
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
