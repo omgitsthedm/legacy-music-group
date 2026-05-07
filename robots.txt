@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /
-
-# Site is in pre-launch. Indexing will be enabled when public.

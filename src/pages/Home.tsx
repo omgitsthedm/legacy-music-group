@@ -1,0 +1,370 @@
+import { useEffect, useRef, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { Mic, Sliders, Star, Play, ChevronRight } from 'lucide-react'
+import { BookingContext } from '../App'
+import ScrollReveal from '../components/ScrollReveal'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const studioImages = [
+  { src: '/images/studio-control-room.jpg', caption: 'Control Room A' },
+  { src: '/images/studio-vocal-booth.jpg', caption: 'Vocal Booth' },
+  { src: '/images/studio-live-room.jpg', caption: 'Live Room' },
+  { src: '/images/studio-lobby.jpg', caption: 'Creative Lounge' },
+  { src: '/images/studio-gear.jpg', caption: 'Outboard Gear' },
+  { src: '/images/about-studio-wide.jpg', caption: 'Studio Hallway' },
+]
+
+const engineers = [
+  { id: '1', name: 'Marcus Cole', specialty: 'Hip-Hop, R&B', image: '/images/engineer-1.jpg' },
+  { id: '2', name: 'Sofia Reyes', specialty: 'Pop, Electronic', image: '/images/engineer-2.jpg' },
+  { id: '3', name: 'David Byrne', specialty: 'Rock, Folk', image: '/images/engineer-3.jpg' },
+  { id: '4', name: 'Jade Williams', specialty: 'Hip-Hop, Soul', image: '/images/engineer-4.jpg' },
+]
+
+const clips = [
+  { src: '/videos/session-clip-1.mp4', title: 'Midnight Sessions', artist: 'Ari Lennox Vibe' },
+  { src: '/videos/session-clip-2.mp4', title: 'Behind the Board', artist: 'Producer POV' },
+  { src: '/videos/session-clip-3.mp4', title: 'Live Drums', artist: 'Deep Ellum Jam' },
+  { src: '/videos/session-clip-4.mp4', title: 'Guitar Tracking', artist: 'Indie Artist Feature' },
+]
+
+export default function Home() {
+  const { openBooking } = useContext(BookingContext)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const galleryRef = useRef<HTMLDivElement>(null)
+  const galleryInnerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Hero entrance animation
+    const hero = heroRef.current
+    if (!hero) return
+    const tagline = hero.querySelector('.hero-tagline')
+    const headline = hero.querySelector('.hero-headline')
+    const subheadline = hero.querySelector('.hero-subheadline')
+    const ctaGroup = hero.querySelector('.hero-cta')
+
+    const tl = gsap.timeline({ delay: 0.3 })
+    tl.fromTo(tagline, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+      .fromTo(headline, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.5')
+      .fromTo(subheadline, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+      .fromTo(ctaGroup, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+
+    return () => { tl.kill() }
+  }, [])
+
+  useEffect(() => {
+    // Horizontal scroll gallery
+    const gallery = galleryRef.current
+    const inner = galleryInnerRef.current
+    if (!gallery || !inner) return
+
+    const scrollWidth = inner.scrollWidth - window.innerWidth
+
+    const st = ScrollTrigger.create({
+      trigger: gallery,
+      start: 'top top',
+      end: () => `+=${scrollWidth}`,
+      pin: true,
+      scrub: 1,
+      animation: gsap.to(inner, { x: -scrollWidth, ease: 'none' }),
+    })
+
+    return () => { st.kill() }
+  }, [])
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      >
+        {/* Background */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/hero-studio-dark.jpg"
+            alt="Recording studio"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.3)] via-transparent to-[#0A0A0A]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0A0A0A_100%)]" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 text-center px-[clamp(1.5rem,5vw,4rem)] max-w-[800px] mx-auto">
+          <p className="hero-tagline font-body text-[0.75rem] uppercase tracking-[3px] text-[#A38F7B] mb-6 opacity-0">
+            Deep Ellum, Dallas
+          </p>
+          <h1 className="hero-headline font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-[-2px] text-[#F5F0E8] opacity-0">
+            Record Your Legacy
+          </h1>
+          <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[500px] mx-auto mt-6 opacity-0">
+            Premium recording studio and artist development for independent creators.
+          </p>
+          <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 opacity-0">
+            <button
+              onClick={openBooking}
+              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            >
+              Book a Session
+            </button>
+            <Link
+              to="/studio"
+              className="border border-[rgba(245,240,232,0.3)] text-[#F5F0E8] font-body text-[0.95rem] font-medium px-8 py-3.5 rounded-full hover:bg-[rgba(245,240,232,0.1)] transition-all duration-300"
+            >
+              Explore Studio
+            </Link>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <div className="w-px h-10 bg-[#A38F7B] animate-pulse" />
+        </div>
+      </section>
+
+      {/* Introduction Section */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <ScrollReveal>
+              <div className="space-y-6">
+                <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+                  About Legacy
+                </span>
+                <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
+                  Where artists become originals.
+                </h2>
+                <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[500px]">
+                  Legacy Music Group is more than a recording studio. We're an artist development ecosystem rooted in the creative culture of Deep Ellum. From your first demo to your final master, we provide the space, the sound, and the strategy to help you build a lasting career.
+                </p>
+                <Link
+                  to="/studio"
+                  className="inline-flex items-center gap-2 font-body text-[1rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300 group"
+                >
+                  Read Our Story
+                  <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={150}>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src="/images/about-studio-wide.jpg"
+                  alt="Legacy studio"
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                />
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Studio Environment Showcase - Horizontal Scroll */}
+      <section ref={galleryRef} className="relative bg-[#111111] min-h-screen overflow-hidden">
+        <div className="pt-16 pb-8 px-[clamp(1.5rem,5vw,4rem)] text-center">
+          <ScrollReveal>
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              The Space
+            </span>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3 mb-4">
+              Built for Creativity
+            </h2>
+          </ScrollReveal>
+        </div>
+        <div ref={galleryInnerRef} className="flex gap-8 pl-[clamp(1.5rem,5vw,4rem)] pb-16 will-change-transform">
+          {studioImages.map((img, i) => (
+            <div
+              key={i}
+              className="relative shrink-0 w-[60vw] max-w-[900px] h-[70vh] max-h-[700px] rounded-lg overflow-hidden group"
+            >
+              <img
+                src={img.src}
+                alt={img.caption}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent p-6">
+                <span className="font-body text-[0.85rem] uppercase tracking-[2px] text-[#A38F7B]">
+                  {img.caption}
+                </span>
+              </div>
+            </div>
+          ))}
+          <div className="shrink-0 w-[20vw]" />
+        </div>
+      </section>
+
+      {/* Services Preview */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1400px]">
+          <ScrollReveal className="text-center mb-16">
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              Services
+            </span>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+              Everything you need to sound professional.
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Mic,
+                title: 'Recording',
+                body: 'World-class rooms and gear for tracking vocals, instruments, and full bands.',
+                href: '/services',
+              },
+              {
+                icon: Sliders,
+                title: 'Mixing & Mastering',
+                body: 'Get your tracks radio-ready with our in-house engineers or add it to your session.',
+                href: '/services',
+              },
+              {
+                icon: Star,
+                title: 'Artist Development',
+                body: 'Strategy, branding, and creative direction to take your music from the studio to the stage.',
+                href: '/services',
+              },
+            ].map((service, i) => (
+              <ScrollReveal key={service.title} delay={i * 100}>
+                <Link
+                  to={service.href}
+                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-8 h-full hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-6">
+                    <service.icon size={22} className="text-[#E8A33D]" />
+                  </div>
+                  <h3 className="font-body text-[1.25rem] font-medium text-[#F5F0E8] mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.6] mb-6">
+                    {service.body}
+                  </p>
+                  <span className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#E8A33D] group-hover:gap-2 transition-all duration-300">
+                    Learn More <ChevronRight size={14} />
+                  </span>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Engineer Preview */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
+        <div className="mx-auto max-w-[1400px]">
+          <ScrollReveal className="mb-12">
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              The Team
+            </span>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+              Engineers who understand your vision.
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {engineers.map((eng, i) => (
+              <ScrollReveal key={eng.id} delay={i * 100}>
+                <Link
+                  to={`/engineers/${eng.id}`}
+                  className="group block rounded-xl overflow-hidden bg-[#111111] border border-[rgba(245,240,232,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+                >
+                  <div className="aspect-[3/4] overflow-hidden">
+                    <img
+                      src={eng.image}
+                      alt={eng.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                      {eng.name}
+                    </h3>
+                    <p className="font-body text-[0.85rem] text-[#A38F7B] mt-1">
+                      {eng.specialty}
+                    </p>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              to="/engineers"
+              className="inline-flex items-center gap-2 font-body text-[0.9rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300 group"
+            >
+              View All Engineers
+              <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Session Clips / Social Proof */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1400px]">
+          <ScrollReveal className="text-center mb-12">
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              Legacy Live
+            </span>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+              See what happens inside.
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {clips.map((clip, i) => (
+              <ScrollReveal key={i} delay={i * 100}>
+                <div className="group relative rounded-xl overflow-hidden bg-[#111111] aspect-square">
+                  <video
+                    src={clip.src}
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0 }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full bg-[rgba(10,10,10,0.7)] border border-[rgba(245,240,232,0.2)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Play size={20} className="text-[#F5F0E8] ml-1" fill="#F5F0E8" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent">
+                    <p className="font-body text-[0.9rem] font-medium text-[#F5F0E8]">{clip.artist}</p>
+                    <p className="font-body text-[0.8rem] text-[#A38F7B]">{clip.title}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-[clamp(6rem,10vw,8rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[700px] text-center">
+          <ScrollReveal>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
+              Ready to make something timeless?
+            </h2>
+            <p className="font-body text-[1.1rem] text-[#A38F7B] mt-4 mb-8">
+              Book your session in under a minute. No confusion, no back-and-forth.
+            </p>
+            <button
+              onClick={openBooking}
+              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-10 py-4 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            >
+              Book Now
+            </button>
+          </ScrollReveal>
+        </div>
+      </section>
+    </div>
+  )
+}

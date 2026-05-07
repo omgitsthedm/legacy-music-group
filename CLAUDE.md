@@ -11,28 +11,30 @@
 - **Domain:** legacymusicgroup.com (PDF spec in parent folder)
 - **Design Style:** Dark Luxury + Creative Utility — cinematic, premium editorial, mobile-first
 
-## Workflow & Roles
-- **Design first pass:** Kimi vk2.6 (David runs)
-- **Implementation:** Codex (David runs as standalone app — NOT the codex:codex-rescue subagent)
+## Workflow & Roles (UPDATED 2026-05-06 — overrides BRIEF §26)
+- **Design first pass:** Kimi vk2.6 — delivered her output as a runnable Vite + React 19 + shadcn app on 2026-05-06
+- **Implementation:** **Claude Code** (per direct user instruction "you are the one building it")
+- **Codex (the standalone app):** available as backup if David explicitly invokes it; not the default builder for this project
 - **Claude Code's role:**
-  - Project doctrine + brief stewardship
-  - Pre-Codex scaffold and infrastructure (this is what's done so far)
-  - Post-Codex audits via `/ultraship`, `/audit-website`, `/seo-audit`, `/perf-audit`, `/security-audit`
-  - SEO/AEO/copy work where requested
-  - Design QA against BRIEF.md
-- **Do not race Codex.** When David hands the build to Codex, stand down on implementation.
+  - Build, ship, iterate the production site
+  - Brief stewardship — every change must respect BRIEF.md positioning, design direction, booking strategy, SEO pillars
+  - Audit cadence: `/ultraship`, `/audit-website`, `/seo-audit`, `/perf-audit`, `/security-audit` after major work
+  - Asset wrangling per BRIEF §32 as final assets arrive
 
-## Stack (Per BRIEF.md §23 — overrides LiFi NYC global "static only" rule)
-- Next.js 15+ App Router
-- TypeScript
-- Tailwind CSS
-- Netlify (hosting + previews)
-- Supabase (data layer)
-- Stripe (payments)
-- Resend (transactional email)
-- GA4 (analytics)
-- Sentry (monitoring)
-- pnpm
+## Stack (Vite path — overrides BRIEF §23 Next.js plan per user instruction)
+- Vite 7 + React 19 + TypeScript
+- Tailwind CSS 3.4 + shadcn/ui (40+ components installed)
+- react-router-dom v7 (NOT App Router)
+- GSAP + ScrollTrigger for motion
+- react-hook-form + zod for forms
+- lucide-react icons
+- DM Serif Display + Inter (Google Fonts via @import)
+- Netlify (hosting + previews) via GitHub Actions
+- Future-state: Stripe / Supabase / Resend / GA4 / Sentry to be added when booking + lead capture go live (BRIEF §22)
+- npm (Kimi shipped `package-lock.json`; pnpm 11 has too-strict build-script gating, npm is the path of least resistance)
+
+### Why Vite, not Next.js (per BRIEF §23)
+Kimi vk2.6 delivered the first-pass design as a working Vite app with all motion, components, and the BookingContext wired. David's instruction was to ship "the whole thing on netlify with all the features and motions and all of that" — fastest path is keeping Kimi's Vite stack. A Next.js port can be revisited if/when booking needs server-side routes (Stripe webhooks, Resend transactional email, Supabase server actions). For now, Vite ships clean to Netlify and preserves Kimi's full design fidelity.
 
 ## Three-Way Sync (Established 2026-05-06)
 - **Local:** `~/Desktop/LiFi NYC/Clients/Legacy Music Group/legacy-music-group/`
@@ -50,34 +52,52 @@
 | 2026-05-06 | Reset repo to blank static placeholder | Existing Vite content workspace removed; Kimi preparing branding |
 | 2026-05-06 | Created Netlify site `legacy-music-group` | Old `legacy-music-group-preview` Next.js deploy (Apr 17) left untouched as historical artifact |
 | 2026-05-06 | Wired auto-deploy via GitHub Actions, not Netlify GitHub App | No OAuth dance needed; secrets managed via `gh secret set` |
-| 2026-05-06 | Master BRIEF.md saved into repo | Codex needs the brief on first checkout; Kimi outputs feed back into the same repo |
-| 2026-05-06 | Stack confirmed Next.js 15+ / Supabase / Stripe / Resend | Per BRIEF.md §23; explicit override of LiFi NYC "static only" client default |
+| 2026-05-06 | Master BRIEF.md saved into repo | Source of truth for product/positioning/design direction; everything reads from it |
+| 2026-05-06 | Kimi vk2.6 first-pass landed as runnable Vite + React 19 + shadcn app | 6 pages, BookingModal, GSAP motion, dark-luxury palette in HSL tokens, placeholder studio imagery + 4 session video clips |
+| 2026-05-06 | **Stack pivot: Vite (not Next.js per BRIEF §23)** | User instruction overrode the Codex+Next.js plan; Vite is fastest path to ship Kimi's full design with motion intact |
+| 2026-05-06 | **Builder pivot: Claude Code (not Codex per BRIEF §26)** | Direct user instruction: "you are the one building it" |
+| 2026-05-06 | Replaced static placeholder with Kimi's Vite app at repo root | Single repo, single deploy; design preview is the production site for now |
+| 2026-05-06 | Deploy workflow rewritten for Vite (pnpm install + pnpm build, publish `dist/`) | Replaces direct static publish |
 
 ## Current Status
-- **Phase:** Pre-design (waiting on Kimi vk2.6 first-pass)
+- **Phase:** First-pass design landed; iteration / refinement ahead
 - **Last worked on:** 2026-05-06
 - **What's done:**
-  - BRIEF.md saved as source of truth
-  - Repo reset to blank static placeholder ("Coming Soon" black page, noindex)
-  - Three-way sync established and verified (push → GitHub Actions → Netlify deploy)
-  - GitHub Actions workflows present: claude-review.yml, claude.yml, netlify-deploy.yml
+  - BRIEF.md doctrine in place
+  - Three-way sync established (local ↔ GitHub `omgitsthedm/legacy-music-group` master ↔ Netlify `legacy-music-group.netlify.app`)
+  - Kimi vk2.6 first-pass merged into repo as the live site
+  - 6 pages routed (Home, Engineers, EngineerProfile, Services, Studio, Contact) + global BookingModal
+  - GSAP hero timeline + horizontal-scroll studio gallery on Home
+  - shadcn/ui theme aligned with BRIEF §7 palette (HSL tokens in `src/index.css`)
+  - Deploy workflow updated: build then publish `dist/`
 - **What's pending:**
-  - Kimi vk2.6 first-pass design output (12 outputs per BRIEF.md §25)
-  - Codex implementation phase (Next.js scaffold, booking flow, etc.)
-  - Asset collection per BRIEF.md §32 (renovation photos, engineer profiles, samples, pricing)
+  - Real booking back-end (currently a UI modal — needs Stripe + Resend + lead capture per BRIEF §22)
+  - Asset upgrade per BRIEF §32 (real renovation photos, real engineer photos/bios/samples, pricing confirmation)
+  - SEO/AEO content fill per BRIEF §27 (page metadata, schema, FAQ)
+  - Pre-launch noindex flip when going live
   - Decide fate of duplicate `Website/` folder in parent dir
 - **Needs from David:**
-  - Approval to delete/archive duplicate `Website/` folder in parent client dir
-  - Notify when Kimi vk2.6 output is ready for review
-  - Hand off to Codex when ready to scaffold Next.js
+  - Approval to delete/archive duplicate `Website/` folder
+  - Engineer roster + bios + sample links (currently placeholder names: Marcus Cole, Sofia Reyes, David Byrne, Jade Williams)
+  - Studio renovation photography (currently stock placeholders flagged per BRIEF §19)
+  - Stripe + booking system rules when ready to wire payment
+  - Final domain pointing decision (legacymusicgroup.com)
 
 ## Pre-Launch Posture
-- `robots.txt` is `Disallow: /` and pages have `<meta name="robots" content="noindex, nofollow">`. **Codex must flip these when going live.**
-- Site is intentionally a black "Legacy Music Group" placeholder until design lands.
+- The current build is **production-quality design preview**, not yet a real booking system.
+- Pages render and look complete. The BookingModal exists in UI but has no backend wiring.
+- Once real booking is needed: add Stripe checkout, Supabase data layer, Resend transactional email per BRIEF §22.
+- When going public, add `noindex` removal + real `robots.txt`/`sitemap.xml`/`site.webmanifest`/OG tags.
 
 ## Key Files
 - `BRIEF.md` — master doctrine (READ FIRST)
 - `CLAUDE.md` — this file (operational metadata + decisions log)
-- `index.html`, `404.html`, `robots.txt`, `sitemap.xml`, `site.webmanifest` — placeholder static scaffold (will be replaced when Codex scaffolds Next.js)
-- `.github/workflows/netlify-deploy.yml` — auto-deploy on push
+- `info.md` — Kimi's component inventory and structure notes
+- `src/App.tsx` — root, routes, BookingContext provider
+- `src/pages/` — Home, Engineers, EngineerProfile, Services, Studio, Contact
+- `src/components/` — Navbar, Footer, BookingModal, ScrollReveal + `ui/` (shadcn)
+- `src/index.css` — HSL color tokens, font imports, calendar dark theme
+- `tailwind.config.js` — theme extension binding tokens
+- `public/images/`, `public/videos/` — placeholder studio assets
+- `.github/workflows/netlify-deploy.yml` — Vite build + Netlify deploy
 - `legacymusicgroup.com.pdf` (in parent dir) — original domain/brand spec PDF

@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 36 30% 94%;
+    --card: 0 0% 7%;
+    --card-foreground: 36 30% 94%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 36 30% 94%;
+    --primary: 36 80% 57%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 36 30% 94%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 28 18% 56%;
+    --accent: 36 80% 57%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 36 30% 94%;
+    --border: 36 30% 94% / 0.08;
+    --input: 36 30% 94% / 0.1;
+    --ring: 36 80% 57%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[#0A0A0A] text-[#F5F0E8] antialiased;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'DM Serif Display', Georgia, serif;
+  }
+  .font-body {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1A1A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A38F7B;
+}
+
+/* Calendar dark theme overrides */
+.rdp {
+  --rdp-accent-color: #E8A33D !important;
+  --rdp-background-color: #1A1A1A !important;
+}
+.rdp-day_selected {
+  background-color: #E8A33D !important;
+  color: #0A0A0A !important;
+}
+.rdp-day_selected:hover {
+  background-color: #D4873C !important;
+}
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: rgba(232, 163, 61, 0.15) !important;
+  color: #F5F0E8 !important;
+}
+.rdp-button {
+  color: #F5F0E8 !important;
+}
+.rdp-head_cell {
+  color: #A38F7B !important;
+}
+.rdp-caption_label {
+  color: #F5F0E8 !important;
+}
+.rdp-nav_button {
+  color: #A38F7B !important;
+}
+.rdp-nav_button:hover {
+  background-color: rgba(232, 163, 61, 0.15) !important;
+  color: #F5F0E8 !important;
+}
