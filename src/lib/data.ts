@@ -65,12 +65,12 @@ export const contact = {
     value: 4.4,
     count: 128,
   },
+  // All social URLs confirmed real 2026-05-07.
   social: {
     instagram: 'https://www.instagram.com/legacymusicgroup/',
-    facebook: 'https://www.facebook.com/theLegacymusicgroup/',
+    facebook: 'https://www.facebook.com/theLegacymusicgroup',
     twitter: 'https://twitter.com/LegacyMusicGrp',
-    youtube: 'https://www.youtube.com/c/LegacyMusicGroup',
-    // PLACEHOLDER: LinkedIn URL exists per GBP profile but exact URL needed
+    youtube: 'https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw',
     linkedin: 'https://www.linkedin.com/company/legacymusicgroup',
   },
 }
@@ -940,25 +940,66 @@ export interface StudioEvent {
   image?: string
 }
 
-// PLACEHOLDER: ready for real events. See PLACEHOLDERS.md §Events.
-export const studioEvents: StudioEvent[] = [
-  {
-    slug: 'open-mic-night',
-    name: 'Legacy Open Mic Night',
-    startDate: '2026-06-15T19:00:00-05:00',
-    endDate: '2026-06-15T22:00:00-05:00',
-    description: 'Monthly open mic at Legacy. Artists, songwriters, and producers welcome. RSVP via the booking page.',
+// Recurring weekly event sourced from Legacy's Facebook 2026-05-07.
+// Started March 30 2026, runs every Monday at TX Tea Room in Deep Ellum.
+//
+// We compute the next 6 occurrences from today so the events page is always
+// fresh without needing manual updates. The series itself is described as a
+// single recurring entity in schema (eventSchedule).
+
+function nextMondays(count: number, fromDate: Date = new Date()): Date[] {
+  const dates: Date[] = []
+  const cursor = new Date(fromDate)
+  cursor.setHours(21, 0, 0, 0) // 9:00 PM show start
+  // Advance to upcoming Monday (Mon = 1)
+  const offset = (1 - cursor.getDay() + 7) % 7 || 7 * (cursor.getDay() === 1 && cursor.getTime() < fromDate.getTime() ? 1 : 0)
+  cursor.setDate(cursor.getDate() + offset)
+  for (let i = 0; i < count; i++) {
+    dates.push(new Date(cursor))
+    cursor.setDate(cursor.getDate() + 7)
+  }
+  return dates
+}
+
+export const studioEvents: StudioEvent[] = nextMondays(6).map((d) => {
+  // 2-hour event, end at 11pm
+  const end = new Date(d)
+  end.setHours(23, 0, 0, 0)
+  const slug = `legacy-live-${d.toISOString().slice(0, 10)}`
+  return {
+    slug,
+    name: 'Legacy Live — Weekly Open Mic',
+    startDate: d.toISOString(),
+    endDate: end.toISOString(),
+    description:
+      "One mic. One song. Dallas, show us what you got. Legacy Live is our weekly open mic for the Dallas artist community at TX Tea Room in Deep Ellum. Sign-ups at 8:30 PM, show starts at 9:00 PM. One song per artist, limited performance slots. Free event for rappers, singers, musicians, and poets — pull up, perform, and connect. Hosted by Legacy Music Group with sound by Kyle Cannon.",
     image: '/images/studio-live-room.jpg',
+  }
+})
+
+/**
+ * Anchor metadata about Legacy Live as a recurring series — used for the
+ * series-level Event card and schema. Each occurrence in `studioEvents` above
+ * is a concrete date for the upcoming weeks.
+ */
+export const legacyLiveSeries = {
+  name: 'Legacy Live — Weekly Open Mic',
+  tagline: 'One mic. One song. Dallas, show us what you got.',
+  description:
+    'A weekly open mic for the Dallas artist community. Sign-ups at 8:30 PM, show at 9:00 PM. One song only, limited performance slots. Free event — artists and audience welcome. Rappers, singers, musicians, poets — pull up, perform, and connect.',
+  recurrence: 'Every Monday',
+  doors: '8:30 PM (sign-ups)',
+  start: '9:00 PM',
+  cost: 'FREE',
+  venue: {
+    name: 'TX Tea Room',
+    neighborhood: 'Deep Ellum',
+    city: 'Dallas',
   },
-  {
-    slug: 'songwriter-circle',
-    name: 'Deep Ellum Songwriter Circle',
-    startDate: '2026-06-22T18:00:00-05:00',
-    endDate: '2026-06-22T20:00:00-05:00',
-    description: 'A working session for Dallas songwriters. Bring a song-in-progress. Limited to 8 attendees.',
-    image: '/images/studio-lobby.jpg',
-  },
-]
+  hostedBy: 'Legacy Music Group',
+  soundBy: 'Kyle Cannon',
+  startedDate: '2026-03-30',
+}
 
 // =========================================================================
 // PRESS MENTIONS (placeholder)

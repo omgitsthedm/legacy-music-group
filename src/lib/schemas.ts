@@ -27,9 +27,9 @@ const BUSINESS = {
   founded: '2014',
   sameAs: [
     'https://www.instagram.com/legacymusicgroup/',
-    'https://www.facebook.com/theLegacymusicgroup/',
+    'https://www.facebook.com/theLegacymusicgroup',
     'https://twitter.com/LegacyMusicGrp',
-    'https://www.youtube.com/c/LegacyMusicGroup',
+    'https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw',
     'https://www.linkedin.com/company/legacymusicgroup',
   ],
 } as const
@@ -371,6 +371,14 @@ export interface EventSchemaInput {
   description: string
   url?: string
   image?: string
+  /** Override location when the event is hosted off-site (e.g. Legacy Live at TX Tea Room) */
+  location?: {
+    name: string
+    addressLocality?: string
+    addressRegion?: string
+  }
+  /** Free-form free admission flag */
+  isFree?: boolean
 }
 
 export const buildEventSchema = (e: EventSchemaInput) => ({
@@ -381,11 +389,39 @@ export const buildEventSchema = (e: EventSchemaInput) => ({
   ...(e.endDate ? { endDate: e.endDate } : {}),
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: { '@id': LOCAL_REF },
+  location: e.location
+    ? {
+        '@type': 'Place',
+        name: e.location.name,
+        ...(e.location.addressLocality || e.location.addressRegion
+          ? {
+              address: {
+                '@type': 'PostalAddress',
+                ...(e.location.addressLocality
+                  ? { addressLocality: e.location.addressLocality }
+                  : {}),
+                ...(e.location.addressRegion
+                  ? { addressRegion: e.location.addressRegion }
+                  : {}),
+              },
+            }
+          : {}),
+      }
+    : { '@id': LOCAL_REF },
   description: e.description,
   ...(e.url ? { url: e.url } : {}),
   ...(e.image ? { image: `${SITE.url}${e.image}` } : {}),
   organizer: { '@id': ORG_REF },
+  ...(e.isFree
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+        },
+      }
+    : {}),
 })
 
 // --- Review + AggregateRating --------------------------------------------

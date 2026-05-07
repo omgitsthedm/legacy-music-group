@@ -417,8 +417,15 @@ export default function Home() {
               Legacy Live
             </span>
             <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-              See what happens inside.
+              See what happens inside — and at our weekly open mic.
             </h2>
+            <p className="font-body text-[0.95rem] text-[#A38F7B] mt-4 max-w-[560px] mx-auto leading-[1.7]">
+              Our free Monday-night open mic at TX Tea Room is one of the most active
+              songwriter rooms in Deep Ellum.{' '}
+              <Link to="/events" className="text-[#E8A33D] hover:underline">
+                See the next dates →
+              </Link>
+            </p>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

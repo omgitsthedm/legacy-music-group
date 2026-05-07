@@ -78,9 +78,13 @@ The existing legacymusicgroup.com site uses a custom Wix-style booking widget (5
 
 ### Events
 
-`src/lib/data.ts` `studioEvents`. Two placeholder events (open mic, songwriter circle) on `/events`.
+✅ **NOW REAL** — sourced from Legacy's Facebook 2026-05-07. The `/events` page now features the actual recurring series:
 
-**Needs:** real event listings from owner (or remove the route until events are real).
+- **Legacy Live — Weekly Open Mic** at TX Tea Room in Deep Ellum, every Monday, 8:30 PM sign-ups + 9 PM show, free, hosted by Legacy with sound by Kyle Cannon.
+
+`studioEvents` is generated programmatically (next 6 Mondays from today) so the events page stays fresh without manual updates. Each occurrence is rendered with `Event` schema using TX Tea Room as the off-site location (via the new optional `location` parameter on `buildEventSchema`).
+
+**Still optional:** add other events as Legacy hosts them (listening parties, label nights, songwriter circles at the studio itself).
 
 ### Blog Posts
 
