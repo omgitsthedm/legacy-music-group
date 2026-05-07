@@ -5,43 +5,62 @@
  * at the repo root for the full inventory of what needs replacing.
  */
 
-// PLACEHOLDER: Calendly URLs.
-// Legacy Music Group uses Calendly for scheduling. Replace these slugs once
-// the real Calendly account / event types are confirmed.
+// PLACEHOLDER: Calendly configuration.
 //
-// Pattern options:
-//   - One general event type that branches via Calendly's own questions
-//   - One event type per session category (with-engineer / studio-time)
-//   - One event type per engineer (most personalized)
+// Hybrid setup: we render a custom brand-matched picker (CalendlyPicker)
+// that fetches real availability via Netlify Function (server-side proxy
+// using CALENDLY_PAT env var) and deep-links to Calendly's hosted page
+// with the exact slot's scheduling_url so the user lands on Calendly's
+// contact form with the time pre-locked.
 //
-// The current code passes session type + engineer + add-ons via UTM and
-// prefills, so any of the three patterns above will work — just point
-// `withEngineer.default` and `withoutEngineer` to the right slugs.
+// Three placeholders to swap in once the Calendly account is configured:
+//   1. Booking URLs (`bookingUrl` per session/engineer) — public Calendly URLs
+//   2. Event type URIs (`eventTypeUri`) — Calendly API resource URIs used by
+//      the proxy to query availability. Format:
+//      https://api.calendly.com/event_types/{UUID}
+//   3. CALENDLY_PAT env var on Netlify — Personal Access Token from Calendly
+//      admin (Integrations → API & webhooks → Personal Access Tokens)
 //
 // See PLACEHOLDERS.md §Calendly for the full swap-out list.
+
+export interface CalendlyEventConfig {
+  /** Public Calendly booking URL — used as deep-link fallback if API is unavailable */
+  bookingUrl: string
+  /** Calendly API resource URI — used by the availability proxy */
+  eventTypeUri: string
+}
+
 export const calendly = {
-  // Used when a specific engineer is selected (step 3). Falls back to `default`
-  // if no per-engineer slug is set yet.
   withEngineer: {
-    default: 'https://calendly.com/legacymusicgroup/recording-with-engineer',
+    default: {
+      bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-engineer',
+      eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-DEFAULT',
+    } satisfies CalendlyEventConfig,
     byEngineerId: {
-      '1': 'https://calendly.com/legacymusicgroup/recording-with-marcus-cole',
-      '2': 'https://calendly.com/legacymusicgroup/recording-with-sofia-reyes',
-      '3': 'https://calendly.com/legacymusicgroup/recording-with-david-byrne',
-      '4': 'https://calendly.com/legacymusicgroup/recording-with-jade-williams',
-    } as Record<string, string>,
+      '1': {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-marcus-cole',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-1',
+      },
+      '2': {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-sofia-reyes',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-2',
+      },
+      '3': {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-david-byrne',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-3',
+      },
+      '4': {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-jade-williams',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-4',
+      },
+    } as Record<string, CalendlyEventConfig>,
   },
-  // Used when "Without Engineer" is selected
-  withoutEngineer: 'https://calendly.com/legacymusicgroup/studio-time',
-  // Brand colors passed to Calendly's pageSettings to theme the embed
-  // (Calendly Pro+ feature; harmless if account is on free tier)
-  pageSettings: {
-    backgroundColor: '0A0A0A',
-    textColor: 'F5F0E8',
-    primaryColor: 'E8A33D',
-    hideEventTypeDetails: false,
-    hideLandingPageDetails: false,
-  },
+  withoutEngineer: {
+    bookingUrl: 'https://calendly.com/legacymusicgroup/studio-time',
+    eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-STUDIO-TIME',
+  } satisfies CalendlyEventConfig,
+  /** Path to Netlify Function that proxies availability requests */
+  availabilityEndpoint: '/.netlify/functions/calendly-availability',
 }
 
 export interface Engineer {

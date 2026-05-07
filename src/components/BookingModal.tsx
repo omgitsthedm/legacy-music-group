@@ -1,5 +1,4 @@
 import { useContext, useState, useRef, useEffect, useMemo } from 'react'
-import { InlineWidget, useCalendlyEventListener } from 'react-calendly'
 import {
   X,
   ChevronRight,
@@ -12,10 +11,11 @@ import {
 } from 'lucide-react'
 import { BookingContext } from '../App'
 import { engineers, calendly } from '../lib/data'
+import CalendlyPicker from './CalendlyPicker'
 
 type Step = 1 | 2 | 3 | 4 | 5
 
-const TOTAL_VISIBLE_STEPS = 4 // Schedule (Calendly) + Confirmed are step 4 and step 5
+const TOTAL_VISIBLE_STEPS = 4
 
 export default function BookingModal() {
   const { isOpen, setIsOpen } = useContext(BookingContext)
@@ -34,26 +34,6 @@ export default function BookingModal() {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  // Listen for Calendly's event_scheduled to advance to our confirmation screen.
-  // PLACEHOLDER: payload contains invitee + event URIs but NOT name/email by default.
-  // To capture lead data into Supabase, hit Calendly's API with the URIs in
-  // e.data.payload or wire a Calendly webhook server-side. See PLACEHOLDERS.md.
-  useCalendlyEventListener({
-    onEventScheduled: (e) => {
-      setStep(5)
-      // Fire analytics (GA4) — uncomment GA4 snippet in index.html for this to do anything
-      const w = window as unknown as { gtag?: (...args: unknown[]) => void }
-      if (typeof window !== 'undefined' && typeof w.gtag === 'function') {
-        w.gtag('event', 'booking_scheduled', {
-          session_type: sessionType,
-          engineer_id: selectedEngineer,
-          addons: addons.join(','),
-          event_uri: e.data.payload?.event?.uri,
-        })
-      }
-    },
-  })
-
   const reset = () => {
     setStep(1)
     setSessionType(null)
@@ -68,7 +48,6 @@ export default function BookingModal() {
 
   const goNext = () => {
     if (step === 1 && sessionType === 'without') {
-      // skip engineer step, jump to add-ons then Calendly
       setStep(2)
       return
     }
@@ -81,7 +60,7 @@ export default function BookingModal() {
       return
     }
     if (step === 4 && sessionType === 'without') {
-      setStep(2) // back from Calendly to add-ons
+      setStep(2)
       return
     }
     setStep((step - 1) as Step)
@@ -96,20 +75,20 @@ export default function BookingModal() {
   const canAdvance = useMemo(() => {
     switch (step) {
       case 1: return !!sessionType
-      case 2: return true // addons optional
+      case 2: return true
       case 3: return sessionType === 'without' || !!selectedEngineer
       default: return false
     }
   }, [step, sessionType, selectedEngineer])
 
-  // Visible step number (skips engineer step for without-engineer flow)
   const visibleStep = useMemo(() => {
     if (step === 5) return TOTAL_VISIBLE_STEPS
     if (sessionType === 'without' && step >= 3) return step - 1
     return step
   }, [step, sessionType])
 
-  const calendlyUrl = useMemo(() => {
+  // Resolve which Calendly event we're targeting based on prior selections
+  const eventConfig = useMemo(() => {
     if (sessionType === 'without') return calendly.withoutEngineer
     if (sessionType === 'with' && selectedEngineer) {
       return calendly.withEngineer.byEngineerId[selectedEngineer] ?? calendly.withEngineer.default
@@ -122,6 +101,16 @@ export default function BookingModal() {
     .map((a) => (a === 'mixing' ? 'Mixing & Mastering' : 'Full Package'))
     .join(' + ')
 
+  const contextLine = useMemo(() => {
+    if (sessionType === 'with' && engineerObj) {
+      return `Booking with ${engineerObj.name}${addons.length ? ` · ${addonString}` : ''}.`
+    }
+    if (sessionType === 'without') {
+      return `Studio time, no engineer${addons.length ? ` · ${addonString}` : ''}.`
+    }
+    return undefined
+  }, [sessionType, engineerObj, addons, addonString])
+
   if (!isOpen) return null
 
   return (
@@ -133,7 +122,7 @@ export default function BookingModal() {
 
       <div
         className={`relative w-full ${
-          step === 4 ? 'max-w-[900px]' : 'max-w-[640px]'
+          step === 4 ? 'max-w-[820px]' : 'max-w-[640px]'
         } max-h-[92vh] flex flex-col bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
       >
         {/* Header */}
@@ -173,7 +162,6 @@ export default function BookingModal() {
 
         {/* Content */}
         <div ref={contentRef} className="flex-1 overflow-y-auto">
-          {/* Step 1: Session Type */}
           {step === 1 && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your session type</h3>
@@ -199,7 +187,6 @@ export default function BookingModal() {
             </div>
           )}
 
-          {/* Step 2: Add-ons */}
           {step === 2 && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Enhance your session</h3>
@@ -227,7 +214,6 @@ export default function BookingModal() {
             </div>
           )}
 
-          {/* Step 3: Engineer (skipped for without-engineer flow) */}
           {step === 3 && sessionType === 'with' && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your engineer</h3>
@@ -261,29 +247,19 @@ export default function BookingModal() {
             </div>
           )}
 
-          {/* Step 4: Calendly schedule */}
           {step === 4 && (
             <div className="animate-in fade-in slide-in-from-right-2 duration-200">
-              <div className="px-6 pt-6 pb-3">
-                <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Pick a time</h3>
-                <p className="font-body text-[0.9rem] text-[#A38F7B]">
-                  {sessionType === 'with' && engineerObj
-                    ? `Booking with ${engineerObj.name}${addons.length ? ` · ${addonString}` : ''}.`
-                    : sessionType === 'without'
-                    ? `Studio time, no engineer${addons.length ? ` · ${addonString}` : ''}.`
-                    : 'Select a time that works.'}
-                </p>
+              <div className="px-6 pt-6 pb-2">
+                <h3 className="font-display text-2xl text-[#F5F0E8]">Pick a time</h3>
               </div>
-              <CalendlyEmbed
-                url={calendlyUrl}
-                sessionType={sessionType}
-                addons={addons}
-                engineerName={engineerObj?.name}
+              <CalendlyPicker
+                eventTypeUri={eventConfig.eventTypeUri}
+                bookingUrl={eventConfig.bookingUrl}
+                contextLine={contextLine}
               />
             </div>
           )}
 
-          {/* Step 5: Confirmation */}
           {step === 5 && (
             <div className="px-6 py-12 flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="w-16 h-16 rounded-full bg-[rgba(74,124,89,0.2)] flex items-center justify-center mb-6">
@@ -291,26 +267,11 @@ export default function BookingModal() {
               </div>
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-3">You're booked.</h3>
               <p className="font-body text-[0.95rem] text-[#A38F7B] max-w-[420px] mb-2">
-                Calendly just confirmed your session. Check your email for the calendar invite and details.
-              </p>
-              {sessionType === 'with' && engineerObj && (
-                <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[420px] mb-2">
-                  Recording with <span className="text-[#F5F0E8]">{engineerObj.name}</span>
-                  {addons.length > 0 && <> · {addonString}</>}
-                </p>
-              )}
-              {sessionType === 'without' && (
-                <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[420px] mb-2">
-                  Studio time
-                  {addons.length > 0 && <> · {addonString}</>}
-                </p>
-              )}
-              <p className="font-body text-[0.75rem] text-[#A38F7B] max-w-[420px] mb-6 mt-2">
-                Day-before reminder will arrive via text. Questions? <a href="mailto:book@legacymusic.group" className="text-[#E8A33D] hover:underline">book@legacymusic.group</a>
+                Check your email for the calendar invite and confirmation.
               </p>
               <button
                 onClick={handleClose}
-                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300"
+                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 mt-4"
               >
                 Done
               </button>
@@ -318,7 +279,7 @@ export default function BookingModal() {
           )}
         </div>
 
-        {/* Footer (hidden during Calendly + confirmation) */}
+        {/* Footer */}
         {step <= 3 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-[rgba(245,240,232,0.08)] shrink-0">
             <button
@@ -354,12 +315,12 @@ export default function BookingModal() {
               Back
             </button>
             <a
-              href={calendlyUrl}
+              href={eventConfig.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
             >
-              Trouble loading? Open in new tab
+              Open Calendly directly
               <ExternalLink size={13} />
             </a>
           </div>
@@ -368,42 +329,6 @@ export default function BookingModal() {
     </div>
   )
 }
-
-// --- Calendly embed --------------------------------------------------------
-
-function CalendlyEmbed({
-  url,
-  sessionType,
-  addons,
-  engineerName,
-}: {
-  url: string
-  sessionType: 'with' | 'without' | null
-  addons: string[]
-  engineerName?: string
-}) {
-  // Pass selections via UTM so they show up in Calendly admin + any zapier/webhook downstream
-  const utm = {
-    utmSource: 'legacymusicgroup.com',
-    utmMedium: 'website',
-    utmCampaign: sessionType === 'with' ? 'recording-with-engineer' : 'studio-time',
-    utmContent: addons.join(','),
-    utmTerm: engineerName ?? '',
-  }
-
-  return (
-    <div className="w-full" style={{ minHeight: 600 }}>
-      <InlineWidget
-        url={url}
-        styles={{ height: 700, width: '100%' }}
-        pageSettings={calendly.pageSettings}
-        utm={utm}
-      />
-    </div>
-  )
-}
-
-// --- SelectCard subcomponent (unchanged from prior version) ---------------
 
 function SelectCard({
   active,

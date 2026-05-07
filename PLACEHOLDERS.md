@@ -165,41 +165,76 @@ What we still own:
 
 ---
 
-## Calendly
+## Calendly (hybrid: custom picker + deep-link)
 
 Source of truth: [`src/lib/data.ts` `calendly` object](src/lib/data.ts).
 
-All Calendly URLs below are **placeholder slugs**. Replace with the real URLs from Legacy's Calendly account.
+We render a **brand-matched custom calendar/slot picker** (`CalendlyPicker`) that fetches real Calendly availability via a Netlify Function proxy (`/.netlify/functions/calendly-availability`), then deep-links the user to Calendly's hosted page using the per-slot `scheduling_url` so they land on Calendly's contact form with the time pre-locked. Calendly handles contact details + agreement + payment + confirmation.
 
-| Use case | Placeholder URL | Notes |
-|---|---|---|
-| With engineer (default fallback) | `https://calendly.com/legacymusicgroup/recording-with-engineer` | Used if no per-engineer slug is set for the selected engineer |
-| With Marcus Cole | `https://calendly.com/legacymusicgroup/recording-with-marcus-cole` | Replace with real per-engineer slug if Marcus has one |
-| With Sofia Reyes | `https://calendly.com/legacymusicgroup/recording-with-sofia-reyes` | Replace with real per-engineer slug |
-| With David Byrne | `https://calendly.com/legacymusicgroup/recording-with-david-byrne` | Replace with real per-engineer slug |
-| With Jade Williams | `https://calendly.com/legacymusicgroup/recording-with-jade-williams` | Replace with real per-engineer slug |
-| Without engineer | `https://calendly.com/legacymusicgroup/studio-time` | General studio-time event type |
+### What needs swapping in
 
-**How the URL is selected at runtime:**
+**Three placeholder layers:**
+
+**1. Calendly Personal Access Token (PAT)** — set as Netlify env var `CALENDLY_PAT`
+
+Get it from Calendly admin → Integrations → API & Webhooks → Personal Access Tokens. Without this set, the picker shows mock availability with a banner saying "real Calendly account not yet connected."
+
+To set it:
+```bash
+netlify env:set CALENDLY_PAT "your-pat-here" --context production
 ```
+
+Or via Netlify UI: Site settings → Environment variables → Add variable.
+
+**2. Public booking URLs** (`bookingUrl` in each entry) — fallback "Open Calendly directly" links
+
+| Use case | Placeholder URL |
+|---|---|
+| With engineer (default fallback) | `https://calendly.com/legacymusicgroup/recording-with-engineer` |
+| With Marcus Cole | `https://calendly.com/legacymusicgroup/recording-with-marcus-cole` |
+| With Sofia Reyes | `https://calendly.com/legacymusicgroup/recording-with-sofia-reyes` |
+| With David Byrne | `https://calendly.com/legacymusicgroup/recording-with-david-byrne` |
+| With Jade Williams | `https://calendly.com/legacymusicgroup/recording-with-jade-williams` |
+| Without engineer | `https://calendly.com/legacymusicgroup/studio-time` |
+
+**3. Calendly event type API URIs** (`eventTypeUri` in each entry) — used by the proxy to query availability
+
+Each Calendly event type has a unique URI like `https://api.calendly.com/event_types/{UUID}`. Get them by:
+
+```bash
+curl -H "Authorization: Bearer $CALENDLY_PAT" \
+  https://api.calendly.com/event_types?user=https://api.calendly.com/users/{YOUR-USER-UUID}
+```
+
+Then map each event type to the matching entry in `src/lib/data.ts`. Currently all `eventTypeUri` values are `https://api.calendly.com/event_types/PLACEHOLDER-UUID-*` strings.
+
+### How the URL is selected at runtime
+
+```ts
 sessionType === 'without'  →  calendly.withoutEngineer
 sessionType === 'with'     →  calendly.withEngineer.byEngineerId[engineerId]
                               ?? calendly.withEngineer.default
 ```
 
-**What we pass to Calendly:**
-- UTM params: `utm_source=legacymusicgroup.com`, `utm_medium=website`, `utm_campaign=recording-with-engineer|studio-time`, `utm_content=<addons>`, `utm_term=<engineer name>`
-- Page styling: brand colors via `pageSettings` (`backgroundColor: 0A0A0A`, `textColor: F5F0E8`, `primaryColor: E8A33D`) — only applied if Calendly account is on Pro+ tier; ignored gracefully on free tier
+### Three valid Calendly setups (pick one)
 
-**Three valid Calendly setups (pick one):**
-1. **Single event type with branching questions** — point both `withEngineer.default` and `withoutEngineer` at the same URL; configure Calendly questions to capture session type / engineer choice from URL params
-2. **Two event types** — one for "with engineer" (auto-routes among engineers based on availability), one for "studio time" — current default scaffold
-3. **Per-engineer event types** — each engineer has their own Calendly event (most personalized, recommended for branded discovery from `/engineers/[id]` pages)
+1. **Single event type with branching questions** — point both `withEngineer.default.eventTypeUri` and `withoutEngineer.eventTypeUri` at the same URI; configure Calendly questions to capture session type / engineer from URL params (Calendly's UTM passthrough handles this)
+2. **Two event types** — one for "with engineer" (Calendly auto-routes among engineers based on availability), one for "studio time" — current default scaffold
+3. **Per-engineer event types** — each engineer has their own Calendly event type (most personalized, recommended for branded discovery from `/engineers/[id]` pages)
 
-**Optional follow-up integrations:**
-- Calendly → Stripe for deposit collection (configurable in Calendly event settings)
+### Optional follow-up integrations
+
+- Calendly → Stripe for deposit collection (configurable in Calendly event settings — Pro+ feature)
 - Calendly webhook → Supabase to mirror bookings into our own lead store
 - Calendly → Resend / Mailchimp / Klaviyo for post-session follow-up sequences
+
+### Going live with the hybrid
+
+1. Get Calendly PAT and set `CALENDLY_PAT` env var on Netlify
+2. Get event type URIs (curl command above) and replace `PLACEHOLDER-UUID-*` strings in `src/lib/data.ts`
+3. Confirm public booking URLs in `src/lib/data.ts`
+4. Trigger a redeploy (`netlify deploy --build` or push a commit)
+5. Open the booking modal — picker shows real availability, mock banner disappears
 
 ---
 
