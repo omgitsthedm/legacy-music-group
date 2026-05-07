@@ -1,8 +1,12 @@
 import { useEffect, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Mic, Sliders, Star, Play, ChevronRight } from 'lucide-react'
+import { Mic, Sliders, Star, Play, ChevronRight, Users, MapPin } from 'lucide-react'
 import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
+import Quickbook from '../components/Quickbook'
+import NewsletterSignup from '../components/NewsletterSignup'
+import { useSeo } from '../lib/seo'
+import { engineers } from '../lib/data'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -17,13 +21,7 @@ const studioImages = [
   { src: '/images/about-studio-wide.jpg', caption: 'Studio Hallway' },
 ]
 
-const engineers = [
-  { id: '1', name: 'Marcus Cole', specialty: 'Hip-Hop, R&B', image: '/images/engineer-1.jpg' },
-  { id: '2', name: 'Sofia Reyes', specialty: 'Pop, Electronic', image: '/images/engineer-2.jpg' },
-  { id: '3', name: 'David Byrne', specialty: 'Rock, Folk', image: '/images/engineer-3.jpg' },
-  { id: '4', name: 'Jade Williams', specialty: 'Hip-Hop, Soul', image: '/images/engineer-4.jpg' },
-]
-
+// PLACEHOLDER: clip metadata is fictional. See PLACEHOLDERS.md §Media.
 const clips = [
   { src: '/videos/session-clip-1.mp4', title: 'Midnight Sessions', artist: 'Ari Lennox Vibe' },
   { src: '/videos/session-clip-2.mp4', title: 'Behind the Board', artist: 'Producer POV' },
@@ -37,8 +35,14 @@ export default function Home() {
   const galleryRef = useRef<HTMLDivElement>(null)
   const galleryInnerRef = useRef<HTMLDivElement>(null)
 
+  useSeo({
+    title: 'Recording Studio in Deep Ellum, Dallas',
+    description:
+      'Premium recording studio and artist development brand in Deep Ellum, Dallas. Record, mix, master, and grow your career with Legacy Music Group. Book in under a minute.',
+    path: '/',
+  })
+
   useEffect(() => {
-    // Hero entrance animation
     const hero = heroRef.current
     if (!hero) return
     const tagline = hero.querySelector('.hero-tagline')
@@ -56,7 +60,6 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    // Horizontal scroll gallery
     const gallery = galleryRef.current
     const inner = galleryInnerRef.current
     if (!gallery || !inner) return
@@ -82,27 +85,26 @@ export default function Home() {
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Background */}
         <div className="absolute inset-0">
           <img
             src="/images/hero-studio-dark.jpg"
-            alt="Recording studio"
+            alt="Deep Ellum recording studio control room"
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.3)] via-transparent to-[#0A0A0A]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0A0A0A_100%)]" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-[clamp(1.5rem,5vw,4rem)] max-w-[800px] mx-auto">
+        <div className="relative z-10 text-center px-[clamp(1.5rem,5vw,4rem)] max-w-[820px] mx-auto">
           <p className="hero-tagline font-body text-[0.75rem] uppercase tracking-[3px] text-[#A38F7B] mb-6 opacity-0">
             Deep Ellum, Dallas
           </p>
           <h1 className="hero-headline font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-[-2px] text-[#F5F0E8] opacity-0">
             Record Your Legacy
           </h1>
-          <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[500px] mx-auto mt-6 opacity-0">
-            Premium recording studio and artist development for independent creators.
+          <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[520px] mx-auto mt-6 opacity-0">
+            Premium recording studio and artist development for independent creators. Book your session in under a minute.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 opacity-0">
             <button
@@ -120,26 +122,31 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
           <div className="w-px h-10 bg-[#A38F7B] animate-pulse" />
         </div>
       </section>
 
-      {/* Introduction Section */}
+      {/* Quickbook — fast-booking preview per BRIEF §14 */}
+      <Quickbook />
+
+      {/* What Legacy Is */}
       <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <ScrollReveal>
               <div className="space-y-6">
                 <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-                  About Legacy
+                  What Legacy Is
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
                   Where artists become originals.
                 </h2>
-                <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[500px]">
-                  Legacy Music Group is more than a recording studio. We're an artist development ecosystem rooted in the creative culture of Deep Ellum. From your first demo to your final master, we provide the space, the sound, and the strategy to help you build a lasting career.
+                <p className="font-body text-[1.05rem] text-[#A38F7B] leading-[1.8] max-w-[520px]">
+                  Legacy Music Group is a Deep Ellum-based recording studio and artist development brand. We help independent artists record professional music, collaborate with other creatives, and grow their presence in the Dallas music scene.
+                </p>
+                <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[520px]">
+                  From your first demo to your final master, we provide the space, the sound, and the strategy to help you build a lasting career — without the gatekeeping, the overhead, or the corporate feel of bigger studios.
                 </p>
                 <Link
                   to="/studio"
@@ -154,8 +161,9 @@ export default function Home() {
               <div className="overflow-hidden rounded-xl">
                 <img
                   src="/images/about-studio-wide.jpg"
-                  alt="Legacy studio"
+                  alt="Inside Legacy Music Group's Deep Ellum studio"
                   className="w-full h-auto object-cover hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                  loading="lazy"
                 />
               </div>
             </ScrollReveal>
@@ -163,7 +171,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Studio Environment Showcase - Horizontal Scroll */}
+      {/* Studio Environment Showcase */}
       <section ref={galleryRef} className="relative bg-[#111111] min-h-screen overflow-hidden">
         <div className="pt-16 pb-8 px-[clamp(1.5rem,5vw,4rem)] text-center">
           <ScrollReveal>
@@ -185,6 +193,7 @@ export default function Home() {
                 src={img.src}
                 alt={img.caption}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent p-6">
                 <span className="font-body text-[0.85rem] uppercase tracking-[2px] text-[#A38F7B]">
@@ -215,24 +224,21 @@ export default function Home() {
                 icon: Mic,
                 title: 'Recording',
                 body: 'World-class rooms and gear for tracking vocals, instruments, and full bands.',
-                href: '/services',
               },
               {
                 icon: Sliders,
                 title: 'Mixing & Mastering',
-                body: 'Get your tracks radio-ready with our in-house engineers or add it to your session.',
-                href: '/services',
+                body: 'Get your tracks radio-ready with our in-house engineers — bundle it with your session.',
               },
               {
                 icon: Star,
                 title: 'Artist Development',
-                body: 'Strategy, branding, and creative direction to take your music from the studio to the stage.',
-                href: '/services',
+                body: 'Strategy, branding, and creative direction to take your music from studio to stage.',
               },
             ].map((service, i) => (
               <ScrollReveal key={service.title} delay={i * 100}>
                 <Link
-                  to={service.href}
+                  to="/services"
                   className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-8 h-full hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
                 >
                   <div className="w-12 h-12 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-6">
@@ -271,13 +277,14 @@ export default function Home() {
               <ScrollReveal key={eng.id} delay={i * 100}>
                 <Link
                   to={`/engineers/${eng.id}`}
-                  className="group block rounded-xl overflow-hidden bg-[#111111] border border-[rgba(245,240,232,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+                  className="group block rounded-xl overflow-hidden bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
                 >
                   <div className="aspect-[3/4] overflow-hidden">
                     <img
                       src={eng.image}
-                      alt={eng.name}
+                      alt={`${eng.name} — ${eng.specialty} engineer at Legacy Music Group`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
                     />
                   </div>
                   <div className="p-5">
@@ -305,7 +312,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Session Clips / Social Proof */}
+      {/* Legacy Live / Social Proof */}
       <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal className="text-center mb-12">
@@ -326,6 +333,7 @@ export default function Home() {
                     muted
                     loop
                     playsInline
+                    preload="metadata"
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                     onMouseEnter={(e) => e.currentTarget.play()}
                     onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0 }}
@@ -343,6 +351,65 @@ export default function Home() {
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Community Signal — BRIEF §14 + §11 */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
+        <div className="mx-auto max-w-[1100px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <ScrollReveal>
+              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
+                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
+                  <Mic size={20} className="text-[#E8A33D]" />
+                </div>
+                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A studio</h3>
+                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
+                  Acoustically tuned rooms, pro engineers, and gear that does the heavy lifting.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={100}>
+              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
+                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
+                  <Star size={20} className="text-[#E8A33D]" />
+                </div>
+                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A development brand</h3>
+                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
+                  Strategy, branding, creative direction. We help artists turn songs into careers.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
+                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
+                  <Users size={20} className="text-[#E8A33D]" />
+                </div>
+                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A creative community</h3>
+                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
+                  Connecting Dallas artists with each other, with venues, and with the wider Deep Ellum scene.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal>
+            <div className="mt-10 flex items-center justify-center gap-2 text-[#A38F7B]">
+              <MapPin size={14} />
+              <span className="font-body text-[0.85rem] uppercase tracking-[2px]">
+                Rooted in Deep Ellum, Dallas
+              </span>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Newsletter / Artist List */}
+      <section className="py-[clamp(4rem,8vw,6rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[700px]">
+          <ScrollReveal>
+            <NewsletterSignup label="Join the Artist List" />
+          </ScrollReveal>
         </div>
       </section>
 

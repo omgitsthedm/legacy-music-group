@@ -1,0 +1,10 @@
+# Pre-launch — site is in design preview phase. Flip to real Allow when going live.
+User-agent: *
+Disallow: /
+
+# When ready to launch, replace the above with:
+# User-agent: *
+# Allow: /
+# Disallow: /api/
+#
+# Sitemap: https://legacymusicgroup.com/sitemap.xml

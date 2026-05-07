@@ -1,42 +1,29 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
-
-const engineers = [
-  {
-    id: '1',
-    name: 'Marcus Cole',
-    specialty: 'Hip-Hop, R&B',
-    bio: 'A veteran of the Dallas music scene, Marcus has worked with Grammy-nominated artists and brings a signature warmth to every mix.',
-    image: '/images/engineer-1.jpg',
-  },
-  {
-    id: '2',
-    name: 'Sofia Reyes',
-    specialty: 'Pop, Electronic',
-    bio: 'Sofia combines technical precision with creative intuition. Her pop and electronic productions have garnered millions of streams.',
-    image: '/images/engineer-2.jpg',
-  },
-  {
-    id: '3',
-    name: 'David Byrne',
-    specialty: 'Rock, Folk',
-    bio: 'With over 15 years in the industry, David has recorded and mixed for indie darlings and major label acts alike.',
-    image: '/images/engineer-3.jpg',
-  },
-  {
-    id: '4',
-    name: 'Jade Williams',
-    specialty: 'Hip-Hop, Soul',
-    bio: 'Jade is an artist-first engineer who specializes in capturing raw, emotional vocal performances for hip-hop and soul artists.',
-    image: '/images/engineer-4.jpg',
-  },
-]
+import JsonLd from '../components/JsonLd'
+import { useSeo } from '../lib/seo'
+import { engineers } from '../lib/data'
+import { buildBreadcrumbSchema } from '../lib/schemas'
 
 export default function Engineers() {
+  useSeo({
+    title: 'Engineers',
+    description:
+      'Meet the engineers and producers behind Legacy Music Group — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, and Soul specialists in Deep Ellum, Dallas.',
+    path: '/engineers',
+  })
+
   return (
     <div className="pt-20">
-      {/* Page Header */}
+      <JsonLd
+        id="engineers-breadcrumb"
+        data={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Engineers', path: '/engineers' },
+        ])}
+      />
+
       <section className="pt-[clamp(4rem,8vw,6rem)] pb-16 px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
@@ -47,13 +34,12 @@ export default function Engineers() {
               Meet the Engineers
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[600px] leading-[1.7]">
-              Our team of producers and engineers bring decades of combined experience across every major genre.
+              Our team of producers and engineers bring decades of combined experience across every major genre — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, Soul, and beyond.
             </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Engineer Grid */}
       <section className="pb-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -66,8 +52,9 @@ export default function Engineers() {
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={eng.image}
-                      alt={eng.name}
+                      alt={`${eng.name} — ${eng.specialty} engineer`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
                     />
                   </div>
                   <div className="p-6">

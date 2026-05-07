@@ -2,45 +2,55 @@ import { useContext } from 'react'
 import { Mic, Sliders, Star, Check, ChevronRight } from 'lucide-react'
 import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
+import JsonLd from '../components/JsonLd'
+import { useSeo } from '../lib/seo'
+import { pricing } from '../lib/data'
+import { buildBreadcrumbSchema } from '../lib/schemas'
 
 const services = [
   {
     icon: Mic,
     title: 'Recording',
-    body: 'Our recording rooms are acoustically designed and equipped with industry-standard microphones, preamps, and converters. Whether you are tracking vocals, instruments, or a full band, we provide the environment and expertise to capture your best performance.',
+    body: 'Acoustically tuned rooms equipped with industry-standard mics, preamps, and converters. Track vocals, instruments, or full bands with engineers who know how to capture your best performance.',
     features: ['Vocal tracking', 'Instrument recording', 'Full band sessions', 'Pro Tools & Logic Pro'],
     image: '/images/studio-vocal-booth.jpg',
   },
   {
     icon: Sliders,
     title: 'Mixing & Mastering',
-    body: 'Take your raw recordings to radio-ready quality. Our engineers use a hybrid analog-digital workflow to give your tracks depth, clarity, and competitive loudness. Every mix is treated as a unique creative project.',
+    body: 'Take raw recordings to radio-ready quality. Our engineers use a hybrid analog-digital workflow to give your tracks depth, clarity, and competitive loudness. Two rounds of revisions included.',
     features: ['Analog summing', 'Stem mixing', 'Mastering for streaming', 'Revision rounds included'],
     image: '/images/studio-control-room.jpg',
   },
   {
     icon: Star,
     title: 'Full Package',
-    body: 'The complete artist experience. Our Full Package includes a recording session, professional mixing and mastering, plus 3 promotional content clips for social media. Everything you need to release your next single with confidence.',
+    body: 'The complete artist experience — recording, professional mix and master, plus three promotional content clips for social. Everything you need to release your next single with confidence.',
     features: ['Recording session', 'Mixing & mastering', '3 promo clips', 'Release strategy consult'],
     image: '/images/studio-live-room.jpg',
   },
 ]
 
-const pricing = [
-  { service: 'Hourly Recording', withEngineer: '$75/hr', withoutEngineer: '$45/hr' },
-  { service: '4-Hour Block', withEngineer: '$280', withoutEngineer: '$170' },
-  { service: '8-Hour Day', withEngineer: '$520', withoutEngineer: '$320' },
-  { service: 'Mixing & Mastering', withEngineer: '$150/song', withoutEngineer: '$150/song' },
-  { service: 'Full Package', withEngineer: '$500', withoutEngineer: 'N/A' },
-]
-
 export default function ServicesPage() {
   const { openBooking } = useContext(BookingContext)
 
+  useSeo({
+    title: 'Services',
+    description:
+      'Recording, mixing, mastering, and full artist packages at Legacy Music Group in Deep Ellum, Dallas. Hourly rates from $45/hr. Add-ons available for any session.',
+    path: '/services',
+  })
+
   return (
     <div className="pt-20">
-      {/* Page Header */}
+      <JsonLd
+        id="services-breadcrumb"
+        data={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+        ])}
+      />
+
       <section className="pt-[clamp(4rem,8vw,6rem)] pb-16 px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
@@ -50,11 +60,13 @@ export default function ServicesPage() {
             <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3">
               Studio Services
             </h1>
+            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[600px] leading-[1.7]">
+              Recording, mixing & mastering, full release packages, and artist development support — pick what you need, bundle if you want.
+            </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Service Detail Cards */}
       <section className="pb-16 px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1000px] space-y-16">
           {services.map((service, i) => (
@@ -67,15 +79,16 @@ export default function ServicesPage() {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:h-full"
+                    loading="lazy"
                   />
                 </div>
                 <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
                   <div className="w-12 h-12 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-6">
                     <service.icon size={24} className="text-[#E8A33D]" />
                   </div>
-                  <h3 className="font-display text-[clamp(1.5rem,3vw,2rem)] text-[#F5F0E8] mb-4">
+                  <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] text-[#F5F0E8] mb-4">
                     {service.title}
-                  </h3>
+                  </h2>
                   <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] mb-6">
                     {service.body}
                   </p>
@@ -100,13 +113,17 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Pricing Table */}
       <section className="py-16 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
         <div className="mx-auto max-w-[800px]">
-          <ScrollReveal className="text-center mb-10">
+          <ScrollReveal className="text-center mb-3">
             <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#F5F0E8]">
               Session Rates
             </h2>
+          </ScrollReveal>
+          <ScrollReveal className="text-center mb-10">
+            <p className="font-body text-[0.85rem] text-[#A38F7B]">
+              Placeholder pricing for design preview. Final rates pending owner confirmation.
+            </p>
           </ScrollReveal>
 
           <ScrollReveal>

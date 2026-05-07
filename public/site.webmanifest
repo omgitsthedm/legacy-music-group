@@ -1,0 +1,10 @@
+{
+  "name": "Legacy Music Group",
+  "short_name": "Legacy",
+  "description": "Deep Ellum recording studio and artist development brand. Book your session in under a minute.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
+  "icons": []
+}
