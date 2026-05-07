@@ -1,19 +1,21 @@
 # Legacy Music Group
 
-Static website for Legacy Music Group.
+Deep Ellum recording studio + artist development brand. Production website.
+
+## Source of Truth
+
+**Read [BRIEF.md](./BRIEF.md) first.** It is the master project doctrine — positioning, design direction, stack, booking strategy, and the Kimi → Codex handoff.
+
+[CLAUDE.md](./CLAUDE.md) holds operational metadata and the decisions log.
 
 ## Status
 
-Pre-launch. Branding and visual design are being prepared by Kimi. This repo is a blank static scaffold ready to receive the design.
+Pre-design. Kimi vk2.6 is producing the first-pass design system. Codex will implement after design approval. The current scaffold is a black "Coming Soon" placeholder with `noindex`.
 
-## Stack
+## Stack (per BRIEF.md §23)
 
-Static HTML / CSS / JS. Deployed via Netlify on push to `master`.
+Next.js 15+ App Router · TypeScript · Tailwind CSS · Supabase · Stripe · Resend · GA4 · Sentry · pnpm · Netlify.
 
-## Local
+## Deploy
 
-Open `index.html` in a browser, or serve the folder with any static server.
-
-```bash
-python3 -m http.server 8000
-```
+Push to `master` → GitHub Actions runs `.github/workflows/netlify-deploy.yml` → Netlify rebuilds [legacy-music-group.netlify.app](https://legacy-music-group.netlify.app).
