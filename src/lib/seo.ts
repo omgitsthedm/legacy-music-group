@@ -4,9 +4,9 @@ const SITE = {
   name: 'Legacy Music Group',
   url: 'https://legacymusicgroup.com',
   defaultDescription:
-    'Deep Ellum recording studio and artist development brand. Premium dark-luxury sessions for independent artists in Dallas. Book in under a minute.',
+    "Hit-quality recordings at affordable rates from Dallas' top-tier audio engineers. Recording, mixing, mastering, and artist development in Deep Ellum. Book in under a minute.",
   defaultOgImage: '/images/hero-studio-dark.jpg',
-  twitterHandle: '@legacymusicgroup',
+  twitterHandle: '@LegacyMusicGrp',
   locale: 'en_US',
 } as const
 

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BookingModal from './components/BookingModal'
 import JsonLd from './components/JsonLd'
+import BookingHowToSchema from './components/HowToSchema'
 import Home from './pages/Home'
 import { organizationSchema, localBusinessSchema, websiteSchema } from './lib/schemas'
 
@@ -76,6 +77,7 @@ function App() {
       <JsonLd id="organization" data={organizationSchema} />
       <JsonLd id="localbusiness" data={localBusinessSchema} />
       <JsonLd id="website" data={websiteSchema} />
+      <BookingHowToSchema />
 
       <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]">
         <Navbar />

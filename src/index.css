@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,10 +35,60 @@
   }
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-[#0A0A0A] text-[#F5F0E8] antialiased;
+    @apply bg-[#0A0A0A] text-[#F5F0E8];
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    overflow-x: hidden;
+  }
+
+  /* Keyboard-only focus ring — never shown on mouse click */
+  :focus-visible {
+    outline: 2px solid #E8A33D;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  /* Most native :focus is muted in favor of focus-visible above */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Selection color matches the brand */
+  ::selection {
+    background: rgba(232, 163, 61, 0.35);
+    color: #F5F0E8;
+  }
+
+  /* Type tightening for premium serif headlines */
+  .font-display {
+    font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
+  }
+
+  /* Tap-target safety on touch devices — buttons and links min 44x44 */
+  @media (pointer: coarse) {
+    button,
+    a,
+    [role='button'],
+    input[type='checkbox'],
+    input[type='radio'] {
+      min-height: 44px;
+    }
+    /* Inputs in forms should be comfortable too */
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='number'],
+    input[type='search'],
+    select,
+    textarea {
+      min-height: 44px;
+      font-size: 16px; /* prevents iOS zoom-on-focus */
+    }
   }
 }
 
@@ -52,11 +102,68 @@
   .text-balance {
     text-wrap: balance;
   }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Animated underline on inline links — applies via .link-underline */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Card hover lift + amber glow — apply via .card-lift */
+  .card-lift {
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Buttons get a subtle press feedback when active */
+  .btn-press:active {
+    transform: scale(0.97);
+  }
 }
 
-/* Custom scrollbar */
+/* Reduced motion: respect user preference and disable our motion-heavy effects */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  /* Force any opacity-0 elements to be visible (kills GSAP entrance fades) */
+  .hero-tagline,
+  .hero-headline,
+  .hero-subheadline,
+  .hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #0A0A0A;

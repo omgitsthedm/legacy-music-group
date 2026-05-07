@@ -201,14 +201,14 @@ export const services: Service[] = [
     name: 'Rap Recording in Dallas',
     shortName: 'Rap Recording',
     category: 'recording',
-    oneLiner: 'Hip-hop sessions tuned for vocal clarity, low-end weight, and the modern Dallas sound.',
+    oneLiner: "Hit-quality rap sessions with Dallas' top-tier audio engineers. Major-label credits in the room.",
     hero: '/images/studio-vocal-booth.jpg',
     intro:
-      "Dallas hip-hop has its own pocket — and we record it like it does. Legacy's vocal chain is dialed for rap delivery: tight low-mids, controlled sibilance, and the kind of breathy presence that makes a verse feel like the artist is in the room with the listener.",
+      "Our head engineer Ray Dallas has tracked, mixed, and edited records for Mac Miller, B.o.B, Dorrough, and Young Jeezy. The same chain those records went through is the one your session runs on: Neumann U 87 or AKG C414, Avalon 737, UA Apollo, the room dialed for hip-hop articulation. Bring the bars — we'll have your sound just right.",
     body: [
-      "Most rap sessions at Legacy book through with-engineer time — you bring the bars, your engineer dials the chain, comps the takes, and you walk out with a stem-ready session. Beat off your laptop, beat from a producer in the room, beat we're tracking live — all good.",
-      "We work fast. A four-hour block typically gets you 1–2 finished records (vocals tracked, comped, lightly polished). Add mixing & mastering to the booking and you leave with masters in 5–7 days.",
-      "The room is built for the workflow. Pro Tools and Logic Pro on-deck, vocal booth tuned for hip-hop articulation, and a producer's chair that doesn't get in the way of the artist's flow.",
+      "Most rap sessions book through with-engineer time. You bring the beat (laptop, USB, producer in the room — works either way) and your engineer dials the chain, comps the takes, and gets the polish in-session. You walk out with stems plus a rough mix same day.",
+      "A four-hour block lands 1–2 finished records. A full eight-hour day gets you 3–5 depending on complexity. Add mixing & mastering ($150/song) and finished masters arrive in 5–7 business days with two rounds of revisions included.",
+      "Pricing is transparent: $75/hour with engineer, $45/hour without. Two-hour minimum. No setup fees, no engineer surcharges, no surprise costs at checkout.",
     ],
     whatsIncluded: [
       'Pro engineer at the board',
@@ -251,14 +251,14 @@ export const services: Service[] = [
     name: 'R&B Recording in Dallas',
     shortName: 'R&B Recording',
     category: 'recording',
-    oneLiner: 'Vocal-forward sessions with the warmth, harmony stacking, and pocket modern R&B demands.',
+    oneLiner: 'Vocal-forward R&B sessions with the warmth and harmony stacking the genre demands.',
     hero: '/images/studio-control-room.jpg',
     intro:
-      'Modern R&B lives or dies on vocal performance and harmony stacking — and we treat them like the engineering problem they are. Legacy\'s R&B chain is built for layered vocals, expressive ad-libs, and the kind of intimate texture that holds up on Spotify and on a car system.',
+      "Modern R&B lives or dies on the vocal — and we record it that way. Legacy's chain runs warm: Neumann U 87 into an Avalon 737, room tuned for layered vocals, harmony stacks, and the breathy ad-libs that hold up on Spotify and in a car system.",
     body: [
-      "Whether you're cutting a slow-burn ballad or a Bedroom-R&B groove, the workflow is the same: we get your lead vocal feeling natural, then build the harmony stack, then tune and color it until the mix sits where it should.",
+      "Whether you're cutting a slow-burn ballad or a bedroom-R&B groove, the workflow's the same. Lead vocal first, comped to feel natural. Harmony stack built next, layered and tuned. Final polish handled in-session before you walk out with stems.",
       "Our R&B engineers come from the school of capturing the take, not engineering it from a click. Real comping, real harmony stacking, real attention to the breaths between phrases.",
-      "Bookings can be tracking-only or full-session (record + mix + master in-house). The Full Package adds promotional clips for social.",
+      "Pricing same as recording: $75/hr with engineer, $45/hr without, two-hour minimum. Bundle mixing & mastering for $150/song or grab the Pro Package ($999) for 5 hours plus 3 mixes + 3 masters + photoshoot.",
     ],
     whatsIncluded: [
       'Vocal chain for layered R&B production',
@@ -299,11 +299,11 @@ export const services: Service[] = [
     oneLiner: 'Studio-grade podcast capture with engineer-driven editing and audiogram-ready exports.',
     hero: '/images/studio-live-room.jpg',
     intro:
-      "Most podcast 'studios' in Dallas are coworking rooms with two USB mics on a table. Legacy is a real recording studio that records podcasts — broadcast-grade mics, treated rooms, and an engineer who knows how to make conversation sit comfortably in the listener's ears.",
+      "Most 'podcast studios' in Dallas are coworking rooms with two USB mics on a table. Legacy is a real recording studio that records podcasts — Shure SM7B-grade mics, an acoustically treated vocal booth with floating-ceiling treatment, and an engineer who knows how to make conversation sit comfortably in the listener's ears.",
     body: [
-      "We support 1–4 hosts in the room with isolated capture per voice, plus remote-guest integration via Squadcast or Riverside if needed. The engineer handles routing, level-setting, and rough edits in-session.",
-      "Editing is the part that kills DIY podcasters. We deliver edited episodes (filler-word removal, awkward-pause trims, basic music beds) with 5-day turnaround. Audiograms and 60s social cuts available as add-ons.",
-      "Recurring shows get block discounts. If you\'re publishing weekly, we'll set up a same-time-every-week slot and a templated workflow so each session takes less of your bandwidth.",
+      "Up to 4 hosts in the room with isolated capture per voice, plus remote-guest routing via Squadcast or Riverside if needed. Your engineer handles routing, level-setting, and rough edits in-session — you're not learning Pro Tools on the clock.",
+      "Editing is the part that kills DIY podcasters. We deliver edited episodes (filler-word removal, awkward-pause trims, basic music beds) within 5 business days. Audiograms and 60-second social cuts available as add-ons.",
+      "Recurring shows get block-discount pricing. If you're publishing weekly, we'll lock in a same-time-every-week slot with a templated workflow so each session takes less of your bandwidth.",
     ],
     whatsIncluded: [
       'Up to 4 host mics + remote guest routing',
@@ -312,7 +312,7 @@ export const services: Service[] = [
       'Edited episode delivered in 5 days',
       'Audiograms + social cuts as add-on',
     ],
-    startingPrice: '$120/hr (tracking + edit bundle)',
+    startingPrice: '$75/hr',
     targetQueries: [
       'podcast studio dallas',
       'podcast recording dallas',
@@ -344,7 +344,7 @@ export const services: Service[] = [
     oneLiner: 'Broadcast-ready voiceover sessions for commercials, audiobooks, narration, and animation.',
     hero: '/images/studio-vocal-booth.jpg',
     intro:
-      "Whether you're a working voice actor with a regular client list or recording your first national spot, we run voiceover sessions like the broadcast clients they\'re for: tight, prepped, and ready for direction from your producer (in-room, on-line, or both).",
+      "Working voice actor with a regular client list or recording your first national spot — we run voiceover sessions like the broadcast clients they're for: tight, prepped, and ready for direction from your producer (in-room, on-line, or both).",
     body: [
       "Phone patch, ipDTL, Source-Connect, Zoom — pick your remote-direction stack and we\'ll have it tested before you walk in. Engineer-directed sessions and self-direction both supported.",
       "We deliver broadcast-spec files (WAV, AIFF, MP3 — your spec) with leveling, de-noise, and edit cleanup applied. Tongue-clicks, breath edits, room tone — handled in-session so you walk out with usable audio.",
@@ -357,7 +357,7 @@ export const services: Service[] = [
       'Files delivered to spec',
       'ACX-compliant audiobook masters available',
     ],
-    startingPrice: '$95/hr',
+    startingPrice: '$75/hr',
     targetQueries: [
       'voiceover studio dallas',
       'voiceover recording dallas',
@@ -389,7 +389,7 @@ export const services: Service[] = [
     oneLiner: 'Strategy, branding, and creative direction beyond the recording booth.',
     hero: '/images/about-studio-wide.jpg',
     intro:
-      "Recording the song is the easy part. Releasing it, building an audience, and turning a song into a career is where most independent artists stall. Legacy\'s artist development isn't a contract — it\'s a working relationship that helps you make the right decisions at the right time.",
+      "Recording the song is the easy part. Releasing it, building an audience, and turning a song into a career is where most independent artists stall. Legacy's artist development is led by music business maven Matthew Medlock — a 10-year industry veteran with a Music Business degree and GRAMMYU background. Not a contract, not a percentage of your masters: a working relationship that helps you make the right decisions at the right time.",
     body: [
       "Engagement levels run from one-off consultations (you\'re stuck on a release plan, you need a second pair of ears on a brand identity) to multi-month creative-direction relationships (we help you plan the rollout, the visuals, the social strategy, the positioning).",
       "We don\'t do management. We don\'t take points on your masters. We help you make better decisions and connect you with the right people in the Dallas scene — venues, photographers, designers, distributors — when you need them.",
@@ -402,7 +402,7 @@ export const services: Service[] = [
       'Connections to Dallas scene (venues, designers, photogs)',
       'Multi-month engagements available',
     ],
-    startingPrice: 'Consultation $150 / Multi-month engagements custom',
+    startingPrice: 'Consultation $99 / Multi-month engagements custom',
     targetQueries: [
       'artist development dallas',
       'music branding dallas',

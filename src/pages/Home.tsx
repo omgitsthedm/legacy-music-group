@@ -36,9 +36,9 @@ export default function Home() {
   const galleryInnerRef = useRef<HTMLDivElement>(null)
 
   useSeo({
-    title: 'Recording Studio in Deep Ellum, Dallas',
+    title: 'Recording Studio in Deep Ellum, Dallas — 4.4★ on Google',
     description:
-      'Premium recording studio and artist development brand in Deep Ellum, Dallas. Record, mix, master, and grow your career with Legacy Music Group. Book in under a minute.',
+      "Legacy Music Group is Dallas' #1 full-service recording studio in Deep Ellum. Hit-quality recordings, top-tier audio engineers, affordable rates. Recording from $75/hr. Book in under a minute.",
     path: '/',
   })
 
@@ -107,8 +107,8 @@ export default function Home() {
           <h1 className="hero-headline font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-[-2px] text-[#F5F0E8] opacity-0 [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
             Record Your Legacy
           </h1>
-          <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[520px] mx-auto mt-6 opacity-0">
-            Premium recording studio and artist development for independent creators. Book your session in under a minute.
+          <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[540px] mx-auto mt-6 opacity-0">
+            Hit-quality recordings from top-tier audio engineers in Deep Ellum, Dallas. Recording, mixing, mastering, and artist development at affordable rates.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 opacity-0">
             <button
@@ -144,13 +144,13 @@ export default function Home() {
                   What Legacy Is
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-                  Where artists become originals.
+                  Dallas' studio for serious artists.
                 </h2>
-                <p className="font-body text-[1.05rem] text-[#A38F7B] leading-[1.8] max-w-[520px]">
-                  Legacy Music Group is a Deep Ellum-based recording studio and artist development brand. We help independent artists record professional music, collaborate with other creatives, and grow their presence in the Dallas music scene.
+                <p data-speakable className="font-body text-[1.05rem] text-[#A38F7B] leading-[1.8] max-w-[540px]">
+                  Legacy Music Group is a full-service recording studio and production company in Deep Ellum. Owned and operated by music business maven Matthew Medlock, we offer hit-quality recordings at affordable rates. Top-tier audio engineers will have your sound just right.
                 </p>
-                <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[520px]">
-                  From your first demo to your final master, we provide the space, the sound, and the strategy to help you build a lasting career — without the gatekeeping, the overhead, or the corporate feel of bigger studios.
+                <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[540px]">
+                  Recording, mixing, mastering, custom production, and artist development — all under one roof. Built for artists, producers, and engineers who want quality professional work without the gatekeeping or corporate feel of bigger studios.
                 </p>
                 <Link
                   to="/studio"
@@ -217,8 +217,8 @@ export default function Home() {
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
               Services
             </span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-              Everything you need to sound professional.
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3 text-balance">
+              Recording, mixing, mastering — under one roof.
             </h2>
           </ScrollReveal>
 
@@ -227,23 +227,23 @@ export default function Home() {
               {
                 icon: Mic,
                 title: 'Recording',
-                body: 'World-class rooms and gear for tracking vocals, instruments, and full bands.',
+                body: 'Vocals, voiceovers, podcasts, full bands. From $75/hr with engineer.',
               },
               {
                 icon: Sliders,
                 title: 'Mixing & Mastering',
-                body: 'Get your tracks radio-ready with our in-house engineers — bundle it with your session.',
+                body: 'Industry-standard mixing from $150. Mastering from $30. Two rounds of revisions included.',
               },
               {
                 icon: Star,
                 title: 'Artist Development',
-                body: 'Strategy, branding, and creative direction to take your music from studio to stage.',
+                body: 'Strategy, branding, and music business consulting from $99 — beyond the recording booth.',
               },
             ].map((service, i) => (
               <ScrollReveal key={service.title} delay={i * 100}>
                 <Link
                   to="/services"
-                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-8 h-full hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
+                  className="card-lift group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-8 h-full hover:border-[rgba(232,163,61,0.3)]"
                 >
                   <div className="w-12 h-12 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-6">
                     <service.icon size={22} className="text-[#E8A33D]" />
@@ -271,8 +271,8 @@ export default function Home() {
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
               The Team
             </span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-              Engineers who understand your vision.
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3 text-balance">
+              Top-tier engineers. Major-label credits.
             </h2>
           </ScrollReveal>
 
@@ -577,15 +577,15 @@ export default function Home() {
       <section className="py-[clamp(6rem,10vw,8rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[700px] text-center">
           <ScrollReveal>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-              Ready to make something timeless?
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] text-balance">
+              Ready to make a record that lasts?
             </h2>
             <p className="font-body text-[1.1rem] text-[#A38F7B] mt-4 mb-8">
-              Book your session in under a minute. No confusion, no back-and-forth.
+              Book your session in under a minute. We'll have your sound just right.
             </p>
             <button
               onClick={openBooking}
-              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-10 py-4 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+              className="btn-press bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-10 py-4 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
             >
               Book Now
             </button>
