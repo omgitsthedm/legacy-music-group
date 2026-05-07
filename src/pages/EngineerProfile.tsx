@@ -5,8 +5,19 @@ import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
-import { engineers, services } from '../lib/data'
+import { engineers, services, type Service } from '../lib/data'
 import { buildPersonSchema, buildBreadcrumbSchema } from '../lib/schemas'
+
+// Precomputed map keyed by slug — O(1) lookup instead of services.find()
+// inside the engineer.serviceSlugs.map() (suppresses N+1 false positive
+// from static analyzers and is genuinely faster as the catalog grows).
+const SERVICES_BY_SLUG: Record<string, Service> = services.reduce(
+  (acc, s) => {
+    acc[s.slug] = s
+    return acc
+  },
+  {} as Record<string, Service>,
+)
 
 export default function EngineerProfile() {
   const { id } = useParams()
@@ -128,7 +139,7 @@ export default function EngineerProfile() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {engineer.serviceSlugs.map((slug) => {
-                  const s = services.find((x) => x.slug === slug)
+                  const s = SERVICES_BY_SLUG[slug]
                   if (!s) return null
                   return (
                     <Link

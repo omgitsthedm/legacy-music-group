@@ -5,30 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0A0A0A" />
 
-    <!-- Defaults — per-page useSeo overrides title, description, OG, canonical, robots -->
     <title>Legacy Music Group — Recording Studio in Deep Ellum, Dallas</title>
     <meta
       name="description"
-      content="Premium recording studio and artist development brand in Deep Ellum, Dallas. Record, mix, master, and grow your career with Legacy Music Group. Book in under a minute."
+      content="Dallas' #1 recording studio in Deep Ellum. Hit-quality recordings, top-tier engineers, affordable rates. From $75/hr. Book in a minute."
     />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="Legacy Music Group" />
+    <meta name="application-name" content="Legacy Music Group" />
 
-    <!-- Open Graph / Twitter defaults -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Legacy Music Group" />
     <meta property="og:title" content="Legacy Music Group — Recording Studio in Deep Ellum, Dallas" />
-    <meta property="og:description" content="Premium recording studio and artist development for independent artists in Dallas. Book in under a minute." />
+    <meta property="og:description" content="Dallas' #1 recording studio in Deep Ellum. Hit-quality recordings, top-tier engineers, affordable rates." />
     <meta property="og:url" content="https://legacymusicgroup.com/" />
     <meta property="og:image" content="https://legacymusicgroup.com/images/hero-studio-dark.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LegacyMusicGrp" />
     <meta name="twitter:title" content="Legacy Music Group — Recording Studio in Deep Ellum, Dallas" />
-    <meta name="twitter:description" content="Premium recording studio and artist development for independent artists in Dallas." />
+    <meta name="twitter:description" content="Dallas' #1 recording studio in Deep Ellum. Hit-quality recordings, top-tier engineers, affordable rates." />
     <meta name="twitter:image" content="https://legacymusicgroup.com/images/hero-studio-dark.jpg" />
 
     <!-- PWA / icons -->
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
 
     <!-- Canonical default; per-page useSeo replaces with the route URL -->
     <link rel="canonical" href="https://legacymusicgroup.com/" />
@@ -38,19 +44,294 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- GA4 placeholder — replace G-XXXXXXXXXX with real measurement ID at launch -->
-    <!--
+    <!-- Static JSON-LD for crawlers and AI bots that don't run JS.
+         The React app re-renders these schemas client-side via JsonLd.tsx —
+         these mirror what the live page provides so search/AI engines see
+         structured data on the initial HTML response. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://legacymusicgroup.com/#organization",
+      "name": "Legacy Music Group",
+      "url": "https://legacymusicgroup.com",
+      "logo": "https://legacymusicgroup.com/images/hero-studio-dark.jpg",
+      "description": "Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right.",
+      "founder": { "@id": "https://legacymusicgroup.com/#founder" },
+      "sameAs": [
+        "https://www.instagram.com/legacymusicgroup/",
+        "https://www.facebook.com/theLegacymusicgroup",
+        "https://twitter.com/LegacyMusicGrp",
+        "https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw",
+        "https://www.linkedin.com/company/legacymusicgroup"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-214-377-9729",
+        "contactType": "customer service",
+        "email": "info@legacymusicgroup.com",
+        "areaServed": "US",
+        "availableLanguage": "English"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://legacymusicgroup.com/#founder",
+      "name": "Matthew Medlock",
+      "jobTitle": "Studio Owner & Manager",
+      "worksFor": { "@id": "https://legacymusicgroup.com/#organization" },
+      "description": "A 10-year music industry veteran, Matthew Medlock attributes his obsession with music to his upbringing near Memphis, Tennessee. He earned a Business Administration degree in Music Business and was active in GRAMMYU.",
+      "alumniOf": "GRAMMYU"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "MusicVenue"],
+      "@id": "https://legacymusicgroup.com/#localbusiness",
+      "name": "Legacy Music Group",
+      "description": "Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right. Artists, producers, and engineers find this setting perfect for quality professional work.",
+      "url": "https://legacymusicgroup.com",
+      "telephone": "+1-214-377-9729",
+      "email": "info@legacymusicgroup.com",
+      "priceRange": "$$",
+      "image": "https://legacymusicgroup.com/images/hero-studio-dark.jpg",
+      "foundingDate": "2014",
+      "founder": { "@id": "https://legacymusicgroup.com/#founder" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2815 Main St, Suite A",
+        "addressLocality": "Dallas",
+        "addressRegion": "TX",
+        "postalCode": "75226",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 32.7837,
+        "longitude": -96.7780
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "01:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "128",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "sameAs": [
+        "https://www.instagram.com/legacymusicgroup/",
+        "https://www.facebook.com/theLegacymusicgroup",
+        "https://twitter.com/LegacyMusicGrp",
+        "https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw",
+        "https://www.linkedin.com/company/legacymusicgroup"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://legacymusicgroup.com/#website",
+      "url": "https://legacymusicgroup.com",
+      "name": "Legacy Music Group",
+      "publisher": { "@id": "https://legacymusicgroup.com/#organization" },
+      "inLanguage": "en-US"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["[data-speakable]", "h1", "h2"]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where is Legacy Music Group located?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Legacy Music Group is at 2815 Main St, Suite A, in the Deep Ellum neighborhood of Downtown Dallas, ZIP 75226. We're walking distance from Trees, Three Links, the Bomb Factory, and the Deep Ellum DART station."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a Dallas recording studio session cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At Legacy Music Group, recording is $75 per hour with an engineer or $45 per hour without (two-hour minimum). Mixing starts at $150 per song and mastering at $30. We also offer packages: Starter ($399), Pro ($999), and Album ($2,900)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What hours is Legacy Music Group open?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Legacy Music Group is open every day from 10am to 1am. Bookings can be made online at legacymusicgroup.com or by phone at (214) 377-9729."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who are Legacy's audio engineers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Owner and manager Matthew Medlock is a 10-year music industry veteran with a Music Business degree and a GRAMMYU background. Head engineer Ray Dallas has credits including Mac Miller, B.o.B, Dorrough, and Young Jeezy. Wayne is a studio engineer and producer focused on mixing and Pro Tools production. Terry handles studio maintenance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What gear does Legacy Music Group use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Legacy runs an industry-standard chain: Avid C24 control surface, UA Apollo with Satellite expansion, Avalon 737 preamp, Purple Audio compressor, Neumann U 87 and AKG C414 microphones, Focal Duo and Adams S10 monitors, plus Pro Tools, Studio One, Logic Pro X, full UAD, Waves, and Slate Digital plugin libraries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I book a session at Legacy Music Group?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Click Book Now anywhere on legacymusicgroup.com. Pick your session type, choose an engineer, lock in a time, and confirm — under a minute. A 50% deposit secures your slot; balance is due day-of. 24-hour cancellation notice required."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- GA4 — replace G-XXXXXXXXXX with real measurement ID at launch -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-XXXXXXXXXX', { 'send_page_view': false });
     </script>
-    -->
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Static fallback content for crawlers and no-JS users.
+         React hydration replaces #root entirely. The substantive copy
+         here ensures search engines and AI crawlers have material to
+         index even before the SPA boots. -->
+    <main id="root" role="main">
+      <!-- Visually hidden but present for crawlers; React's <Home> renders the real headline -->
+      <h1 style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+        Legacy Music Group — Recording Studio in Deep Ellum, Dallas
+      </h1>
+      <noscript>
+        <div style="max-width:760px;margin:80px auto;padding:24px;font-family:Georgia,serif;color:#F5F0E8;background:#0A0A0A;">
+          <header>
+            <p style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#E8A33D;margin:0 0 12px;">
+              Deep Ellum, Dallas
+            </p>
+            <p style="font-size:48px;line-height:1.05;font-weight:400;margin:0 0 20px;">
+              Record Your Legacy
+            </p>
+            <p style="font-size:18px;line-height:1.6;color:#A38F7B;margin:0 0 24px;">
+              Hit-quality recordings from top-tier audio engineers in Deep Ellum, Dallas.
+              Recording, mixing, mastering, and artist development at affordable rates.
+              Open daily 10am–1am · Rated 4.4 stars on Google with 128 reviews.
+            </p>
+          </header>
+          <nav aria-label="Main">
+            <p>
+              <a href="/studio" style="color:#E8A33D;">The Studio</a> ·
+              <a href="/services" style="color:#E8A33D;">Services</a> ·
+              <a href="/engineers" style="color:#E8A33D;">Engineers</a> ·
+              <a href="/pricing" style="color:#E8A33D;">Pricing</a> ·
+              <a href="/gear" style="color:#E8A33D;">Gear</a> ·
+              <a href="/blog" style="color:#E8A33D;">Journal</a> ·
+              <a href="/events" style="color:#E8A33D;">Events</a> ·
+              <a href="/reviews" style="color:#E8A33D;">Reviews</a> ·
+              <a href="/contact" style="color:#E8A33D;">Contact</a> ·
+              <a href="/faq" style="color:#E8A33D;">FAQ</a>
+            </p>
+          </nav>
+
+          <section>
+            <h2 style="font-size:28px;margin:32px 0 12px;">What is Legacy Music Group?</h2>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              Legacy Music Group is a full-service recording studio and production
+              company in the heart of Deep Ellum. Owned and operated by music business
+              maven Matthew Medlock — a 10-year music industry veteran with a Music
+              Business degree and a GRAMMYU background — Legacy was built to be the
+              studio serious independent artists in Dallas have been looking for.
+            </p>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              We specialize in vocals across genres but handle whatever the song calls
+              for: tracking, mixing, mastering, drum and band sessions, voiceover,
+              podcasts, and advertisements. In-house producers and songwriters help
+              shape projects from idea to release.
+            </p>
+          </section>
+
+          <section>
+            <h2 style="font-size:28px;margin:32px 0 12px;">How does pricing work?</h2>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              Recording is $75 per hour with an engineer or $45 per hour without — two-hour
+              minimum, with discounts on five-hour blocks. Mixing starts at $150 per song
+              and mastering at $30. Custom production with a Legacy producer is $500.
+              Engineer rates are $55/hour for Room A and $45/hour for Room B; major-label
+              sessions $175/hour. Lessons $100, consultations $99, listening parties $125
+              with a 3-hour minimum, graphic design priced per project.
+            </p>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              Bundled packages: Starter ($399) for 2 hours plus 1 mix and 1 master plus
+              cover art and an Instagram story; Pro ($999) for 5 hours plus 3 mixes and
+              3 masters plus cover art, Instagram story, consultation, and a 1-hour
+              photoshoot; Album ($2,900) for 10 hours plus 7 mixes and 7 masters plus
+              full music video production, photoshoot, and social-media content.
+            </p>
+          </section>
+
+          <section>
+            <h2 style="font-size:28px;margin:32px 0 12px;">Who are the engineers?</h2>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              Owner and manager Matthew Medlock leads operations and artist development.
+              Head engineer Ray Dallas handles mixing, tracking, editing, and Melodyne
+              with credits including Mac Miller, B.o.B, Dorrough, and Young Jeezy. Wayne
+              is a studio engineer and producer focused on mixing and Pro Tools
+              production. Terry handles studio maintenance to keep the gear dialed.
+            </p>
+          </section>
+
+          <section>
+            <h2 style="font-size:28px;margin:32px 0 12px;">Why book at Legacy?</h2>
+            <p style="font-size:16px;line-height:1.7;color:#A38F7B;">
+              Legacy is rated 4.4 stars on Google with 128 reviews. Pricing is published,
+              not hidden. Booking takes about a minute through our online calendar.
+              The chain is broadcast-grade — Avid C24, UA Apollo, Avalon 737, Neumann
+              U 87 — and the room is acoustically treated with a floating-ceiling vocal
+              booth tuned for hip-hop and R&B vocal articulation. We're located right in
+              the heart of Deep Ellum at 2815 Main St, Suite A.
+            </p>
+          </section>
+
+          <footer>
+            <p style="font-size:14px;color:#A38F7B;border-top:1px solid #1A1A1A;padding-top:16px;margin-top:32px;">
+              © Legacy Music Group · 2815 Main St, Suite A, Dallas, TX 75226 ·
+              <a href="tel:+12143779729" style="color:#E8A33D;">(214) 377-9729</a> ·
+              <a href="mailto:info@legacymusicgroup.com" style="color:#E8A33D;">info@legacymusicgroup.com</a>
+            </p>
+            <p style="font-size:12px;color:#A38F7B;">
+              Designed, hosted and cared for by
+              <a href="https://littlefightnyc.com" style="color:#E8A33D;">LittleFightNYC.com</a>
+            </p>
+          </footer>
+        </div>
+      </noscript>
+    </main>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
