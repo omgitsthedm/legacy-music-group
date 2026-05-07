@@ -1,60 +1,33 @@
-# Legacy Music Group — pre-launch posture.
-# Site is in design preview while the new build replaces the existing
-# legacymusicgroup.com. Indexing will be enabled at launch.
+# Legacy Music Group — production crawl policy.
 
-# Default: block everything until the new site replaces production.
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /api/
+Disallow: /.netlify/
 
-# AI crawlers — explicit allow-rules so they index us when we flip the
-# default Disallow above to Allow at launch. Pre-staged for clarity.
+# AI crawlers — explicit allow so we're citable in AI answers.
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: PerplexityBot
-Disallow: /
+Allow: /
 
 User-agent: Claude-Web
-Disallow: /
+Allow: /
 
 User-agent: ClaudeBot
-Disallow: /
+Allow: /
 
 User-agent: CCBot
-Disallow: /
+Allow: /
 
 User-agent: anthropic-ai
-Disallow: /
+Allow: /
 
 User-agent: Google-Extended
-Disallow: /
+Allow: /
 
-# At launch, replace the above with the indexable version below:
-#
-# User-agent: *
-# Allow: /
-# Disallow: /api/
-# Disallow: /.netlify/
-#
-# User-agent: GPTBot
-# Allow: /
-#
-# User-agent: PerplexityBot
-# Allow: /
-#
-# User-agent: Claude-Web
-# Allow: /
-#
-# User-agent: ClaudeBot
-# Allow: /
-#
-# User-agent: CCBot
-# Allow: /
-#
-# User-agent: anthropic-ai
-# Allow: /
-#
-# User-agent: Google-Extended
-# Allow: /
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://legacymusicgroup.com/sitemap.xml
