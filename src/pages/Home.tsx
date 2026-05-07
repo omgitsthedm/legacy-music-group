@@ -1,12 +1,12 @@
 import { useEffect, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Mic, Sliders, Star, Play, ChevronRight, Users, MapPin } from 'lucide-react'
+import { Mic, Sliders, Star, Play, ChevronRight, Users, MapPin, Clock } from 'lucide-react'
 import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import Quickbook from '../components/Quickbook'
 import NewsletterSignup from '../components/NewsletterSignup'
 import { useSeo } from '../lib/seo'
-import { engineers } from '../lib/data'
+import { engineers, reviews, blogPosts, pressMentions } from '../lib/data'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -312,6 +312,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Press Strip */}
+      <section className="py-10 px-[clamp(1.5rem,5vw,4rem)] border-y border-[rgba(245,240,232,0.05)]">
+        <div className="mx-auto max-w-[1200px]">
+          <p className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] text-center mb-6">
+            As featured in
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-60">
+            {pressMentions.map((p) => (
+              <span
+                key={p.outlet}
+                className="font-display text-[1.1rem] text-[#A38F7B] tracking-[1px]"
+              >
+                {p.outlet}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Preview */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1100px]">
+          <ScrollReveal className="mb-12">
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              What artists say
+            </span>
+            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+              Real reviews from real sessions.
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {reviews.slice(0, 3).map((r, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <article className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 h-full">
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Star
+                        key={n}
+                        size={12}
+                        fill={n <= r.rating ? '#E8A33D' : 'transparent'}
+                        className={n <= r.rating ? 'text-[#E8A33D]' : 'text-[rgba(232,163,61,0.4)]'}
+                      />
+                    ))}
+                  </div>
+                  <p className="font-body text-[0.95rem] text-[#F5F0E8] leading-[1.7] mb-4">
+                    "{r.body.length > 180 ? r.body.slice(0, 180) + '…' : r.body}"
+                  </p>
+                  <p className="font-body text-[0.85rem] text-[#A38F7B] font-medium">
+                    {r.author}
+                  </p>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal>
+            <div className="mt-10 text-center">
+              <Link
+                to="/reviews"
+                className="inline-flex items-center gap-2 font-body text-[0.9rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300 group"
+              >
+                Read all reviews
+                <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Legacy Live / Social Proof */}
       <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
@@ -401,6 +471,62 @@ export default function Home() {
               </span>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* From the Journal */}
+      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1100px]">
+          <ScrollReveal className="mb-12 flex items-end justify-between flex-wrap gap-4">
+            <div>
+              <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+                Journal
+              </span>
+              <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
+                Read up before you record.
+              </h2>
+            </div>
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 group"
+            >
+              All articles
+              <ChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {blogPosts.slice(0, 3).map((post, i) => (
+              <ScrollReveal key={post.slug} delay={i * 80}>
+                <Link
+                  to={`/blog/${post.slug}`}
+                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300 h-full"
+                >
+                  <div className="aspect-[16/9] overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-body text-[0.65rem] uppercase tracking-[1.5px] text-[#E8A33D] font-medium">
+                        {post.category}
+                      </span>
+                      <span className="font-body text-[0.65rem] uppercase tracking-[1.5px] text-[#A38F7B] flex items-center gap-1">
+                        <Clock size={10} /> {post.readMins}min
+                      </span>
+                    </div>
+                    <h3 className="font-display text-[1.2rem] leading-[1.25] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                      {post.title}
+                    </h3>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 

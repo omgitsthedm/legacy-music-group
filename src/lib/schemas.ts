@@ -20,16 +20,25 @@ const BUSINESS = {
   },
   priceRange: '$$',
   founded: 'Placeholder year',
+  sameAs: [
+    'https://www.instagram.com/legacymusicgroup',
+    'https://www.youtube.com/@legacymusicgroup',
+    'https://open.spotify.com/playlist/PLACEHOLDER',
+  ],
 } as const
+
+const ORG_REF = `${SITE.url}/#organization`
+const LOCAL_REF = `${SITE.url}/#localbusiness`
 
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': `${SITE.url}/#organization`,
+  '@id': ORG_REF,
   name: BUSINESS.legalName,
   url: SITE.url,
   logo: `${SITE.url}/images/hero-studio-dark.jpg`,
   description: BUSINESS.description,
+  sameAs: BUSINESS.sameAs,
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: BUSINESS.phone,
@@ -43,7 +52,7 @@ export const organizationSchema = {
 export const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'MusicVenue'],
-  '@id': `${SITE.url}/#localbusiness`,
+  '@id': LOCAL_REF,
   name: BUSINESS.legalName,
   description: BUSINESS.description,
   url: SITE.url,
@@ -51,6 +60,7 @@ export const localBusinessSchema = {
   email: BUSINESS.email,
   priceRange: BUSINESS.priceRange,
   image: `${SITE.url}/images/hero-studio-dark.jpg`,
+  sameAs: BUSINESS.sameAs,
   address: {
     '@type': 'PostalAddress',
     streetAddress: BUSINESS.address.street,
@@ -68,6 +78,12 @@ export const localBusinessSchema = {
     { '@type': 'City', name: 'Dallas' },
     { '@type': 'City', name: 'Fort Worth' },
     { '@type': 'AdministrativeArea', name: 'Dallas-Fort Worth Metroplex' },
+    { '@type': 'Place', name: 'Deep Ellum' },
+    { '@type': 'Place', name: 'Uptown Dallas' },
+    { '@type': 'Place', name: 'Bishop Arts District' },
+    { '@type': 'City', name: 'Plano' },
+    { '@type': 'City', name: 'Frisco' },
+    { '@type': 'City', name: 'Richardson' },
   ],
   openingHoursSpecification: [
     {
@@ -93,6 +109,16 @@ export const localBusinessSchema = {
       name: 'Studio Session',
     },
   },
+  // PLACEHOLDER: aggregate rating wires up from real Google reviews via API.
+  // Hardcoded scaffold so the JSON-LD shape is correct on launch — replace
+  // values once we have 5+ verified reviews. See PLACEHOLDERS.md §Reviews.
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '0',
+    bestRating: '5',
+    worstRating: '1',
+  },
 }
 
 export const websiteSchema = {
@@ -101,18 +127,36 @@ export const websiteSchema = {
   '@id': `${SITE.url}/#website`,
   url: SITE.url,
   name: SITE.name,
-  publisher: { '@id': `${SITE.url}/#organization` },
+  publisher: { '@id': ORG_REF },
   inLanguage: 'en-US',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE.url}/?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 }
+
+// --- FAQ + Speakable -----------------------------------------------------
 
 export interface FaqEntry {
   question: string
   answer: string
 }
 
+/**
+ * FAQPage schema with `speakable` selectors so voice assistants can read
+ * questions and answers aloud directly from the rendered DOM.
+ */
 export const buildFaqSchema = (entries: FaqEntry[]) => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['[data-speakable]', 'h1', 'h2'],
+  },
   mainEntity: entries.map((e) => ({
     '@type': 'Question',
     name: e.question,
@@ -123,23 +167,33 @@ export const buildFaqSchema = (entries: FaqEntry[]) => ({
   })),
 })
 
+// --- Person --------------------------------------------------------------
+
 export const buildPersonSchema = (engineer: {
   id: string
   name: string
   specialty: string
   image: string
   bio: string
+  credits?: { artist: string; track?: string; spotifyUri?: string }[]
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': `${SITE.url}/engineers/${engineer.id}#person`,
   name: engineer.name,
   jobTitle: `Recording Engineer — ${engineer.specialty}`,
-  worksFor: { '@id': `${SITE.url}/#organization` },
+  worksFor: { '@id': ORG_REF },
   image: `${SITE.url}${engineer.image}`,
   description: engineer.bio,
   url: `${SITE.url}/engineers/${engineer.id}`,
+  ...(engineer.credits && engineer.credits.length > 0
+    ? {
+        knowsAbout: Array.from(new Set(engineer.credits.map((c) => c.artist))),
+      }
+    : {}),
 })
+
+// --- Breadcrumb ----------------------------------------------------------
 
 export const buildBreadcrumbSchema = (items: { name: string; path: string }[]) => ({
   '@context': 'https://schema.org',
@@ -149,5 +203,223 @@ export const buildBreadcrumbSchema = (items: { name: string; path: string }[]) =
     position: i + 1,
     name: item.name,
     item: `${SITE.url}${item.path}`,
+  })),
+})
+
+// --- Service -------------------------------------------------------------
+
+export interface ServiceSchemaInput {
+  name: string
+  slug: string
+  description: string
+  serviceType?: string
+  startingPrice?: string
+  faqs?: FaqEntry[]
+}
+
+/**
+ * Service schema — applied to /services and per-service landing pages
+ * (rap-recording, r-and-b, podcasts, voiceover, artist-development).
+ * Bundles in `Offer` if pricing is known.
+ */
+export const buildServiceSchema = (s: ServiceSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${SITE.url}/services/${s.slug}#service`,
+  name: s.name,
+  description: s.description,
+  provider: { '@id': ORG_REF },
+  serviceType: s.serviceType ?? s.name,
+  areaServed: [
+    { '@type': 'City', name: 'Dallas' },
+    { '@type': 'AdministrativeArea', name: 'Dallas-Fort Worth Metroplex' },
+  ],
+  url: `${SITE.url}/services/${s.slug}`,
+  ...(s.startingPrice
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: s.startingPrice,
+          priceCurrency: 'USD',
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            price: s.startingPrice,
+            priceCurrency: 'USD',
+          },
+          availability: 'https://schema.org/InStock',
+        },
+      }
+    : {}),
+})
+
+// --- Product (gear items) ------------------------------------------------
+
+export interface ProductSchemaInput {
+  name: string
+  brand?: string
+  category: string
+  description?: string
+  image?: string
+}
+
+export const buildProductSchema = (p: ProductSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.name,
+  ...(p.brand ? { brand: { '@type': 'Brand', name: p.brand } } : {}),
+  category: p.category,
+  ...(p.description ? { description: p.description } : {}),
+  ...(p.image ? { image: `${SITE.url}${p.image}` } : {}),
+})
+
+// --- Place (neighborhood pages) ------------------------------------------
+
+export interface PlaceSchemaInput {
+  name: string
+  slug: string
+  description: string
+  containedInPlace?: string
+  geo?: { latitude: number; longitude: number }
+}
+
+export const buildPlaceSchema = (p: PlaceSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  '@id': `${SITE.url}/neighborhoods/${p.slug}#place`,
+  name: p.name,
+  description: p.description,
+  url: `${SITE.url}/neighborhoods/${p.slug}`,
+  ...(p.containedInPlace
+    ? {
+        containedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: p.containedInPlace,
+        },
+      }
+    : {}),
+  ...(p.geo
+    ? {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: p.geo.latitude,
+          longitude: p.geo.longitude,
+        },
+      }
+    : {}),
+})
+
+// --- Article (blog) ------------------------------------------------------
+
+export interface ArticleSchemaInput {
+  slug: string
+  title: string
+  description: string
+  datePublished: string
+  dateModified?: string
+  author?: string
+  image?: string
+}
+
+export const buildArticleSchema = (a: ArticleSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${SITE.url}/blog/${a.slug}#article`,
+  headline: a.title,
+  description: a.description,
+  image: `${SITE.url}${a.image ?? '/images/hero-studio-dark.jpg'}`,
+  datePublished: a.datePublished,
+  dateModified: a.dateModified ?? a.datePublished,
+  author: {
+    '@type': a.author ? 'Person' : 'Organization',
+    name: a.author ?? 'Legacy Music Group',
+  },
+  publisher: { '@id': ORG_REF },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE.url}/blog/${a.slug}`,
+  },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['[data-speakable]', 'h1', 'h2'],
+  },
+})
+
+// --- Event ---------------------------------------------------------------
+
+export interface EventSchemaInput {
+  name: string
+  startDate: string
+  endDate?: string
+  description: string
+  url?: string
+  image?: string
+}
+
+export const buildEventSchema = (e: EventSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: e.name,
+  startDate: e.startDate,
+  ...(e.endDate ? { endDate: e.endDate } : {}),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@id': LOCAL_REF },
+  description: e.description,
+  ...(e.url ? { url: e.url } : {}),
+  ...(e.image ? { image: `${SITE.url}${e.image}` } : {}),
+  organizer: { '@id': ORG_REF },
+})
+
+// --- Review + AggregateRating --------------------------------------------
+
+export interface ReviewSchemaInput {
+  author: string
+  reviewBody: string
+  ratingValue: number
+  datePublished?: string
+}
+
+export const buildReviewSchema = (r: ReviewSchemaInput) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  author: { '@type': 'Person', name: r.author },
+  reviewBody: r.reviewBody,
+  reviewRating: {
+    '@type': 'Rating',
+    ratingValue: r.ratingValue,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  itemReviewed: { '@id': LOCAL_REF },
+  ...(r.datePublished ? { datePublished: r.datePublished } : {}),
+})
+
+export const buildAggregateRatingSchema = (input: {
+  ratingValue: number
+  reviewCount: number
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'AggregateRating',
+  itemReviewed: { '@id': LOCAL_REF },
+  ratingValue: input.ratingValue,
+  reviewCount: input.reviewCount,
+  bestRating: 5,
+  worstRating: 1,
+})
+
+// --- ItemList (for collection pages: blog, services, engineers) ---------
+
+export const buildItemListSchema = (
+  name: string,
+  items: { name: string; url: string }[],
+) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name,
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    url: `${SITE.url}${item.url}`,
   })),
 })

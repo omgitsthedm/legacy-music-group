@@ -139,6 +139,56 @@ export default function Studio() {
         </div>
       </section>
 
+      {/* Internal links to deeper pages */}
+      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1100px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link
+              to="/gear"
+              className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 hover:border-[rgba(232,163,61,0.3)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-2">
+                Inside the room
+              </h3>
+              <p className="font-display text-[1.4rem] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                See the full gear list
+              </p>
+              <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2">
+                Console, mics, outboard, monitoring — what makes a session sound like a record.
+              </p>
+            </Link>
+            <Link
+              to="/neighborhoods/deep-ellum"
+              className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 hover:border-[rgba(232,163,61,0.3)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-2">
+                The neighborhood
+              </h3>
+              <p className="font-display text-[1.4rem] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                About Deep Ellum
+              </p>
+              <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2">
+                The history, the venues, and why we built Legacy here.
+              </p>
+            </Link>
+            <Link
+              to="/pricing"
+              className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 hover:border-[rgba(232,163,61,0.3)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-2">
+                Transparent rates
+              </h3>
+              <p className="font-display text-[1.4rem] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                See pricing
+              </p>
+              <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2">
+                Hourly, blocks, day rates, and packages — all published.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal className="text-center mb-12">

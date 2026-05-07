@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail, Instagram, Music, Youtube } from 'lucide-react'
 import { useContext } from 'react'
 import { BookingContext } from '../App'
-import { contact } from '../lib/data'
+import { contact, services, neighborhoods } from '../lib/data'
 
 export default function Footer() {
   const { openBooking } = useContext(BookingContext)
@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#111111] border-t border-[rgba(245,240,232,0.08)]">
       <div className="mx-auto max-w-[1400px] px-[clamp(1.5rem,5vw,4rem)] py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="space-y-4 col-span-2">
             <Link
@@ -21,7 +21,8 @@ export default function Footer() {
               Legacy
             </Link>
             <p className="font-body text-[0.9rem] text-[#A38F7B] leading-relaxed max-w-[320px]">
-              Deep Ellum recording studio and artist development brand. Built to help independent artists make professional music in Dallas.
+              Deep Ellum recording studio and artist development brand. Built to help
+              independent artists make professional music in Dallas.
             </p>
             <button
               onClick={openBooking}
@@ -30,24 +31,29 @@ export default function Footer() {
               Book a Session
             </button>
             <div className="flex items-center gap-3 pt-2">
-              {/* PLACEHOLDER: real social URLs needed */}
               <a
-                href="#"
+                href="https://www.instagram.com/legacymusicgroup"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
               >
                 <Instagram size={15} />
               </a>
               <a
-                href="#"
+                href="https://open.spotify.com/playlist/PLACEHOLDER"
                 aria-label="Spotify"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
               >
                 <Music size={15} />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@legacymusicgroup"
                 aria-label="YouTube"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
               >
                 <Youtube size={15} />
@@ -63,9 +69,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: 'Studio', href: '/studio' },
-                { label: 'Services', href: '/services' },
+                { label: 'Gear', href: '/gear' },
                 { label: 'Engineers', href: '/engineers' },
-                { label: 'Contact', href: '/contact' },
+                { label: 'Pricing', href: '/pricing' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -85,38 +91,40 @@ export default function Footer() {
               Services
             </h4>
             <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={openBooking}
-                  className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 text-left"
-                >
-                  Recording
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={openBooking}
-                  className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 text-left"
-                >
-                  Mixing & Mastering
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={openBooking}
-                  className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 text-left"
-                >
-                  Full Package
-                </button>
-              </li>
-              <li>
-                <Link
-                  to="/services"
-                  className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-                >
-                  Artist Development
-                </Link>
-              </li>
+              {services.slice(0, 5).map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    to={`/services/${s.slug}`}
+                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                  >
+                    {s.shortName}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div className="space-y-4">
+            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
+              Resources
+            </h4>
+            <ul className="space-y-3">
+              {[
+                { label: 'Journal', href: '/blog' },
+                { label: 'Reviews', href: '/reviews' },
+                { label: 'Events', href: '/events' },
+                { label: 'FAQ', href: '/faq' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -155,15 +163,30 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Neighborhoods strip */}
+        <div className="mt-12 pt-8 border-t border-[rgba(245,240,232,0.08)]">
+          <p className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium mb-3">
+            Serving North Dallas
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {neighborhoods.map((n) => (
+              <Link
+                key={n.slug}
+                to={`/neighborhoods/${n.slug}`}
+                className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
+              >
+                {n.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 border-t border-[rgba(245,240,232,0.08)] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-[rgba(245,240,232,0.08)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-body text-[0.85rem] text-[#A38F7B]">
             © {year} Legacy Music Group. All rights reserved.
           </p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            <Link to="/faq" className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300">
-              FAQ
-            </Link>
             <Link to="/policies" className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300">
               Policies
             </Link>
@@ -176,7 +199,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* LiFi NYC attribution per global doctrine */}
+        {/* LiFi NYC attribution */}
         <div className="mt-6 pt-6 border-t border-[rgba(245,240,232,0.04)] text-center">
           <a
             href="https://littlefightnyc.com"

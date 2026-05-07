@@ -1,11 +1,12 @@
 import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Mic, Sliders, Star, Check, ChevronRight } from 'lucide-react'
 import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
-import { pricing } from '../lib/data'
-import { buildBreadcrumbSchema } from '../lib/schemas'
+import { pricing, services as genreServices } from '../lib/data'
+import { buildBreadcrumbSchema, buildServiceSchema, buildItemListSchema } from '../lib/schemas'
 
 const services = [
   {
@@ -50,6 +51,24 @@ export default function ServicesPage() {
           { name: 'Services', path: '/services' },
         ])}
       />
+      <JsonLd
+        id="services-list"
+        data={buildItemListSchema(
+          'Services at Legacy Music Group',
+          genreServices.map((s) => ({ name: s.name, url: `/services/${s.slug}` })),
+        )}
+      />
+      {genreServices.map((s) => (
+        <JsonLd
+          key={s.slug}
+          id={`service-${s.slug}-overview`}
+          data={buildServiceSchema({
+            name: s.name,
+            slug: s.slug,
+            description: s.oneLiner,
+          })}
+        />
+      ))}
 
       <section className="pt-[clamp(4rem,8vw,6rem)] pb-16 px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[1400px]">
@@ -113,6 +132,54 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Genre / category service pages */}
+      <section className="py-16 px-[clamp(1.5rem,5vw,4rem)]">
+        <div className="mx-auto max-w-[1000px]">
+          <ScrollReveal className="text-center mb-10">
+            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
+              Specialized
+            </span>
+            <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#F5F0E8] mt-3">
+              Genre &amp; format-specific recording
+            </h2>
+            <p className="font-body text-[0.95rem] text-[#A38F7B] mt-3 max-w-[560px] mx-auto">
+              Sessions tuned for what you actually do — rap, R&amp;B, podcasts, voiceover, artist development.
+            </p>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {genreServices.map((s, i) => (
+              <ScrollReveal key={s.slug} delay={i * 60}>
+                <Link
+                  to={`/services/${s.slug}`}
+                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:border-[rgba(232,163,61,0.3)] hover:-translate-y-1 transition-all duration-300 h-full"
+                >
+                  <div className="aspect-[16/9] overflow-hidden">
+                    <img
+                      src={s.image}
+                      alt={s.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-body text-[1.05rem] font-medium text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                      {s.shortName}
+                    </h3>
+                    <p className="font-body text-[0.85rem] text-[#A38F7B] mt-1.5 leading-[1.5]">
+                      {s.oneLiner}
+                    </p>
+                    <p className="font-body text-[0.75rem] text-[#E8A33D] mt-3 font-medium">
+                      From {s.startingPrice}
+                    </p>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
         <div className="mx-auto max-w-[800px]">
           <ScrollReveal className="text-center mb-3">
@@ -148,13 +215,19 @@ export default function ServicesPage() {
             </div>
           </ScrollReveal>
 
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center flex items-center justify-center gap-4 flex-wrap">
             <button
               onClick={openBooking}
               className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
             >
               Book a Session
             </button>
+            <Link
+              to="/pricing"
+              className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 inline-flex items-center gap-1"
+            >
+              See full pricing <ChevronRight size={14} />
+            </Link>
           </div>
         </div>
       </section>

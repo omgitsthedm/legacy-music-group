@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom'
 import { useContext } from 'react'
-import { Play, ChevronLeft } from 'lucide-react'
+import { Play, ChevronLeft, ChevronRight } from 'lucide-react'
 import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
-import { engineers } from '../lib/data'
+import { engineers, services } from '../lib/data'
 import { buildPersonSchema, buildBreadcrumbSchema } from '../lib/schemas'
 
 export default function EngineerProfile() {
@@ -118,6 +118,41 @@ export default function EngineerProfile() {
           </ScrollReveal>
         </div>
       </section>
+
+      {engineer.serviceSlugs.length > 0 && (
+        <section className="py-12 px-[clamp(1.5rem,5vw,4rem)]">
+          <div className="mx-auto max-w-[700px]">
+            <ScrollReveal>
+              <h2 className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-5">
+                Specializes In
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {engineer.serviceSlugs.map((slug) => {
+                  const s = services.find((x) => x.slug === slug)
+                  if (!s) return null
+                  return (
+                    <Link
+                      key={slug}
+                      to={`/services/${slug}`}
+                      className="group flex items-center justify-between gap-3 bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-4 hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
+                    >
+                      <div>
+                        <h3 className="font-body text-[0.95rem] font-medium text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                          {s.shortName}
+                        </h3>
+                        <p className="font-body text-[0.8rem] text-[#A38F7B] mt-0.5">
+                          From {s.startingPrice}
+                        </p>
+                      </div>
+                      <ChevronRight size={16} className="text-[#A38F7B] group-hover:text-[#E8A33D]" />
+                    </Link>
+                  )
+                })}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       <section className="py-16 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
         <div className="mx-auto max-w-[700px]">

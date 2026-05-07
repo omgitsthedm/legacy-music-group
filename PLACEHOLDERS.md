@@ -8,6 +8,84 @@ Last updated: 2026-05-06.
 
 ---
 
+## Reviews
+
+`src/lib/data.ts` `reviews` array.
+
+Six placeholder reviews are hardcoded so the `/reviews` page, the homepage Reviews preview, and the `AggregateRating` schema all render with realistic content. **Replace with real Google Business Profile / Yelp reviews on launch.**
+
+| Field | Currently | Needs |
+|---|---|---|
+| Author names | "Placeholder Artist Name", etc. | Real reviewer names (anonymize if reviewer prefers) |
+| Bodies | Plausible studio review copy | Real reviewer text from Google/Yelp |
+| Ratings | All 5★ | Real ratings |
+| Sources | Mix of Google + Yelp | Real source platform |
+| Dates | 2026-01 through 2026-04 | Real publication dates |
+| AggregateRating in `LocalBusiness` schema | Hardcoded `ratingValue: 5.0, reviewCount: 0` | Wire to Google Business Profile API once site launches and earns real reviews |
+
+**Recommended integration path**: Google Business Profile API → Netlify Function (similar pattern to Calendly availability) → fetched on `/reviews` and `aggregateRating` populated from real data.
+
+---
+
+## Events
+
+`src/lib/data.ts` `studioEvents` array. Two placeholder events render on `/events` with `Event` schema. Replace with real upcoming Legacy events (open mics, songwriter circles, listening parties) before publishing.
+
+---
+
+## Press Mentions
+
+`src/lib/data.ts` `pressMentions` array. Currently lists outlets the team should _pitch_ (Dallas Observer, D Magazine, Central Track, KERA News, Texas Music Office). Render in homepage "As featured in" strip.
+
+When real coverage is earned, swap the array to actual mentions with quote + URL fields:
+```ts
+{ outlet: 'Dallas Observer', quote: '...', url: 'https://...' }
+```
+
+---
+
+## Blog Posts
+
+`src/lib/data.ts` `blogPosts` array — six anchor articles per the compete-analysis recommendations:
+- `recording-studios-in-deep-ellum-guide`
+- `first-studio-session-dallas`
+- `rap-recording-dallas`
+- `mixing-mastering-pricing-dallas`
+- `artist-development-dallas-choosing-studio`
+- `inside-legacy-studio`
+
+These are written to be publishable as-is — Legacy team should:
+1. Review for tone and accuracy (gear specifics, pricing references, neighborhood claims)
+2. Edit anything that contradicts real Legacy operations
+3. Add real author bylines (currently attributed to "Legacy Music Group")
+4. Publish
+
+---
+
+## Calendly
+
+`CALENDLY_PAT` env var on Netlify, plus `eventTypeUri` and `bookingUrl` placeholder slugs in `src/lib/data.ts` `calendly` object. See full Calendly section below.
+
+---
+
+## Engineers' Service Specialties
+
+`src/lib/data.ts` `engineers[].serviceSlugs` is hardcoded based on engineer specialty (e.g., Marcus → `['rap-recording', 'r-and-b']`). When real engineer roster lands, update these to reflect each engineer's actual genre fit.
+
+---
+
+## Service Pages — Pricing
+
+Five genre service pages (`/services/rap-recording`, etc.) reference starting prices. These mirror the values in `pricing` and `pricingTiers`. **All values are illustrative until owner confirms.**
+
+---
+
+## Neighborhood Pages
+
+`src/lib/data.ts` `neighborhoods` array — 6 pages including Deep Ellum + 5 North Dallas neighborhoods (Uptown, Bishop Arts, Plano, Frisco, Richardson). Drive times, ZIP references, and neighborhood narratives are accurate at first-pass but should be reviewed by someone who actually lives in DFW.
+
+---
+
 ## Engineers
 
 All four engineer profiles are fictional. Source of truth: [`src/lib/data.ts` `engineers` array](src/lib/data.ts).
