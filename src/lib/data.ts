@@ -947,24 +947,42 @@ export interface StudioEvent {
 // fresh without needing manual updates. The series itself is described as a
 // single recurring entity in schema (eventSchedule).
 
-function nextMondays(count: number, fromDate: Date = new Date()): Date[] {
+/** True if `date` falls within US Central Daylight Time (2nd Sun of March through 1st Sun of November). */
+function isCentralDST(date: Date): boolean {
+  const year = date.getFullYear()
+  const march = new Date(year, 2, 1)
+  const dstStart = new Date(year, 2, 8 + ((7 - march.getDay()) % 7))
+  const november = new Date(year, 10, 1)
+  const dstEnd = new Date(year, 10, 1 + ((7 - november.getDay()) % 7))
+  return date >= dstStart && date < dstEnd
+}
+
+/**
+ * Returns the next `count` Monday Date objects, each fixed at 9:00 PM
+ * Central Time (CDT or CST as appropriate). Always anchored to Central
+ * regardless of the runtime's timezone — Legacy Live is a Dallas event.
+ */
+function nextMondaysCentral(count: number, fromDate: Date = new Date()): Date[] {
   const dates: Date[] = []
   const cursor = new Date(fromDate)
-  cursor.setHours(21, 0, 0, 0) // 9:00 PM show start
-  // Advance to upcoming Monday (Mon = 1)
-  const offset = (1 - cursor.getDay() + 7) % 7 || 7 * (cursor.getDay() === 1 && cursor.getTime() < fromDate.getTime() ? 1 : 0)
-  cursor.setDate(cursor.getDate() + offset)
+  cursor.setHours(0, 0, 0, 0)
+  const dayOfWeek = cursor.getDay()
+  const daysUntilMonday = (1 - dayOfWeek + 7) % 7 || 7
+  cursor.setDate(cursor.getDate() + daysUntilMonday)
   for (let i = 0; i < count; i++) {
-    dates.push(new Date(cursor))
+    const y = cursor.getFullYear()
+    const m = String(cursor.getMonth() + 1).padStart(2, '0')
+    const d = String(cursor.getDate()).padStart(2, '0')
+    const offset = isCentralDST(cursor) ? '-05:00' : '-06:00'
+    dates.push(new Date(`${y}-${m}-${d}T21:00:00${offset}`))
     cursor.setDate(cursor.getDate() + 7)
   }
   return dates
 }
 
-export const studioEvents: StudioEvent[] = nextMondays(6).map((d) => {
-  // 2-hour event, end at 11pm
-  const end = new Date(d)
-  end.setHours(23, 0, 0, 0)
+export const studioEvents: StudioEvent[] = nextMondaysCentral(6).map((d) => {
+  // 2-hour show — ends at 11 PM Central
+  const end = new Date(d.getTime() + 2 * 60 * 60 * 1000)
   const slug = `legacy-live-${d.toISOString().slice(0, 10)}`
   return {
     slug,
