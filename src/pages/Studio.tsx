@@ -62,16 +62,23 @@ export default function Studio() {
             <ScrollReveal>
               <div className="space-y-6">
                 <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-                  Philosophy
+                  About Legacy
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-                  Where precision meets vibe.
+                  Owned and operated by music business maven Matthew Medlock.
                 </h2>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  Every room at Legacy is acoustically treated and equipped with industry-standard monitoring. But beyond the gear, we've curated an atmosphere that puts artists at ease. We believe the best takes happen when you feel at home.
+                  Legacy is a full-service recording studio and production company in the
+                  heart of Deep Ellum. Founder Matthew Medlock — a Memphis-raised music
+                  business veteran with a degree in Music Business and a GRAMMYU
+                  background — built Legacy to be the studio he wished existed for
+                  serious independent artists in Dallas.
                 </p>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  From the moment you walk through our doors in Deep Ellum, you are not just booking studio time — you are entering a creative space designed to help you produce your best work.
+                  We specialize in vocals across genres but handle anything you need:
+                  tracking, mixing, mastering, drum and band sessions, voiceovers,
+                  podcasts, and advertisements. In-house producers and songwriters are
+                  ready to support whatever the song calls for.
                 </p>
                 <Link
                   to="/services"

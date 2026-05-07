@@ -2,374 +2,184 @@
 
 > Single source of truth for everything in this codebase that is **placeholder content**, **placeholder logic**, or **awaiting real data/integration**. Per BRIEF.md §19 and §32.
 
-Every entry below should be replaced before public launch (or at least audited and either replaced, removed, or explicitly accepted as placeholder for staging).
-
-Last updated: 2026-05-06.
+Last updated: 2026-05-07. Most contact, gear, pricing, engineer, and policy content was sourced from the existing legacymusicgroup.com on 2026-05-07. The remaining placeholders are listed below.
 
 ---
 
-## Reviews
+## NOW REAL (sourced from legacymusicgroup.com 2026-05-07)
 
-`src/lib/data.ts` `reviews` array.
+These were placeholders and are now real. Documenting here so future sessions don't accidentally treat them as placeholder again:
 
-Six placeholder reviews are hardcoded so the `/reviews` page, the homepage Reviews preview, and the `AggregateRating` schema all render with realistic content. **Replace with real Google Business Profile / Yelp reviews on launch.**
-
-| Field | Currently | Needs |
-|---|---|---|
-| Author names | "Placeholder Artist Name", etc. | Real reviewer names (anonymize if reviewer prefers) |
-| Bodies | Plausible studio review copy | Real reviewer text from Google/Yelp |
-| Ratings | All 5★ | Real ratings |
-| Sources | Mix of Google + Yelp | Real source platform |
-| Dates | 2026-01 through 2026-04 | Real publication dates |
-| AggregateRating in `LocalBusiness` schema | Hardcoded `ratingValue: 5.0, reviewCount: 0` | Wire to Google Business Profile API once site launches and earns real reviews |
-
-**Recommended integration path**: Google Business Profile API → Netlify Function (similar pattern to Calendly availability) → fetched on `/reviews` and `aggregateRating` populated from real data.
+- ✅ Contact info — phone, email, address, all 4 social URLs
+- ✅ 4 real engineers — Matthew Medlock, Ray Dallas, Wayne, Terry (with their real bios)
+- ✅ Real gear list — 27 items in `/equipment` (UA Apollo, C24, Avalon 737, Neumann U87, AKG C414, Focal Duo, Adams S10, Mackie Thump 12, Pro Tools, Studio One, Logic Pro X, UAD plugins, Waves, Slate Digital, etc.)
+- ✅ Real pricing tiers + à la carte — Recording $75/hr, Starter $399, Pro $999, Album $2,900, plus 10 à la carte services (Mixing $150+, Mastering $30, Custom Production $500, Engineer A/B rates, Major Label rate, Lessons, Consultation, Listening Parties, Graphic Design)
+- ✅ Real policies — 50% non-refundable deposit, 24hr cancellation rule, $55 reschedule fee, $35 guest fee, 90-day file retention, max 7 guests, no-smoking, parking metered $0.25/30min after 6pm
+- ✅ 3 real Google reviews (Brandon P., Farhan P., Richard C.)
+- ✅ Real Matthew Medlock founder story (Memphis, GRAMMYU, 10yr veteran, music business degree)
+- ✅ Two-room studio fact (A Room and B Room with different engineer rates)
+- ✅ Schema BUSINESS constant — real address, phone, geo coords (~32.7837, -96.7780), social `sameAs`, founded year (2014 estimated)
 
 ---
 
-## Events
+## STILL PLACEHOLDER
 
-`src/lib/data.ts` `studioEvents` array. Two placeholder events render on `/events` with `Event` schema. Replace with real upcoming Legacy events (open mics, songwriter circles, listening parties) before publishing.
+### Operating Hours
 
----
+`src/lib/data.ts` `contact.hours` and `src/lib/schemas.ts` `openingHoursSpecification`. The live site does NOT publish hours. Currently using "Mon–Sat, by appointment" as display + 10am–10pm Mon–Sat in schema.
 
-## Press Mentions
+**Needs:** real published hours from owner, including any Sunday availability and holiday closures.
 
-`src/lib/data.ts` `pressMentions` array. Currently lists outlets the team should _pitch_ (Dallas Observer, D Magazine, Central Track, KERA News, Texas Music Office). Render in homepage "As featured in" strip.
+### Founding Year
 
-When real coverage is earned, swap the array to actual mentions with quote + URL fields:
-```ts
-{ outlet: 'Dallas Observer', quote: '...', url: 'https://...' }
-```
+`src/lib/schemas.ts` `BUSINESS.founded`. Currently `'2014'` as a reasonable estimate from the 10-year-veteran owner mention.
 
----
+**Needs:** confirm exact founding year for `foundingDate` in Organization schema.
 
-## Blog Posts
+### Engineer Photos
 
-`src/lib/data.ts` `blogPosts` array — six anchor articles per the compete-analysis recommendations:
-- `recording-studios-in-deep-ellum-guide`
-- `first-studio-session-dallas`
-- `rap-recording-dallas`
-- `mixing-mastering-pricing-dallas`
-- `artist-development-dallas-choosing-studio`
-- `inside-legacy-studio`
+`src/lib/data.ts` `engineers[].image`. All four engineers reference placeholder paths (`/images/engineer-1.jpg` through `engineer-4.jpg`).
 
-These are written to be publishable as-is — Legacy team should:
-1. Review for tone and accuracy (gear specifics, pricing references, neighborhood claims)
-2. Edit anything that contradicts real Legacy operations
-3. Add real author bylines (currently attributed to "Legacy Music Group")
-4. Publish
+**Real photos exist on legacymusicgroup.com** at `/team`, `/team/wayne`, `/team/terry` (and equivalent for Matthew + Ray). Need to:
+1. Download each engineer's headshot from the live site (or get higher-res from owner)
+2. Convert to `.webp` (per LiFi NYC client rules)
+3. Save into `/public/images/` with named slugs (e.g., `engineer-matthew.webp`)
+4. Update `image` paths in `data.ts`
 
----
+### Engineer Track Credits (deeper)
 
-## Calendly
+`src/lib/data.ts` `engineers[].credits`. Ray Dallas has 4 named credits (Mac Miller, B.o.B, Dorrough, Young Jeezy) but no specific tracks. Other engineers have empty credits.
 
-`CALENDLY_PAT` env var on Netlify, plus `eventTypeUri` and `bookingUrl` placeholder slugs in `src/lib/data.ts` `calendly` object. See full Calendly section below.
+**Needs:** real track names + Spotify/Apple Music URIs per engineer for `MusicGroup` / track schema and the engineer profile credit sheet.
 
----
+### AggregateRating
 
-## Engineers' Service Specialties
+`src/lib/schemas.ts` `localBusinessSchema.aggregateRating`. Currently hardcoded as `5.0 / 0 reviews`. We have 3 real reviews on the homepage but no real aggregate count.
 
-`src/lib/data.ts` `engineers[].serviceSlugs` is hardcoded based on engineer specialty (e.g., Marcus → `['rap-recording', 'r-and-b']`). When real engineer roster lands, update these to reflect each engineer's actual genre fit.
+**Needs:** Google Business Profile API integration (Netlify Function pattern, similar to Calendly availability). On launch: `aggregateRating` and the `/reviews` page render real-time data from GBP.
 
----
+### Google Business Profile
 
-## Service Pages — Pricing
+Not yet claimed/configured per the compete analysis. Highest single-lever for ranking in North Dallas studio search.
 
-Five genre service pages (`/services/rap-recording`, etc.) reference starting prices. These mirror the values in `pricing` and `pricingTiers`. **All values are illustrative until owner confirms.**
+**Needs:** owner to claim GBP, set up category (Recording Studio + Music Production Service), upload 30+ photos, hours, services menu, Q&A pre-seeded.
 
----
+### Calendly URLs (still pending)
 
-## Neighborhood Pages
+`src/lib/data.ts` `calendly` object. All `bookingUrl` slugs and `eventTypeUri` UUIDs are placeholders.
 
-`src/lib/data.ts` `neighborhoods` array — 6 pages including Deep Ellum + 5 North Dallas neighborhoods (Uptown, Bishop Arts, Plano, Frisco, Richardson). Drive times, ZIP references, and neighborhood narratives are accurate at first-pass but should be reviewed by someone who actually lives in DFW.
+**Needs:** `CALENDLY_PAT` env var on Netlify + replacement of 6 placeholder URLs/URIs with real Calendly account values. See instructions below.
 
----
+The existing legacymusicgroup.com site uses a custom Wix-style booking widget (5-step flow with full-payment-upfront), NOT Calendly. **Confirm with owner that the planned switch to Calendly is still the direction.** If not, the BookingModal needs to integrate with their actual booking system instead.
 
-## Engineers
+### Press Mentions
 
-All four engineer profiles are fictional. Source of truth: [`src/lib/data.ts` `engineers` array](src/lib/data.ts).
+`src/lib/data.ts` `pressMentions`. Currently lists outlets to *pitch* (Dallas Observer, D Magazine, Central Track, KERA News, Texas Music Office) — Legacy has not yet earned coverage in any of them.
 
-| Field | Placeholder | Needs |
-|---|---|---|
-| Engineer 1 — name | Marcus Cole | Real name |
-| Engineer 1 — bio | Grammy-nominated, LA studios, etc. | Real bio |
-| Engineer 1 — image | `/public/images/engineer-1.jpg` (stock) | Real headshot |
-| Engineer 1 — stats | "10+ Years / 500+ Projects / Grammy Nominated" | Real career stats |
-| Engineer 1 — samples | 4 fictional track titles | Real audio files + titles + durations |
-| Engineer 2 — name | Sofia Reyes | Real name |
-| Engineer 2 — bio | 50M streams pop/electronic | Real bio |
-| Engineer 2 — image | `/public/images/engineer-2.jpg` (stock) | Real headshot |
-| Engineer 2 — stats | "8+ Years / 300+ Projects / 50M+ Streams" | Real career stats |
-| Engineer 2 — samples | 4 fictional track titles | Real audio files |
-| Engineer 3 — name | David Byrne | Real name (and note: collides with the famous Talking Heads frontman — change before launch regardless) |
-| Engineer 3 — bio | 15+ years rock/folk | Real bio |
-| Engineer 3 — image | `/public/images/engineer-3.jpg` (stock) | Real headshot |
-| Engineer 3 — stats | "15+ Years / 700+ Projects / Multi-Platinum" | Real career stats |
-| Engineer 3 — samples | 4 fictional track titles | Real audio files |
-| Engineer 4 — name | Jade Williams | Real name |
-| Engineer 4 — bio | Rising star hip-hop/soul | Real bio |
-| Engineer 4 — image | `/public/images/engineer-4.jpg` (stock) | Real headshot |
-| Engineer 4 — stats | "6+ Years / 200+ Projects / Rising Star" | Real career stats |
-| Engineer 4 — samples | 4 fictional track titles | Real audio files |
-| Sample playback | Play buttons render but don't play | Wire up `<audio>` element + real MP3/WAV URLs |
+**Needs:** actual press wins. The compete analysis recommended pitching these outlets specifically.
 
----
+### Events
 
-## Studio Imagery
+`src/lib/data.ts` `studioEvents`. Two placeholder events (open mic, songwriter circle) on `/events`.
 
-`public/images/`. All currently stock or AI-generated placeholders matching the dark-luxury tone per BRIEF §19.
+**Needs:** real event listings from owner (or remove the route until events are real).
 
-| File | Usage | Needs |
-|---|---|---|
-| `hero-studio-dark.jpg` | Homepage hero, OG image | Real Legacy hero shot |
-| `about-studio-wide.jpg` | About section + Studio page hero + footer-area context | Real wide angle of the renovated space |
-| `studio-control-room.jpg` | Horizontal gallery, Services, Studio philosophy | Real control room photo |
-| `studio-vocal-booth.jpg` | Horizontal gallery, Services Recording card | Real vocal booth photo |
-| `studio-live-room.jpg` | Horizontal gallery, Services Full Package card | Real live room photo |
-| `studio-lobby.jpg` | Horizontal gallery, Studio location section | Real lobby/lounge photo |
-| `studio-gear.jpg` | Horizontal gallery | Real outboard gear close-up |
+### Blog Posts
 
-**Optimization to-do once real images arrive:**
-- Convert to `.webp` per LiFi NYC client rules (CLAUDE.md "Images" section).
-- Provide multiple sizes: hero q80/2000px, standard q78/1400px, thumb q75/900px.
-- Add explicit `width`/`height` attributes to `<img>` tags to lock CLS.
+`src/lib/data.ts` `blogPosts` — six anchor articles drafted to be publishable but not yet reviewed by Legacy team.
 
----
+**Needs:**
+1. Owner / engineer review for tone, accuracy on gear specifics, accuracy of pricing references, accuracy of neighborhood claims
+2. Real author bylines (currently attributed to "Legacy Music Group" — could attribute to Matthew or Ray)
+3. The live site has 4 real blog posts (Mixing & Mastering, Are You Ready to Record, Take Care of Your Voice, Ladies Where You At) — consider importing these alongside the new ones for the Journal launch
 
-## Session Video Clips
+### Service Specialty Mapping
 
-`public/videos/`. All placeholders for the Legacy Live homepage section.
+`src/lib/data.ts` `engineers[].serviceSlugs`. Mapped based on engineer specialty per their bio. Matthew → artist-development; Ray → rap, R&B, voiceover, podcasts; Wayne → rap, R&B; Terry → none (maintenance role).
 
-| File | Caption shown | Needs |
-|---|---|---|
-| `hero-studio-ambient.mp4` | (currently unused — was for hero ambient bg) | Real ambient B-roll if hero video is wanted |
-| `session-clip-1.mp4` | "Midnight Sessions / Ari Lennox Vibe" | Real session clip |
-| `session-clip-2.mp4` | "Behind the Board / Producer POV" | Real session clip |
-| `session-clip-3.mp4` | "Live Drums / Deep Ellum Jam" | Real session clip |
-| `session-clip-4.mp4` | "Guitar Tracking / Indie Artist Feature" | Real session clip |
+**Needs:** owner confirmation that these mappings reflect each engineer's actual genre fit and service preference.
 
-Captions/titles are also placeholder — replace with real artist names or remove names entirely.
+### Genre/Service Pricing Alignment
 
----
+`src/lib/data.ts` `services[]` — the 5 genre service pages (rap-recording, r-and-b, podcasts, voiceover, artist-development) reference starting prices that broadly match real Legacy rates but should be reviewed:
+- "rap-recording" lists `From $75/hr` ✓ matches real
+- "r-and-b" lists `From $75/hr` ✓ matches real
+- "podcasts" lists `From $120/hr` — Legacy's actual podcast pricing not specified on live site, this is a guess
+- "voiceover" lists `From $95/hr` — Legacy's actual VO pricing not specified, this is a guess
+- "artist-development" lists `Consultation $150 / Multi-month engagements custom` — actual Legacy rate is $99 consultation, multi-month custom
 
-## Pricing
+**Needs:** confirm podcast and VO rates with owner; update artist-dev page to use real $99 consultation rate.
 
-`src/lib/data.ts` `pricing` array.
+### Neighborhood Pages
 
-All rates are illustrative. Real rates pending owner confirmation:
+`src/lib/data.ts` `neighborhoods` — 6 pages. Drive times and ZIPs are accurate at first-pass but reviewed by someone living in DFW would help.
 
-| Service | Placeholder (with engineer / without) | Needs |
-|---|---|---|
-| Hourly Recording | $75/hr / $45/hr | Real rate |
-| 4-Hour Block | $280 / $170 | Real rate |
-| 8-Hour Day | $520 / $320 | Real rate |
-| Mixing & Mastering | $150/song | Real rate |
-| Full Package | $500 (with) / N/A | Real rate |
-| Booking add-on prices | Mixing $150, Full Package $300 | Real rates (also in `src/components/BookingModal.tsx` `ADDON_PRICES`) |
+### Studio Imagery
+
+`/public/images/` — 7 stock studio images. Replace with real photos of Legacy's two-room setup (A Room with C24, vocal booth, B Room) when renovation/photography happens.
+
+### Session Video Clips
+
+`/public/videos/` — 5 stock session clips. Replace with real "Live from Legacy" video sessions per the compete recommendation.
+
+### Buy Beats / Merch (services Legacy actually offers but we haven't built yet)
+
+The live site has:
+- **`/buy-beats`** — exclusive and leased beats catalog (login-gated; we don't have catalog data)
+- **`/shop`** — merch (T-shirts, hoodies, snapbacks, koozies)
+
+We have NOT built routes for these yet. **Decide:**
+- Build a `/shop` page that links out to the existing Wix shop (until it's migrated)?
+- Build a `/beats` page or service?
+- Wait until launch and bring them over fully?
+
+### Domain Cutover
+
+`legacymusicgroup.com` is currently serving the older Wix-style site. The new build needs to:
+1. Backlink audit on the existing domain (Ahrefs/Semrush) before switching
+2. Map any URL changes for 301 redirects (e.g., `/about-2` → `/studio`, `/services-page` → `/services`, `/contacts` → `/contact`, `/team/*` → `/engineers/*`, `/equipment` → `/gear`, `/buy-beats` → ???, `/shop` → ???)
+3. Set up `_redirects` in Netlify with the migration map
+4. Flip DNS only after redirects are tested
+
+### Pre-Launch Toggle Set
+
+When ready to publish:
+1. `public/robots.txt` → switch from `Disallow: /` to `Allow: /` + `Sitemap:` line
+2. `index.html` `<meta name="robots">` default → `index, follow`
+3. `src/lib/seo.ts` `useSeo` default `noindex: false`
+4. `index.html` → uncomment GA4 block + replace `G-XXXXXXXXXX` with real measurement ID
+5. Add real OG image at `/og-image.jpg` (1200×630)
+6. Convert images to `.webp` per LiFi NYC client rules
+7. Run `/audit-website`, `/seo-audit`, `/perf-audit`, `/security-audit`, `/ultraship`
 
 ---
 
-## Contact info
-
-`src/lib/data.ts` `contact` object.
-
-| Field | Placeholder | Needs |
-|---|---|---|
-| Phone (display) | `(214) 555-0199` | Real phone — update everywhere this string appears |
-| Phone (E.164) | `+12145550199` | Real E.164 phone for `tel:` links |
-| Email | `book@legacymusic.group` | Real email (and confirm domain) |
-| Privacy email | `privacy@legacymusic.group` (in `src/pages/Privacy.tsx`) | Real privacy contact |
-| Address line 1 | `Deep Ellum` | Real street address |
-| Address line 2 | `Dallas, TX 75226` | Real ZIP if different |
-| Hours | `Mon–Sat, 10am–10pm` | Real operating hours |
-| Response time copy | `We reply within 24hrs` | Confirm SLA |
-
-Also in `src/lib/schemas.ts` `BUSINESS` constant — same fields, schema-encoded.
-
----
-
-## Social URLs
-
-`src/components/Footer.tsx` social icons currently link to `#`.
-
-| Icon | Needs |
-|---|---|
-| Instagram | Real IG URL |
-| Spotify | Real Spotify artist/profile URL |
-| YouTube | Real YouTube channel URL |
-
-Add other platforms (TikTok, Twitter/X) as needed.
-
----
-
-## Lead capture
-
-All forms currently no-op locally — submit handlers call `setSubmitted(true)` and don't send anything anywhere.
-
-| Form | File | Needs to wire |
-|---|---|---|
-| Long-form contact | `src/pages/Contact.tsx` | Email send (Resend / Netlify Forms / Supabase write) + alert to `book@…` |
-| Callback request | `src/components/CallbackForm.tsx` | Same — plus optional SMS to studio (Twilio / Grasshopper sync per BRIEF §21) |
-| Newsletter / Artist List | `src/components/NewsletterSignup.tsx` (used on Home + Contact pages) | Email provider sync (Klaviyo / Mailchimp / Resend Audiences) |
-| Booking — contact details capture (step 5) | `src/components/BookingModal.tsx` | Persist to Supabase `leads` / `bookings` tables per BRIEF §22 |
-
----
-
-## Booking backend
-
-Booking now hands off to **Calendly** after the brand-styled intro steps. Calendly handles time, contact, agreement, payment, and confirmation natively.
-
-| Step | What's there | What's needed |
-|---|---|---|
-| 1 — Session type | UI complete (with/without engineer) | n/a |
-| 2 — Add-ons | UI complete (mixing, full package) | n/a |
-| 3 — Engineer | UI complete (uses centralized `engineers`) | Auto-updates when real engineer roster lands |
-| 4 — Calendly schedule | Inline embed via `react-calendly` `InlineWidget` with brand-themed `pageSettings` | Real Calendly URLs (see Calendly section below) |
-| 5 — Confirmation | Triggers on Calendly `event_scheduled` callback | Optionally hit Calendly API to fetch invitee details and persist to Supabase `leads` |
-
-What Calendly handles for us (no longer our responsibility):
-- Real availability (synced from engineer calendars in Calendly admin)
-- Contact details capture
-- Studio agreement (configurable in Calendly event settings)
-- Payment (configurable Calendly + Stripe integration)
-- Confirmation email + calendar invite to invitee
-- Day-of reminders
-
-What we still own:
-- Pre-Calendly UX (steps 1–3)
-- Tracking — fires `gtag('event', 'booking_scheduled', ...)` on success (uncomment GA4 first)
-- Optional: Calendly webhook → Supabase write for our own lead store
-
----
-
-## Calendly (hybrid: custom picker + deep-link)
-
-Source of truth: [`src/lib/data.ts` `calendly` object](src/lib/data.ts).
-
-We render a **brand-matched custom calendar/slot picker** (`CalendlyPicker`) that fetches real Calendly availability via a Netlify Function proxy (`/.netlify/functions/calendly-availability`), then deep-links the user to Calendly's hosted page using the per-slot `scheduling_url` so they land on Calendly's contact form with the time pre-locked. Calendly handles contact details + agreement + payment + confirmation.
-
-### What needs swapping in
+## Calendly setup (when ready)
 
 **Three placeholder layers:**
 
-**1. Calendly Personal Access Token (PAT)** — set as Netlify env var `CALENDLY_PAT`
-
-Get it from Calendly admin → Integrations → API & Webhooks → Personal Access Tokens. Without this set, the picker shows mock availability with a banner saying "real Calendly account not yet connected."
-
-To set it:
+**1. Calendly Personal Access Token** — set as Netlify env var `CALENDLY_PAT`. Get from Calendly admin → Integrations → API & Webhooks → Personal Access Tokens.
 ```bash
 netlify env:set CALENDLY_PAT "your-pat-here" --context production
 ```
 
-Or via Netlify UI: Site settings → Environment variables → Add variable.
-
-**2. Public booking URLs** (`bookingUrl` in each entry) — fallback "Open Calendly directly" links
+**2. Public booking URLs** in `src/lib/data.ts` `calendly`:
 
 | Use case | Placeholder URL |
 |---|---|
-| With engineer (default fallback) | `https://calendly.com/legacymusicgroup/recording-with-engineer` |
-| With Marcus Cole | `https://calendly.com/legacymusicgroup/recording-with-marcus-cole` |
-| With Sofia Reyes | `https://calendly.com/legacymusicgroup/recording-with-sofia-reyes` |
-| With David Byrne | `https://calendly.com/legacymusicgroup/recording-with-david-byrne` |
-| With Jade Williams | `https://calendly.com/legacymusicgroup/recording-with-jade-williams` |
-| Without engineer | `https://calendly.com/legacymusicgroup/studio-time` |
+| With engineer (default) | `calendly.com/legacymusicgroup/recording-with-engineer` |
+| With Matthew Medlock | `calendly.com/legacymusicgroup/recording-with-marcus-cole` (legacy slug — update) |
+| With Ray Dallas | `calendly.com/legacymusicgroup/recording-with-sofia-reyes` (legacy slug — update) |
+| With Wayne | `calendly.com/legacymusicgroup/recording-with-david-byrne` (legacy slug — update) |
+| With Terry | n/a (maintenance role, not bookable) |
+| Without engineer | `calendly.com/legacymusicgroup/studio-time` |
 
-**3. Calendly event type API URIs** (`eventTypeUri` in each entry) — used by the proxy to query availability
+**Note:** the per-engineer URL keys in `data.ts` need updating — they currently match old placeholder engineer IDs (`'1'`, `'2'`, `'3'`, `'4'`) but the new engineer IDs are slug-based (`matthew`, `ray`, `wayne`, `terry`). When real Calendly URLs land, update `byEngineerId` to use the new slugs.
 
-Each Calendly event type has a unique URI like `https://api.calendly.com/event_types/{UUID}`. Get them by:
-
+**3. Event type URIs** — get them via:
 ```bash
 curl -H "Authorization: Bearer $CALENDLY_PAT" \
   https://api.calendly.com/event_types?user=https://api.calendly.com/users/{YOUR-USER-UUID}
 ```
 
-Then map each event type to the matching entry in `src/lib/data.ts`. Currently all `eventTypeUri` values are `https://api.calendly.com/event_types/PLACEHOLDER-UUID-*` strings.
-
-### How the URL is selected at runtime
-
-```ts
-sessionType === 'without'  →  calendly.withoutEngineer
-sessionType === 'with'     →  calendly.withEngineer.byEngineerId[engineerId]
-                              ?? calendly.withEngineer.default
-```
-
-### Three valid Calendly setups (pick one)
-
-1. **Single event type with branching questions** — point both `withEngineer.default.eventTypeUri` and `withoutEngineer.eventTypeUri` at the same URI; configure Calendly questions to capture session type / engineer from URL params (Calendly's UTM passthrough handles this)
-2. **Two event types** — one for "with engineer" (Calendly auto-routes among engineers based on availability), one for "studio time" — current default scaffold
-3. **Per-engineer event types** — each engineer has their own Calendly event type (most personalized, recommended for branded discovery from `/engineers/[id]` pages)
-
-### Optional follow-up integrations
-
-- Calendly → Stripe for deposit collection (configurable in Calendly event settings — Pro+ feature)
-- Calendly webhook → Supabase to mirror bookings into our own lead store
-- Calendly → Resend / Mailchimp / Klaviyo for post-session follow-up sequences
-
-### Going live with the hybrid
-
-1. Get Calendly PAT and set `CALENDLY_PAT` env var on Netlify
-2. Get event type URIs (curl command above) and replace `PLACEHOLDER-UUID-*` strings in `src/lib/data.ts`
-3. Confirm public booking URLs in `src/lib/data.ts`
-4. Trigger a redeploy (`netlify deploy --build` or push a commit)
-5. Open the booking modal — picker shows real availability, mock banner disappears
-
----
-
-## SEO / Analytics
-
-| Item | Status | Needs |
-|---|---|---|
-| `robots.txt` | `Disallow: /` (pre-launch) | Flip to allowing crawl + sitemap reference at launch |
-| `sitemap.xml` | Static, references `legacymusicgroup.com` URLs | Confirm domain; regenerate if route map changes |
-| Canonical URLs | Use `https://legacymusicgroup.com` | Confirm domain |
-| `noindex` meta on all pages | Set via `useSeo({ noindex: true })` default | Flip default to `false` at launch |
-| GA4 | Snippet commented out in `index.html` with placeholder `G-XXXXXXXXXX` | Real GA4 measurement ID + uncomment |
-| Sentry | Not yet wired | Add per BRIEF §23 stack list |
-| OG image | Reuses `hero-studio-dark.jpg` | Dedicated 1200×630 OG asset |
-| Schema — LocalBusiness | Includes placeholder street address `"Placeholder Street Address"` | Real street address in `src/lib/schemas.ts` `BUSINESS.address.street` |
-| Schema — geo | Approximate Deep Ellum coords (32.7842, -96.7841) | Real building coordinates |
-| Schema — `priceRange` | `$$` | Confirm |
-| Schema — `founded` | `"Placeholder year"` | Real founding year |
-
----
-
-## Policies / Legal
-
-| Page | Status | Needs |
-|---|---|---|
-| `/policies` | First-pass copy covering booking, cancellation, late, conduct, files, revisions, ownership | Owner review + possibly legal review |
-| `/privacy` | First-pass GDPR/CCPA-aware draft | Legal review; confirm what tracking actually happens |
-| `/terms` | First-pass standard terms | Legal review; confirm Texas governing law and Dallas County venue clause |
-| Cancellation windows | "48 hrs" placeholder | Real window from owner |
-| Deposit structure | "Deposit required" — amount unstated | Real deposit % or flat amount |
-| Revision rounds | "Two rounds included" | Confirm |
-
----
-
-## Copy
-
-Most page copy follows BRIEF §15 voice but should still be reviewed for:
-- Engineer bios (all fictional, see Engineers section above)
-- "Where artists become originals" tagline — owner approval
-- Hero subhead "Premium recording studio and artist development for independent creators." — owner approval
-- About copy on Home, Studio — owner approval
-- Service descriptions on Services — confirm features list matches reality
-- FAQ answers — confirm specifics (cancellation window, gear list, parking, deposit amount)
-- Studio agreement text in BookingModal step 7 — confirm against final policies
-
----
-
-## Pre-launch checklist (when ready to flip from preview to public)
-
-1. Replace placeholder content per all sections above.
-2. `public/robots.txt` → switch to `Allow: /` and add `Sitemap:` line.
-3. `index.html` → set `<meta name="robots">` default to `index, follow`.
-4. `src/lib/seo.ts` → set `useSeo` default `noindex: false`.
-5. `index.html` → uncomment GA4 block and replace `G-XXXXXXXXXX`.
-6. Wire all forms (contact, callback, newsletter) to real backends.
-7. Wire Stripe in BookingModal step 8 + real availability source for step 4.
-8. Add real OG image at `/og-image.jpg` (1200×630) and update `src/lib/seo.ts` `defaultOgImage`.
-9. Convert all images to `.webp` with proper sizes per LiFi NYC client rules.
-10. Set up custom domain on Netlify, point DNS, confirm canonical matches.
-11. Run `/audit-website`, `/seo-audit`, `/perf-audit`, `/security-audit`, `/ultraship`.
+Replace `PLACEHOLDER-UUID-*` strings in `src/lib/data.ts`.

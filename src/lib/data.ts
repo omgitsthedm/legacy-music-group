@@ -21,21 +21,17 @@ export const calendly = {
       eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-DEFAULT',
     } satisfies CalendlyEventConfig,
     byEngineerId: {
-      '1': {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-marcus-cole',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-1',
+      matthew: {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/consultation-matthew',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-MATTHEW',
       },
-      '2': {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-sofia-reyes',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-2',
+      ray: {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-ray',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-RAY',
       },
-      '3': {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-david-byrne',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-3',
-      },
-      '4': {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-jade-williams',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-4',
+      wayne: {
+        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-wayne',
+        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-WAYNE',
       },
     } as Record<string, CalendlyEventConfig>,
   },
@@ -47,18 +43,25 @@ export const calendly = {
 }
 
 // =========================================================================
-// CONTACT INFO
+// CONTACT INFO (REAL — sourced from legacymusicgroup.com 2026-05-07)
 // =========================================================================
-// PLACEHOLDER: replace all values with real contact details before launch.
 
 export const contact = {
-  phone: '(214) 555-0199',
-  phoneE164: '+12145550199',
-  email: 'book@legacymusic.group',
-  addressLine1: 'Deep Ellum',
+  phone: '(214) 377-9729',
+  phoneE164: '+12143779729',
+  email: 'info@legacymusicgroup.com',
+  addressLine1: '2815 Main St, Suite A',
   addressLine2: 'Dallas, TX 75226',
-  hours: 'Mon–Sat, 10am–10pm',
+  // PLACEHOLDER: hours are not on the public site. Confirm with owner.
+  hours: 'Mon–Sat, by appointment',
   responseTime: 'We reply within 24hrs',
+  parkingNote: 'Metered street parking 6pm–midnight at $0.25 / 30 min.',
+  social: {
+    instagram: 'https://www.instagram.com/legacymusicgroup/',
+    facebook: 'https://www.facebook.com/theLegacymusicgroup/',
+    twitter: 'https://twitter.com/LegacyMusicGrp',
+    youtube: 'https://www.youtube.com/c/LegacyMusicGroup',
+  },
 }
 
 // =========================================================================
@@ -88,88 +91,70 @@ export interface Engineer {
   credits: EngineerCredit[]
 }
 
-// PLACEHOLDER: All engineer data is fictional — see PLACEHOLDERS.md §Engineers.
+// Real engineers sourced from legacymusicgroup.com 2026-05-07.
+// Photos remain placeholder paths — engineer headshots exist on the live site
+// and need to be downloaded/uploaded. See PLACEHOLDERS.md §Engineers.
 export const engineers: Engineer[] = [
   {
-    id: '1',
-    name: 'Marcus Cole',
-    specialty: 'Hip-Hop, R&B',
-    image: '/images/engineer-1.jpg',
-    bio: 'Marcus Cole is a Grammy-nominated engineer and producer with over a decade of experience shaping the sound of Dallas hip-hop and R&B. His approach blends analog warmth with modern clarity, creating mixes that feel both timeless and contemporary. Marcus began his career interning at legendary studios in Los Angeles before returning to his hometown to build Legacy Music Group alongside fellow creators. His work has been featured on major streaming playlists, national radio, and even a Super Bowl commercial. Artists describe his sessions as transformative — he has a rare gift for making vocalists feel completely at ease while pushing them to deliver their best performance.',
-    stats: { experience: '10+ Years', projects: '500+ Projects', highlight: 'Grammy Nominated' },
-    genres: ['Hip-Hop', 'R&B', 'Trap Soul'],
-    serviceSlugs: ['rap-recording', 'r-and-b'],
-    samples: [
-      { title: 'Midnight in Deep Ellum', artist: 'Local Artist Mix', duration: '3:42' },
-      { title: 'Caramel Skies', artist: 'R&B Session', duration: '4:15' },
-      { title: 'Concrete Jungle', artist: 'Hip-Hop Beat', duration: '2:58' },
-      { title: 'Late Night Drive', artist: 'Trap Soul Mix', duration: '3:30' },
-    ],
-    credits: [
-      { artist: 'Placeholder Artist A', track: 'Track Name', year: '2024' },
-      { artist: 'Placeholder Artist B', track: 'Track Name', year: '2024' },
-      { artist: 'Placeholder Artist C', track: 'Track Name', year: '2023' },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Sofia Reyes',
-    specialty: 'Pop, Electronic',
-    image: '/images/engineer-2.jpg',
-    bio: 'Sofia Reyes is a pop and electronic music specialist whose productions have collectively amassed over 50 million streams. Trained in both classical piano and electronic production, she brings a unique harmonic sensibility to modern pop music. Sofia has a particular talent for vocal production — comping, tuning, and layering vocals to create that polished, radio-ready sound. Her electronic productions are known for their dynamic range and emotional depth, often blending organic instrumentation with synthesized textures.',
-    stats: { experience: '8+ Years', projects: '300+ Projects', highlight: '50M+ Streams' },
-    genres: ['Pop', 'Electronic', 'Synthwave'],
+    id: 'matthew',
+    name: 'Matthew Medlock',
+    specialty: 'Studio Owner & Manager',
+    image: '/images/engineer-1.jpg', // PLACEHOLDER — real photo on live site
+    bio: 'A 10-year music industry veteran, Matthew Medlock attributes his diehard obsession with music to his upbringing near the cultural melting pot of Memphis, Tennessee. He earned a Business Administration degree in Music Business and was active in GRAMMYU. Matthew learned music management expertise from his father — a successful business owner who emphasized high standards and work ethics. His professionalism, industry connections, and instincts have established him as a respected figure in Dallas music management.',
+    stats: { experience: '10+ Years', projects: 'Studio Owner', highlight: 'GRAMMYU Member' },
+    genres: ['Studio Operations', 'Artist Development', 'Music Business'],
     serviceSlugs: ['artist-development'],
     samples: [
-      { title: 'Neon Dreams', artist: 'Pop Production', duration: '3:18' },
-      { title: 'Pulse', artist: 'Electronic Mix', duration: '4:02' },
-      { title: 'Glass Heart', artist: 'Pop Ballad', duration: '3:55' },
-      { title: 'Digital Love', artist: 'Synthwave Track', duration: '3:22' },
+      { title: 'Schedule a consultation', artist: 'Artist Development', duration: '60 min' },
+    ],
+    credits: [],
+  },
+  {
+    id: 'ray',
+    name: 'Ray Dallas',
+    specialty: 'Head Engineer',
+    image: '/images/engineer-2.jpg', // PLACEHOLDER — real photo on live site
+    bio: 'Ray handles the primary engineering work at Legacy Music Group, with deep expertise in mixing, tracking, editing, and Melodyne. He has been with Legacy for five years and has collaborated with numerous local and national clients including Mac Miller, B.o.B, Dorrough, and Young Jeezy. His preferred styles span rap, pop, and singer-songwriter sessions — he has a particular gift for getting the best performance out of vocalists.',
+    stats: { experience: '5+ Years at Legacy', projects: 'Major Label Credits', highlight: 'Mac Miller · B.o.B · Young Jeezy' },
+    genres: ['Rap', 'Pop', 'Songwriter'],
+    serviceSlugs: ['rap-recording', 'r-and-b', 'voiceover', 'podcasts'],
+    samples: [
+      { title: 'Mixing & Tracking', artist: 'Ray\'s specialty', duration: '—' },
+      { title: 'Editing & Melodyne', artist: 'Ray\'s specialty', duration: '—' },
     ],
     credits: [
-      { artist: 'Placeholder Pop Artist', track: 'Track Name', year: '2024' },
-      { artist: 'Placeholder Synth Act', track: 'Track Name', year: '2024' },
+      { artist: 'Mac Miller' },
+      { artist: 'B.o.B' },
+      { artist: 'Dorrough' },
+      { artist: 'Young Jeezy' },
     ],
   },
   {
-    id: '3',
-    name: 'David Byrne',
-    specialty: 'Rock, Folk',
-    image: '/images/engineer-3.jpg',
-    bio: 'David Byrne has spent over 15 years recording and mixing for indie darlings and major label rock acts. His philosophy is simple: capture the performance, not the perfection. David specializes in live band recording, using minimal processing to preserve the raw energy of a group playing together in a room. His folk productions are renowned for their intimate, "sitting-right-next-to-you" quality. David also mentors younger engineers at Legacy, passing down the craft of analog signal flow and microphone technique.',
-    stats: { experience: '15+ Years', projects: '700+ Projects', highlight: 'Multi-Platinum' },
-    genres: ['Rock', 'Folk', 'Indie'],
-    serviceSlugs: ['voiceover', 'podcasts'],
+    id: 'wayne',
+    name: 'Wayne',
+    specialty: 'Studio Engineer / Producer',
+    image: '/images/engineer-3.jpg', // PLACEHOLDER — real photo on live site
+    bio: 'Wayne has been with Legacy for 2 years with a main focus on mixing and production. Pro Tools is his go-to DAW, paired with an assortment of valuable plugins. He handles editing needs and final mixes for Legacy clients. Check his availability when booking a session.',
+    stats: { experience: '2+ Years at Legacy', projects: 'Mixing & Production', highlight: 'Pro Tools Specialist' },
+    genres: ['Mixing', 'Production', 'Editing'],
+    serviceSlugs: ['rap-recording', 'r-and-b'],
     samples: [
-      { title: 'Dust and Bones', artist: 'Rock Album Mix', duration: '4:10' },
-      { title: 'Front Porch', artist: 'Folk Session', duration: '3:45' },
-      { title: 'Amplifier', artist: 'Live Band Recording', duration: '3:58' },
-      { title: 'Open Road', artist: 'Indie Production', duration: '4:22' },
+      { title: 'Mix & Production', artist: 'Wayne\'s focus', duration: '—' },
     ],
-    credits: [
-      { artist: 'Placeholder Indie Band', track: 'Track Name', year: '2023' },
-      { artist: 'Placeholder Folk Artist', track: 'Track Name', year: '2024' },
-    ],
+    credits: [],
   },
   {
-    id: '4',
-    name: 'Jade Williams',
-    specialty: 'Hip-Hop, Soul',
-    image: '/images/engineer-4.jpg',
-    bio: 'Jade Williams is an artist-first engineer who believes every great recording starts with a great performance. Specializing in hip-hop and soul, Jade has an uncanny ability to connect with artists on a personal level, creating a studio environment where vulnerability and creativity can flourish. She cut her teeth engineering for local Dallas artists before quickly rising to work with touring acts passing through Deep Ellum. Her soul productions feature lush, warm tones that harken back to the golden age of R&B while maintaining contemporary punch.',
-    stats: { experience: '6+ Years', projects: '200+ Projects', highlight: 'Rising Star' },
-    genres: ['Hip-Hop', 'Soul', 'Neo-Soul'],
-    serviceSlugs: ['rap-recording', 'r-and-b', 'artist-development'],
-    samples: [
-      { title: 'Soul Searching', artist: 'Neo-Soul Mix', duration: '4:05' },
-      { title: 'Barz', artist: 'Hip-Hop Session', duration: '3:12' },
-      { title: 'Golden Hour', artist: 'Soul Production', duration: '3:48' },
-      { title: 'Freestyle Room', artist: 'Raw Session', duration: '2:45' },
-    ],
-    credits: [
-      { artist: 'Placeholder Hip-Hop Artist', track: 'Track Name', year: '2024' },
-      { artist: 'Placeholder Soul Singer', track: 'Track Name', year: '2023' },
-    ],
+    id: 'terry',
+    name: 'Terry',
+    specialty: 'Maintenance Engineer',
+    image: '/images/engineer-4.jpg', // PLACEHOLDER — real photo on live site
+    // PLACEHOLDER: bio is brief on the live site. Confirm with owner.
+    bio: 'Terry keeps the room running. As Legacy\'s maintenance engineer, he\'s the reason the gear is dialed when you walk in — patch bays clean, signal flow tested, and rooms ready for whatever a session demands.',
+    stats: { experience: 'On the Legacy team', projects: 'Studio Maintenance', highlight: 'Keeps the Gear Dialed' },
+    genres: ['Studio Maintenance'],
+    serviceSlugs: [],
+    samples: [],
+    credits: [],
   },
 ]
 
@@ -445,60 +430,120 @@ export interface PricingTier {
   highlighted?: boolean
 }
 
-// PLACEHOLDER: pricing reflects illustrative rates — confirm with owner.
+// Real pricing sourced from legacymusicgroup.com 2026-05-07.
 export const pricingTiers: PricingTier[] = [
   {
-    name: 'Hourly',
+    name: 'Recording',
     price: '$75',
-    unit: '/hr · with engineer',
-    tagline: 'Best for short sessions or testing the room.',
+    unit: '/hour · 2-hour minimum',
+    tagline: 'Vocals, voiceovers, podcasts.',
     features: [
       'Pro engineer at the board',
-      'Pro Tools / Logic Pro',
-      'Vocal booth or live room',
-      '$45/hr without engineer',
-      '2-hour minimum booking',
+      'Vocal booth with floating-ceiling treatment',
+      'Industry-standard tracking workflow',
+      'Discounts on 5+ hour blocks',
+      'Bring your beat, vocals, or podcast crew',
     ],
   },
   {
-    name: '4-Hour Block',
-    price: '$280',
-    unit: 'with engineer · saves $20',
-    tagline: 'The sweet spot. 1–2 finished records.',
+    name: 'Starter Package',
+    price: '$399',
+    unit: '2 hrs · 1 mix · 1 master · cover art',
+    tagline: 'Single-release ready.',
     features: [
-      'Includes engineer',
-      'Comping + light polish in-session',
-      '$170 without engineer',
-      'Stem files delivered same-day',
-      'Add mixing/mastering for $150/song',
+      '2 hours of studio time',
+      '1 song mixed',
+      '1 song mastered',
+      'Cover art designed',
+      'Instagram story asset',
+    ],
+  },
+  {
+    name: 'Pro Package',
+    price: '$999',
+    unit: '5 hrs · 3 mixes · 3 masters · photoshoot',
+    tagline: 'Multi-track project, fully polished.',
+    features: [
+      '5 hours of studio time',
+      '3 mixes + 3 masters',
+      'Cover art + Instagram story',
+      'Music business consultation',
+      '1-hour photoshoot',
     ],
     highlighted: true,
   },
   {
-    name: '8-Hour Day',
-    price: '$520',
-    unit: 'with engineer · saves $80',
-    tagline: 'Full project day. EP- or album-ready.',
+    name: 'Album Package',
+    price: '$2,900',
+    unit: '10 hrs · 7 mixes · 7 masters · music video',
+    tagline: 'Album-ready, release-day ready.',
     features: [
-      'Includes engineer',
-      'Stem files + reference mixes',
-      '$320 without engineer',
-      'Coffee + meal accommodation',
-      'Add Full Package for $300',
+      '10 hours of studio time',
+      '7 mixes + 7 masters',
+      'Full music video production',
+      'Photoshoot included',
+      'Social media content kit',
     ],
   },
+]
+
+// À la carte services — beyond the packages above.
+export interface AlaCarteService {
+  name: string
+  price: string
+  description: string
+}
+
+export const alaCarteServices: AlaCarteService[] = [
   {
-    name: 'Full Package',
+    name: 'Mixing',
+    price: '$150+',
+    description: 'Industry-leading mixing handled by experienced engineers.',
+  },
+  {
+    name: 'Mastering',
+    price: '$30',
+    description: 'Final polish for singles or full projects.',
+  },
+  {
+    name: 'Custom Production',
     price: '$500',
-    unit: 'recording + mix + master + 3 promo clips',
-    tagline: 'The release-ready bundle.',
-    features: [
-      '4-hour recording session',
-      'Professional mix + master',
-      '3 promotional content clips',
-      'Release strategy consult',
-      '5–7 day turnaround on deliverables',
-    ],
+    description: 'One-on-one beat production with a Legacy producer.',
+  },
+  {
+    name: 'Engineer Rate — Room A',
+    price: '$55/hour',
+    description: 'Hourly engineer rate when booking the A Room.',
+  },
+  {
+    name: 'Engineer Rate — Room B',
+    price: '$45/hour',
+    description: 'Hourly engineer rate when booking the B Room.',
+  },
+  {
+    name: 'Major Label Rate',
+    price: '$175/hour',
+    description: 'Rate for major-label artists or label-budgeted sessions.',
+  },
+  {
+    name: 'Lessons',
+    price: '$100',
+    description: 'Recording and production lessons with a pro engineer.',
+  },
+  {
+    name: 'Music Business Consultation',
+    price: '$99',
+    description: 'Personalized guidance on music business questions.',
+  },
+  {
+    name: 'Listening Parties',
+    price: '$125',
+    description: 'Lounge-space hosting · 3-hour minimum.',
+  },
+  {
+    name: 'Graphic Design',
+    price: 'Call for Quote',
+    description: 'Album covers, song artwork, marketing materials.',
   },
 ]
 
@@ -514,110 +559,176 @@ export interface GearItem {
   image?: string
 }
 
-// PLACEHOLDER: gear list reflects a realistic Dallas studio loadout.
-// Replace with Legacy's actual gear list before launch.
+// Real gear list sourced from legacymusicgroup.com/equipment 2026-05-07.
 export const gearList: GearItem[] = [
+  // Microphones
   {
-    name: 'Solid State Logic SSL Console',
-    brand: 'SSL',
-    category: 'console',
-    description: 'Analog summing console for hybrid mixing workflow.',
+    name: 'Neumann U 87',
+    brand: 'Neumann',
+    category: 'microphone',
+    description: 'The vocal mic. Lives in the vocal booth.',
   },
+  {
+    name: 'AKG C414',
+    brand: 'AKG',
+    category: 'microphone',
+    description: 'Versatile workhorse condenser — vocals, instruments, room.',
+  },
+  {
+    name: 'Kaotica Eyeball',
+    brand: 'Kaotica',
+    category: 'microphone',
+    description: 'Portable iso ball for tighter vocal capture when needed.',
+  },
+  // Preamps & Outboard
+  {
+    name: 'Avalon 737',
+    brand: 'Avalon',
+    category: 'preamp',
+    description: 'Tube preamp + EQ + opto compressor in one — silky vocal chain.',
+  },
+  {
+    name: 'Purple Audio Compressor',
+    brand: 'Purple Audio',
+    category: 'compressor',
+    description: 'High-end outboard compression for vocals and bus work.',
+  },
+  // Audio Interfaces
+  {
+    name: 'UA Apollo',
+    brand: 'Universal Audio',
+    category: 'preamp',
+    description: 'Front-end interface with UAD plugin processing for tracking.',
+  },
+  {
+    name: 'UA Satellite Expansion CPU',
+    brand: 'Universal Audio',
+    category: 'outboard',
+    description: 'Extra UAD horsepower for plugin-heavy mix sessions.',
+  },
+  {
+    name: 'Focusrite Scarlett',
+    brand: 'Focusrite',
+    category: 'preamp',
+    description: 'Secondary interface for routing and scratch tracking.',
+  },
+  {
+    name: 'Stagesnake 16-Input',
+    brand: 'Stagesnake',
+    category: 'outboard',
+    description: 'Multi-input snake for live drum and band sessions.',
+  },
+  // Monitoring
+  {
+    name: 'Focal Duo Monitors',
+    brand: 'Focal',
+    category: 'monitor',
+    description: 'Mains. Detailed top-end and tight low-mid translation.',
+  },
+  {
+    name: 'Adams Studio 10 Monitors',
+    brand: 'Adams',
+    category: 'monitor',
+    description: 'Alternate mix-check monitoring.',
+  },
+  {
+    name: 'Presonus Sceptre S6',
+    brand: 'Presonus',
+    category: 'monitor',
+    description: 'Coaxial monitors in B Room and the Vocal Booth.',
+  },
+  {
+    name: 'Mackie Thump 12 PA + 18" Sub',
+    brand: 'Mackie',
+    category: 'monitor',
+    description: 'PA system for listening parties and group playback.',
+  },
+  {
+    name: 'Digimax Headphone Amp',
+    brand: 'Presonus',
+    category: 'outboard',
+    description: 'Distribution amp for multi-headphone monitoring.',
+  },
+  {
+    name: 'Presonus HP60 Headphone Amp',
+    brand: 'Presonus',
+    category: 'outboard',
+    description: 'Six-channel headphone amp for full-band sessions.',
+  },
+  // Software
   {
     name: 'Pro Tools',
     brand: 'Avid',
     category: 'software',
-    description: 'Industry-standard DAW running on every session.',
+    description: 'Default DAW for tracking and mixing.',
   },
   {
-    name: 'Logic Pro',
+    name: 'Studio One',
+    brand: 'Presonus',
+    category: 'software',
+    description: 'Alternate DAW available on request.',
+  },
+  {
+    name: 'Logic Pro X',
     brand: 'Apple',
     category: 'software',
-    description: 'Available on request — works for songwriters who came up in Logic.',
+    description: 'Available for songwriters and producers who came up in Logic.',
   },
   {
-    name: 'Neumann U87',
-    brand: 'Neumann',
-    category: 'microphone',
-    description: 'The vocal mic. Bright, present, forgiving.',
-  },
-  {
-    name: 'Shure SM7B',
-    brand: 'Shure',
-    category: 'microphone',
-    description: 'Hip-hop vocal mic + podcast mic. Defaults for rap sessions.',
-  },
-  {
-    name: 'Sony C-800G',
-    brand: 'Sony',
-    category: 'microphone',
-    description: 'When the song calls for that polished modern hip-hop sound.',
-  },
-  {
-    name: 'AEA R84A Ribbon',
-    brand: 'AEA',
-    category: 'microphone',
-    description: 'For vocals that need warmth and roll-off — also tracks guitar amps and brass.',
-  },
-  {
-    name: 'Royer R-121',
-    brand: 'Royer',
-    category: 'microphone',
-    description: 'Guitar amp ribbon. Warm and detailed.',
-  },
-  {
-    name: 'Universal Audio Apollo',
+    name: 'UAD Plugins',
     brand: 'Universal Audio',
-    category: 'preamp',
-    description: 'Front-end interface with UAD plugins for tracking-time effects.',
+    category: 'software',
+    description: 'Full UAD plugin library running on the Apollo + Satellite.',
   },
   {
-    name: 'Neve 1073-style Preamp',
-    brand: 'Neve',
-    category: 'preamp',
-    description: 'For vocals that need that classic British color.',
+    name: 'Waves Bundle',
+    brand: 'Waves',
+    category: 'software',
+    description: 'Industry-standard mixing and processing plugins.',
   },
   {
-    name: 'API 512c',
-    brand: 'API',
-    category: 'preamp',
-    description: 'Snare and percussion preamp — punch.',
+    name: 'Slate Digital',
+    brand: 'Slate Digital',
+    category: 'software',
+    description: 'Modern modeling plugins for vocal and drum chains.',
+  },
+  // Control / Computing
+  {
+    name: 'C24 Control Surface',
+    brand: 'Avid',
+    category: 'console',
+    description: 'Pro Tools control surface — physical faders, EQ, and routing.',
   },
   {
-    name: 'LA-2A Compressor',
-    brand: 'Universal Audio',
-    category: 'compressor',
-    description: 'Silky vocal compressor. Standard hip-hop and R&B chain.',
+    name: 'iMac 27"',
+    brand: 'Apple',
+    category: 'instrument',
+    description: 'Workstation in A Room and the Vocal Booth.',
   },
   {
-    name: '1176 Compressor',
-    brand: 'Universal Audio',
-    category: 'compressor',
-    description: 'Aggressive vocal and drum compression.',
+    name: 'Akai MAX 49 MIDI Controller',
+    brand: 'Akai',
+    category: 'instrument',
+    description: 'For producers tracking with virtual instruments in-room.',
+  },
+  // Treatment + amenities
+  {
+    name: 'Vocal Booth — Floating Ceiling',
+    brand: 'Custom',
+    category: 'outboard',
+    description: 'Iso-treated booth with floating ceiling acoustic treatment.',
   },
   {
-    name: 'Distressor EL8',
-    brand: 'Empirical Labs',
-    category: 'compressor',
-    description: 'Mod button on, vocal sounds 10× more expensive.',
+    name: 'Two Producer Workstations',
+    brand: 'Legacy Music Group',
+    category: 'instrument',
+    description: 'Producer-side desks for collab sessions or beat-finishing.',
   },
   {
-    name: 'Genelec 1031A Monitors',
-    brand: 'Genelec',
-    category: 'monitor',
-    description: 'Mains. Translation that holds up everywhere.',
-  },
-  {
-    name: 'Yamaha NS-10M',
-    brand: 'Yamaha',
-    category: 'monitor',
-    description: 'Reference nearfields. The unforgiving second opinion.',
-  },
-  {
-    name: 'Avantone MixCubes',
-    brand: 'Avantone',
-    category: 'monitor',
-    description: 'Mid-only check — what your mix sounds like in the average car.',
+    name: 'Prime Acoustics Treatment',
+    brand: 'Prime Acoustics',
+    category: 'outboard',
+    description: 'Acoustic treatment throughout the studio.',
   },
 ]
 
@@ -778,50 +889,30 @@ export interface Review {
   date: string
 }
 
-// PLACEHOLDER: hardcoded reviews to demo the UI. Real reviews wire via
-// Google Business Profile API on launch. See PLACEHOLDERS.md §Reviews.
+// Real reviews scraped from legacymusicgroup.com homepage 2026-05-07.
+// Source: 3 Google reviews already on the live site. AggregateRating wires
+// to Google Business Profile API on launch for the full count.
 export const reviews: Review[] = [
   {
-    author: 'Placeholder Artist Name',
-    body: 'Best studio I\'ve recorded at in Dallas. Engineer was dialed in, the room sounded incredible, and the booking was the easiest I\'ve ever done. Walking out with finished records same-day was a first.',
+    author: 'Brandon P.',
+    body: 'Recorded a few songs here, they have excellent quality and the engineers can really help take the song to the next level.',
     rating: 5,
     source: 'Google',
-    date: '2026-04-15',
+    date: '2025-08-01', // PLACEHOLDER date — real Google review date pending GBP API wire
   },
   {
-    author: 'Placeholder Producer Name',
-    body: 'Legacy is the studio I send all my artists to now. The chain is clean, the workflow is fast, and the engineers actually understand hip-hop production — not just \"recording for hip-hop.\" Big difference.',
+    author: 'Farhan P.',
+    body: 'Their unbelievable customer service, alongside the beautiful studio and excellent equipment, made my experience top-notch.',
     rating: 5,
     source: 'Google',
-    date: '2026-03-28',
+    date: '2025-09-01', // PLACEHOLDER date
   },
   {
-    author: 'Placeholder Podcaster Name',
-    body: 'We record our podcast here weekly. The recurring booking is seamless, the sound is broadcast-quality, and the engineer-driven editing saves us 4+ hours of post a week. Worth every dollar.',
+    author: 'Richard C.',
+    body: "The atmosphere gave off a musical vibe that's makes everything flow. The recording process was relaxed and productive.",
     rating: 5,
     source: 'Google',
-    date: '2026-03-10',
-  },
-  {
-    author: 'Placeholder Vocalist Name',
-    body: 'I\'ve been recording in Dallas for 12 years. Legacy is the first studio that felt like both a serious workspace AND a comfortable creative environment. Booked my next session before I left.',
-    rating: 5,
-    source: 'Yelp',
-    date: '2026-02-22',
-  },
-  {
-    author: 'Placeholder Indie Artist Name',
-    body: 'Honestly thought premium studios in Deep Ellum were out of my budget. Legacy\'s pricing is transparent, the engineer was patient with a first-time recorder, and the masters sound like a major label release. Hugely recommend.',
-    rating: 5,
-    source: 'Google',
-    date: '2026-02-08',
-  },
-  {
-    author: 'Placeholder Voice Actor Name',
-    body: 'Source-Connect setup was tested before I walked in, the engineer knew exactly how to direct for broadcast, and I had the final masters in my inbox same day. Best VO session I\'ve done in DFW.',
-    rating: 5,
-    source: 'Google',
-    date: '2026-01-30',
+    date: '2025-10-01', // PLACEHOLDER date
   },
 ]
 

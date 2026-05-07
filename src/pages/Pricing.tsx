@@ -5,7 +5,7 @@ import { BookingContext } from '../App'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
-import { pricingTiers } from '../lib/data'
+import { pricingTiers, alaCarteServices } from '../lib/data'
 import { buildBreadcrumbSchema, buildFaqSchema } from '../lib/schemas'
 
 const pricingFaqs = [
@@ -131,32 +131,35 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Add-ons section */}
+      {/* À la carte services */}
       <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
-        <div className="mx-auto max-w-[900px]">
+        <div className="mx-auto max-w-[1000px]">
           <ScrollReveal>
             <h2
               data-speakable
-              className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#F5F0E8] mb-8 text-center"
+              className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#F5F0E8] mb-3 text-center"
             >
-              Common Add-Ons
+              À La Carte
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { name: 'Mixing & Mastering', price: '$150/song', body: '5–7 day turnaround. 2 rounds of revisions included.' },
-                { name: 'Promo Content Clips', price: '+$150 / 3 clips', body: 'Vertical and square cuts ready for socials.' },
-                { name: 'Audiobook ACX Master', price: '+$50/chapter', body: 'ACX-spec deliverables for Audible publishing.' },
-              ].map((a) => (
+            <p className="font-body text-[0.95rem] text-[#A38F7B] mb-8 text-center max-w-[560px] mx-auto">
+              Beyond the packages — individual services, hourly rates, and consultations.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {alaCarteServices.map((s) => (
                 <div
-                  key={a.name}
-                  className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-5"
+                  key={s.name}
+                  className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-4"
                 >
-                  <h3 className="font-body text-[1rem] font-medium text-[#F5F0E8]">{a.name}</h3>
-                  <p className="font-body text-[0.95rem] text-[#E8A33D] mt-1 font-medium">
-                    {a.price}
-                  </p>
-                  <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2 leading-[1.6]">
-                    {a.body}
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="font-body text-[0.95rem] font-medium text-[#F5F0E8] leading-[1.3]">
+                      {s.name}
+                    </h3>
+                    <span className="font-body text-[0.85rem] text-[#E8A33D] font-medium whitespace-nowrap">
+                      {s.price}
+                    </span>
+                  </div>
+                  <p className="font-body text-[0.8rem] text-[#A38F7B] leading-[1.5]">
+                    {s.description}
                   </p>
                 </div>
               ))}

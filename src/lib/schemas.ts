@@ -3,27 +3,31 @@ import { SITE } from './seo'
 const BUSINESS = {
   legalName: 'Legacy Music Group',
   description:
-    'Premium recording studio and artist development brand in Deep Ellum, Dallas. Recording, mixing, mastering, and full artist packages for independent artists.',
+    'Dallas\' #1 full-service recording studio and production company. Recording, mixing, mastering, custom production, and artist development in Deep Ellum.',
   address: {
-    street: 'Placeholder Street Address',
+    street: '2815 Main St, Suite A',
     city: 'Dallas',
     region: 'TX',
     postal: '75226',
     country: 'US',
     neighborhood: 'Deep Ellum',
   },
-  phone: '+1-214-555-0199',
-  email: 'book@legacymusic.group',
+  phone: '+1-214-377-9729',
+  email: 'info@legacymusicgroup.com',
   geo: {
-    latitude: 32.7842,
-    longitude: -96.7841,
+    // Approximate coords for 2815 Main St, Dallas, TX 75226 (Deep Ellum)
+    latitude: 32.7837,
+    longitude: -96.7780,
   },
   priceRange: '$$',
-  founded: 'Placeholder year',
+  // PLACEHOLDER: real founding year not surfaced on legacymusicgroup.com.
+  // Estimated from team tenure (10-yr veteran owner). Confirm with owner.
+  founded: '2014',
   sameAs: [
-    'https://www.instagram.com/legacymusicgroup',
-    'https://www.youtube.com/@legacymusicgroup',
-    'https://open.spotify.com/playlist/PLACEHOLDER',
+    'https://www.instagram.com/legacymusicgroup/',
+    'https://www.facebook.com/theLegacymusicgroup/',
+    'https://twitter.com/LegacyMusicGrp',
+    'https://www.youtube.com/c/LegacyMusicGroup',
   ],
 } as const
 
@@ -85,6 +89,8 @@ export const localBusinessSchema = {
     { '@type': 'City', name: 'Frisco' },
     { '@type': 'City', name: 'Richardson' },
   ],
+  // PLACEHOLDER: real hours not surfaced on legacymusicgroup.com.
+  // Hours below are reasonable assumption — confirm with owner.
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -93,6 +99,7 @@ export const localBusinessSchema = {
       closes: '22:00',
     },
   ],
+  foundingDate: BUSINESS.founded,
   potentialAction: {
     '@type': 'ReserveAction',
     target: {
