@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, useMemo } from 'react'
+import { InlineWidget, useCalendlyEventListener } from 'react-calendly'
 import {
   X,
   ChevronRight,
@@ -7,52 +8,14 @@ import {
   Sliders,
   Package,
   Check,
-  Calendar as CalIcon,
-  Clock,
-  CreditCard,
-  FileText,
-  Mail,
+  ExternalLink,
 } from 'lucide-react'
 import { BookingContext } from '../App'
-import { Calendar } from '@/components/ui/calendar'
-import { engineers } from '../lib/data'
+import { engineers, calendly } from '../lib/data'
 
-const timeSlots = [
-  '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM',
-  '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM',
-  '6:00 PM', '7:00 PM', '8:00 PM',
-]
-// PLACEHOLDER: disabled slots are illustrative — wire to real availability backend.
-const disabledSlots = ['12:00 PM', '3:00 PM', '6:00 PM']
+type Step = 1 | 2 | 3 | 4 | 5
 
-const ADDON_PRICES: Record<string, number> = {
-  mixing: 150,
-  full: 300,
-}
-const HOURLY_RATE: Record<'with' | 'without', number> = {
-  with: 75,
-  without: 45,
-}
-
-type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-
-interface ContactDetails {
-  name: string
-  email: string
-  phone: string
-  notes: string
-  source: string
-  optIn: boolean
-}
-
-const initialContact: ContactDetails = {
-  name: '',
-  email: '',
-  phone: '',
-  notes: '',
-  source: '',
-  optIn: false,
-}
+const TOTAL_VISIBLE_STEPS = 4 // Schedule (Calendly) + Confirmed are step 4 and step 5
 
 export default function BookingModal() {
   const { isOpen, setIsOpen } = useContext(BookingContext)
@@ -60,11 +23,6 @@ export default function BookingModal() {
   const [sessionType, setSessionType] = useState<'with' | 'without' | null>(null)
   const [addons, setAddons] = useState<string[]>([])
   const [selectedEngineer, setSelectedEngineer] = useState<string | null>(null)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  const [selectedTime, setSelectedTime] = useState<string | null>(null)
-  const [contact, setContact] = useState<ContactDetails>(initialContact)
-  const [agreed, setAgreed] = useState(false)
-  const [paymentInfo, setPaymentInfo] = useState({ name: '', card: '', exp: '', cvc: '', zip: '' })
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -76,22 +34,31 @@ export default function BookingModal() {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  // Without-engineer flow skips the engineer step. Same total (8 steps + 1 confirm)
-  // visually, but we route around step 3 in transitions.
-  const totalSteps = 8
-
-  const stepNumberLabel = step === 9 ? 'Confirmed' : `${step} of ${totalSteps}`
+  // Listen for Calendly's event_scheduled to advance to our confirmation screen.
+  // PLACEHOLDER: payload contains invitee + event URIs but NOT name/email by default.
+  // To capture lead data into Supabase, hit Calendly's API with the URIs in
+  // e.data.payload or wire a Calendly webhook server-side. See PLACEHOLDERS.md.
+  useCalendlyEventListener({
+    onEventScheduled: (e) => {
+      setStep(5)
+      // Fire analytics (GA4) — uncomment GA4 snippet in index.html for this to do anything
+      const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+      if (typeof window !== 'undefined' && typeof w.gtag === 'function') {
+        w.gtag('event', 'booking_scheduled', {
+          session_type: sessionType,
+          engineer_id: selectedEngineer,
+          addons: addons.join(','),
+          event_uri: e.data.payload?.event?.uri,
+        })
+      }
+    },
+  })
 
   const reset = () => {
     setStep(1)
     setSessionType(null)
     setAddons([])
     setSelectedEngineer(null)
-    setSelectedDate(new Date())
-    setSelectedTime(null)
-    setContact(initialContact)
-    setAgreed(false)
-    setPaymentInfo({ name: '', card: '', exp: '', cvc: '', zip: '' })
   }
 
   const handleClose = () => {
@@ -101,20 +68,20 @@ export default function BookingModal() {
 
   const goNext = () => {
     if (step === 1 && sessionType === 'without') {
-      setStep(3) // skip engineer step
-      return
-    }
-    if (step === 8) {
-      // PLACEHOLDER: payment processing — see PLACEHOLDERS.md §Booking backend
-      setStep(9)
+      // skip engineer step, jump to add-ons then Calendly
+      setStep(2)
       return
     }
     setStep((step + 1) as Step)
   }
 
   const goBack = () => {
-    if (step === 3 && sessionType === 'without') {
+    if (step === 2 && sessionType === 'without') {
       setStep(1)
+      return
+    }
+    if (step === 4 && sessionType === 'without') {
+      setStep(2) // back from Calendly to add-ons
       return
     }
     setStep((step - 1) as Step)
@@ -131,37 +98,29 @@ export default function BookingModal() {
       case 1: return !!sessionType
       case 2: return true // addons optional
       case 3: return sessionType === 'without' || !!selectedEngineer
-      case 4: return !!selectedDate && !!selectedTime
-      case 5:
-        return (
-          contact.name.trim().length > 1 &&
-          /\S+@\S+\.\S+/.test(contact.email) &&
-          contact.phone.replace(/\D/g, '').length >= 10
-        )
-      case 6: return true // review only
-      case 7: return agreed
-      case 8:
-        return (
-          paymentInfo.name.trim().length > 1 &&
-          paymentInfo.card.replace(/\s/g, '').length >= 13 &&
-          paymentInfo.exp.length >= 4 &&
-          paymentInfo.cvc.length >= 3
-        )
       default: return false
     }
-  }, [step, sessionType, selectedEngineer, selectedDate, selectedTime, contact, agreed, paymentInfo])
+  }, [step, sessionType, selectedEngineer])
 
-  const sessionTypeLabel = sessionType === 'with' ? 'With Engineer' : sessionType === 'without' ? 'Without Engineer' : '—'
-  const engineerName = engineers.find((e) => e.id === selectedEngineer)?.name ?? '—'
-  const formattedDate = selectedDate?.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-  const baseRate = sessionType ? HOURLY_RATE[sessionType] : 0
-  const addonTotal = addons.reduce((sum, a) => sum + (ADDON_PRICES[a] ?? 0), 0)
-  const estimatedTotal = baseRate + addonTotal
+  // Visible step number (skips engineer step for without-engineer flow)
+  const visibleStep = useMemo(() => {
+    if (step === 5) return TOTAL_VISIBLE_STEPS
+    if (sessionType === 'without' && step >= 3) return step - 1
+    return step
+  }, [step, sessionType])
+
+  const calendlyUrl = useMemo(() => {
+    if (sessionType === 'without') return calendly.withoutEngineer
+    if (sessionType === 'with' && selectedEngineer) {
+      return calendly.withEngineer.byEngineerId[selectedEngineer] ?? calendly.withEngineer.default
+    }
+    return calendly.withEngineer.default
+  }, [sessionType, selectedEngineer])
+
+  const engineerObj = engineers.find((e) => e.id === selectedEngineer)
+  const addonString = addons
+    .map((a) => (a === 'mixing' ? 'Mixing & Mastering' : 'Full Package'))
+    .join(' + ')
 
   if (!isOpen) return null
 
@@ -172,28 +131,29 @@ export default function BookingModal() {
         onClick={handleClose}
       />
 
-      <div className="relative w-full max-w-[640px] max-h-[90vh] flex flex-col bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+      <div
+        className={`relative w-full ${
+          step === 4 ? 'max-w-[900px]' : 'max-w-[640px]'
+        } max-h-[92vh] flex flex-col bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(245,240,232,0.08)] shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <span className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] whitespace-nowrap">
-              Step {stepNumberLabel}
+              {step === 5 ? 'Confirmed' : `Step ${visibleStep} of ${TOTAL_VISIBLE_STEPS}`}
             </span>
-            {step !== 9 && (
-              <div className="flex items-center gap-1 overflow-hidden">
-                {Array.from({ length: totalSteps }).map((_, i) => {
+            {step !== 5 && (
+              <div className="flex items-center gap-1">
+                {Array.from({ length: TOTAL_VISIBLE_STEPS }).map((_, i) => {
                   const stepIndex = i + 1
-                  const isPast = stepIndex < step
-                  const isCurrent = stepIndex === step
-                  const isSkipped = sessionType === 'without' && stepIndex === 3 && step > 3
+                  const isPast = stepIndex < visibleStep
+                  const isCurrent = stepIndex === visibleStep
                   return (
                     <div
                       key={i}
                       className={`w-3 sm:w-4 h-1 rounded-full transition-colors duration-300 ${
                         isPast || isCurrent
-                          ? isSkipped
-                            ? 'bg-[rgba(232,163,61,0.3)]'
-                            : 'bg-[#E8A33D]'
+                          ? 'bg-[#E8A33D]'
                           : 'bg-[rgba(245,240,232,0.15)]'
                       }`}
                     />
@@ -211,11 +171,11 @@ export default function BookingModal() {
           </button>
         </div>
 
-        {/* Content (scroll) */}
-        <div ref={contentRef} className="flex-1 overflow-y-auto px-6 py-6">
+        {/* Content */}
+        <div ref={contentRef} className="flex-1 overflow-y-auto">
           {/* Step 1: Session Type */}
           {step === 1 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
+            <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your session type</h3>
               <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Pick what fits how you work.</p>
               <div className="space-y-3">
@@ -241,7 +201,7 @@ export default function BookingModal() {
 
           {/* Step 2: Add-ons */}
           {step === 2 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
+            <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Enhance your session</h3>
               <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Optional. Skip if you're just tracking.</p>
               <div className="space-y-3">
@@ -269,7 +229,7 @@ export default function BookingModal() {
 
           {/* Step 3: Engineer (skipped for without-engineer flow) */}
           {step === 3 && sessionType === 'with' && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
+            <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
               <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your engineer</h3>
               <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Pick the one whose style fits yours.</p>
               <div className="space-y-2">
@@ -301,298 +261,52 @@ export default function BookingModal() {
             </div>
           )}
 
-          {/* Step 4: Date + Time */}
+          {/* Step 4: Calendly schedule */}
           {step === 4 && (
             <div className="animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Pick a time</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Pre-launch placeholder — real availability syncs once scheduling is wired.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={setSelectedDate}
-                    className="bg-[#0A0A0A] rounded-xl border border-[rgba(245,240,232,0.08)] p-3"
-                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                  />
-                </div>
-                <div>
-                  <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] mb-3">
-                    Available Slots
-                  </h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {timeSlots.map((slot) => {
-                      const isDisabled = disabledSlots.includes(slot)
-                      const isSelected = selectedTime === slot
-                      return (
-                        <button
-                          key={slot}
-                          disabled={isDisabled}
-                          onClick={() => setSelectedTime(slot)}
-                          className={`font-body text-[0.85rem] py-2.5 px-3 rounded-full border transition-all duration-300 ${
-                            isSelected
-                              ? 'bg-[#E8A33D] text-[#0A0A0A] border-[#E8A33D]'
-                              : isDisabled
-                              ? 'text-[rgba(163,143,123,0.4)] border-[rgba(245,240,232,0.05)] line-through cursor-not-allowed'
-                              : 'text-[#F5F0E8] border-[rgba(245,240,232,0.2)] hover:border-[#E8A33D] hover:text-[#E8A33D]'
-                          }`}
-                        >
-                          {slot}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
+              <div className="px-6 pt-6 pb-3">
+                <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Pick a time</h3>
+                <p className="font-body text-[0.9rem] text-[#A38F7B]">
+                  {sessionType === 'with' && engineerObj
+                    ? `Booking with ${engineerObj.name}${addons.length ? ` · ${addonString}` : ''}.`
+                    : sessionType === 'without'
+                    ? `Studio time, no engineer${addons.length ? ` · ${addonString}` : ''}.`
+                    : 'Select a time that works.'}
+                </p>
               </div>
+              <CalendlyEmbed
+                url={calendlyUrl}
+                sessionType={sessionType}
+                addons={addons}
+                engineerName={engineerObj?.name}
+              />
             </div>
           )}
 
-          {/* Step 5: Contact Details */}
+          {/* Step 5: Confirmation */}
           {step === 5 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200 space-y-4">
-              <div>
-                <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Your details</h3>
-                <p className="font-body text-[0.9rem] text-[#A38F7B]">So we can confirm your session.</p>
-              </div>
-              <FieldInput
-                label="Name"
-                name="name"
-                value={contact.name}
-                onChange={(v) => setContact({ ...contact, name: v })}
-                placeholder="Your name"
-                autoComplete="name"
-              />
-              <FieldInput
-                label="Email"
-                name="email"
-                type="email"
-                value={contact.email}
-                onChange={(v) => setContact({ ...contact, email: v })}
-                placeholder="you@example.com"
-                autoComplete="email"
-              />
-              <FieldInput
-                label="Phone"
-                name="phone"
-                type="tel"
-                value={contact.phone}
-                onChange={(v) => setContact({ ...contact, phone: v })}
-                placeholder="(214) 555-0199"
-                autoComplete="tel"
-              />
-              <FieldInput
-                label="Notes (optional)"
-                name="notes"
-                value={contact.notes}
-                onChange={(v) => setContact({ ...contact, notes: v })}
-                placeholder="Anything we should know?"
-                multiline
-              />
-              <div>
-                <label className="block font-body text-[0.7rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-                  How did you hear about us? (optional)
-                </label>
-                <select
-                  value={contact.source}
-                  onChange={(e) => setContact({ ...contact, source: e.target.value })}
-                  className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
-                >
-                  <option value="">Select...</option>
-                  <option value="instagram">Instagram</option>
-                  <option value="google">Google search</option>
-                  <option value="referral">Friend / referral</option>
-                  <option value="event">Legacy Live or event</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <label className="flex items-start gap-3 cursor-pointer pt-2">
-                <input
-                  type="checkbox"
-                  checked={contact.optIn}
-                  onChange={(e) => setContact({ ...contact, optIn: e.target.checked })}
-                  className="mt-1 accent-[#E8A33D]"
-                />
-                <span className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.5]">
-                  Add me to the artist list — studio drops, release tips, Dallas events. Unsubscribe anytime.
-                </span>
-              </label>
-            </div>
-          )}
-
-          {/* Step 6: Review */}
-          {step === 6 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Review your booking</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Make sure everything looks right.</p>
-
-              <div className="space-y-3 bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-5">
-                <ReviewRow icon={<Headphones size={14} />} label="Session" value={sessionTypeLabel} />
-                {sessionType === 'with' && (
-                  <ReviewRow icon={<User size={14} />} label="Engineer" value={engineerName} />
-                )}
-                {addons.length > 0 && (
-                  <ReviewRow
-                    icon={<Sliders size={14} />}
-                    label="Add-ons"
-                    value={addons
-                      .map((a) =>
-                        a === 'mixing' ? 'Mixing & Mastering' : 'Full Package',
-                      )
-                      .join(', ')}
-                  />
-                )}
-                <ReviewRow icon={<CalIcon size={14} />} label="Date" value={formattedDate ?? '—'} />
-                <ReviewRow icon={<Clock size={14} />} label="Time" value={selectedTime ?? '—'} />
-                <ReviewRow icon={<Mail size={14} />} label="Contact" value={`${contact.name} · ${contact.email}`} />
-              </div>
-
-              <div className="mt-6 bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-xl p-5">
-                <div className="flex items-center justify-between">
-                  <p className="font-body text-[0.85rem] uppercase tracking-[1px] text-[#A38F7B]">
-                    Estimated total
-                  </p>
-                  <p className="font-display text-2xl text-[#F5F0E8]">${estimatedTotal}</p>
-                </div>
-                <p className="font-body text-[0.75rem] text-[#A38F7B] mt-2">
-                  Hourly rate × your session length, plus any add-ons. Final total confirmed at checkout. (Placeholder calculation.)
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Step 7: Agreement */}
-          {step === 7 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Studio agreement</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Quick read. The rules of the room.</p>
-
-              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-5 space-y-3 max-h-[260px] overflow-y-auto">
-                <div className="flex gap-3">
-                  <FileText size={16} className="text-[#E8A33D] shrink-0 mt-0.5" />
-                  <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                    Cancellations 48+ hrs before your session are fully refundable. Inside 48 hrs, the deposit is non-refundable but transferable to a future session.
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <FileText size={16} className="text-[#E8A33D] shrink-0 mt-0.5" />
-                  <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                    Sessions start and end at the scheduled time. Late arrivals don't extend the session.
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <FileText size={16} className="text-[#E8A33D] shrink-0 mt-0.5" />
-                  <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                    You own everything you create here. We may reference our work with you for portfolio purposes.
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <FileText size={16} className="text-[#E8A33D] shrink-0 mt-0.5" />
-                  <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                    Damage to equipment is the responsibility of the booking party.
-                  </p>
-                </div>
-                <p className="font-body text-[0.75rem] text-[rgba(163,143,123,0.7)] pt-2 border-t border-[rgba(245,240,232,0.06)]">
-                  Full policies at <a href="/policies" className="text-[#E8A33D] hover:underline">/policies</a>. (Placeholder copy — final terms pending owner confirmation.)
-                </p>
-              </div>
-
-              <label className="flex items-start gap-3 cursor-pointer mt-5 p-4 rounded-xl border border-[rgba(245,240,232,0.1)] hover:border-[rgba(232,163,61,0.4)] transition-colors duration-300">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                  className="mt-1 accent-[#E8A33D] w-4 h-4"
-                />
-                <span className="font-body text-[0.95rem] text-[#F5F0E8] leading-[1.5]">
-                  I've read the studio agreement and policies, and I'm good to proceed.
-                </span>
-              </label>
-            </div>
-          )}
-
-          {/* Step 8: Payment */}
-          {step === 8 && (
-            <div className="animate-in fade-in slide-in-from-right-2 duration-200">
-              <div className="flex items-start justify-between gap-4 mb-1">
-                <h3 className="font-display text-2xl text-[#F5F0E8]">Payment</h3>
-                <span className="font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B]">
-                  ${estimatedTotal} estimated
-                </span>
-              </div>
-              <p className="font-body text-[0.85rem] text-[#A38F7B] mb-5">
-                Secure deposit holds your slot. Balance is settled before your session.
-              </p>
-
-              <div className="bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-xl p-3 mb-5 flex items-start gap-2">
-                <CreditCard size={16} className="text-[#E8A33D] shrink-0 mt-0.5" />
-                <p className="font-body text-[0.8rem] text-[#A38F7B] leading-[1.5]">
-                  Placeholder form — live card processing wires to Stripe before launch. No real charge will be attempted.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <FieldInput
-                  label="Cardholder name"
-                  name="cardName"
-                  value={paymentInfo.name}
-                  onChange={(v) => setPaymentInfo({ ...paymentInfo, name: v })}
-                  placeholder="Name on card"
-                  autoComplete="cc-name"
-                />
-                <FieldInput
-                  label="Card number"
-                  name="card"
-                  value={paymentInfo.card}
-                  onChange={(v) => setPaymentInfo({ ...paymentInfo, card: v })}
-                  placeholder="4242 4242 4242 4242"
-                  autoComplete="cc-number"
-                  inputMode="numeric"
-                />
-                <div className="grid grid-cols-3 gap-3">
-                  <FieldInput
-                    label="Exp"
-                    name="exp"
-                    value={paymentInfo.exp}
-                    onChange={(v) => setPaymentInfo({ ...paymentInfo, exp: v })}
-                    placeholder="MM/YY"
-                    autoComplete="cc-exp"
-                    inputMode="numeric"
-                  />
-                  <FieldInput
-                    label="CVC"
-                    name="cvc"
-                    value={paymentInfo.cvc}
-                    onChange={(v) => setPaymentInfo({ ...paymentInfo, cvc: v })}
-                    placeholder="123"
-                    autoComplete="cc-csc"
-                    inputMode="numeric"
-                  />
-                  <FieldInput
-                    label="ZIP"
-                    name="zip"
-                    value={paymentInfo.zip}
-                    onChange={(v) => setPaymentInfo({ ...paymentInfo, zip: v })}
-                    placeholder="75226"
-                    autoComplete="postal-code"
-                    inputMode="numeric"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 9: Confirmation */}
-          {step === 9 && (
-            <div className="flex flex-col items-center justify-center h-full py-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="px-6 py-12 flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="w-16 h-16 rounded-full bg-[rgba(74,124,89,0.2)] flex items-center justify-center mb-6">
                 <Check size={32} className="text-[#4A7C59]" />
               </div>
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-3">Booking Confirmed</h3>
+              <h3 className="font-display text-2xl text-[#F5F0E8] mb-3">You're booked.</h3>
               <p className="font-body text-[0.95rem] text-[#A38F7B] max-w-[420px] mb-2">
-                Your session is locked in for <span className="text-[#F5F0E8]">{formattedDate}</span> at <span className="text-[#F5F0E8]">{selectedTime}</span>.
+                Calendly just confirmed your session. Check your email for the calendar invite and details.
               </p>
-              <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[420px] mb-6">
-                Confirmation sent to {contact.email || 'your email'}. We'll text {contact.phone || 'you'} the day before with parking and check-in details.
+              {sessionType === 'with' && engineerObj && (
+                <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[420px] mb-2">
+                  Recording with <span className="text-[#F5F0E8]">{engineerObj.name}</span>
+                  {addons.length > 0 && <> · {addonString}</>}
+                </p>
+              )}
+              {sessionType === 'without' && (
+                <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[420px] mb-2">
+                  Studio time
+                  {addons.length > 0 && <> · {addonString}</>}
+                </p>
+              )}
+              <p className="font-body text-[0.75rem] text-[#A38F7B] max-w-[420px] mb-6 mt-2">
+                Day-before reminder will arrive via text. Questions? <a href="mailto:book@legacymusic.group" className="text-[#E8A33D] hover:underline">book@legacymusic.group</a>
               </p>
               <button
                 onClick={handleClose}
@@ -604,8 +318,8 @@ export default function BookingModal() {
           )}
         </div>
 
-        {/* Footer */}
-        {step !== 9 && (
+        {/* Footer (hidden during Calendly + confirmation) */}
+        {step <= 3 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-[rgba(245,240,232,0.08)] shrink-0">
             <button
               onClick={goBack}
@@ -627,8 +341,27 @@ export default function BookingModal() {
                   : 'bg-[#E8A33D] text-[#0A0A0A] hover:bg-[#D4873C] hover:scale-[1.02]'
               }`}
             >
-              {step === 8 ? 'Pay & Confirm' : step === 7 ? 'Continue to Payment' : step === 6 ? 'Looks Good' : 'Next'}
+              {step === 3 ? 'Continue to scheduling' : step === 2 && sessionType === 'without' ? 'Continue to scheduling' : 'Next'}
             </button>
+          </div>
+        )}
+        {step === 4 && (
+          <div className="flex items-center justify-between px-6 py-3 border-t border-[rgba(245,240,232,0.08)] shrink-0">
+            <button
+              onClick={goBack}
+              className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+            >
+              Back
+            </button>
+            <a
+              href={calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
+            >
+              Trouble loading? Open in new tab
+              <ExternalLink size={13} />
+            </a>
           </div>
         )}
       </div>
@@ -636,7 +369,41 @@ export default function BookingModal() {
   )
 }
 
-// --- Subcomponents -------------------------------------------------------
+// --- Calendly embed --------------------------------------------------------
+
+function CalendlyEmbed({
+  url,
+  sessionType,
+  addons,
+  engineerName,
+}: {
+  url: string
+  sessionType: 'with' | 'without' | null
+  addons: string[]
+  engineerName?: string
+}) {
+  // Pass selections via UTM so they show up in Calendly admin + any zapier/webhook downstream
+  const utm = {
+    utmSource: 'legacymusicgroup.com',
+    utmMedium: 'website',
+    utmCampaign: sessionType === 'with' ? 'recording-with-engineer' : 'studio-time',
+    utmContent: addons.join(','),
+    utmTerm: engineerName ?? '',
+  }
+
+  return (
+    <div className="w-full" style={{ minHeight: 600 }}>
+      <InlineWidget
+        url={url}
+        styles={{ height: 700, width: '100%' }}
+        pageSettings={calendly.pageSettings}
+        utm={utm}
+      />
+    </div>
+  )
+}
+
+// --- SelectCard subcomponent (unchanged from prior version) ---------------
 
 function SelectCard({
   active,
@@ -688,72 +455,5 @@ function SelectCard({
         </div>
       )}
     </button>
-  )
-}
-
-function FieldInput({
-  label,
-  name,
-  value,
-  onChange,
-  placeholder,
-  type = 'text',
-  autoComplete,
-  inputMode,
-  multiline = false,
-}: {
-  label: string
-  name: string
-  value: string
-  onChange: (v: string) => void
-  placeholder?: string
-  type?: string
-  autoComplete?: string
-  inputMode?: 'numeric' | 'text' | 'email' | 'tel'
-  multiline?: boolean
-}) {
-  const className =
-    'w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300'
-  return (
-    <div>
-      <label className="block font-body text-[0.7rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-        {label}
-      </label>
-      {multiline ? (
-        <textarea
-          name={name}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          rows={3}
-          className={`${className} resize-none`}
-        />
-      ) : (
-        <input
-          name={name}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          inputMode={inputMode}
-          className={className}
-        />
-      )}
-    </div>
-  )
-}
-
-function ReviewRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-2 text-[#A38F7B]">
-        {icon}
-        <span className="font-body text-[0.85rem] uppercase tracking-[1px]">{label}</span>
-      </div>
-      <span className="font-body text-[0.95rem] text-[#F5F0E8] text-right truncate max-w-[60%]">
-        {value}
-      </span>
-    </div>
   )
 }

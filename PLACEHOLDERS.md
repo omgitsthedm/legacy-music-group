@@ -140,21 +140,66 @@ All forms currently no-op locally — submit handlers call `setSubmitted(true)` 
 
 ## Booking backend
 
-Core flow is wired through 9 steps but no real backend.
+Booking now hands off to **Calendly** after the brand-styled intro steps. Calendly handles time, contact, agreement, payment, and confirmation natively.
 
 | Step | What's there | What's needed |
 |---|---|---|
-| 1 — Session type | UI complete | n/a |
-| 2 — Add-ons | UI complete | n/a |
-| 3 — Engineer | UI complete (uses centralized `engineers`) | When real engineer roster lands, this auto-updates |
-| 4 — Date/time | Calendar + slot picker, with hardcoded `disabledSlots` | Real availability source — pull from engineer calendars (Google Cal / Cal.com / custom in Supabase) |
-| 5 — Contact details | Form complete with validation | Persist to Supabase `leads` and `bookings` |
-| 6 — Review | Dynamic review summary with estimated total | Replace est. total with real pricing engine |
-| 7 — Agreement | Placeholder agreement text | Final terms from owner; capture acceptance with timestamp + IP |
-| 8 — Payment | Placeholder card form (no real charge) | **Stripe Elements** integration; charge deposit, queue balance |
-| 9 — Confirmation | Static confirmation screen | Send confirmation email (Resend) + SMS (Grasshopper or Twilio) |
+| 1 — Session type | UI complete (with/without engineer) | n/a |
+| 2 — Add-ons | UI complete (mixing, full package) | n/a |
+| 3 — Engineer | UI complete (uses centralized `engineers`) | Auto-updates when real engineer roster lands |
+| 4 — Calendly schedule | Inline embed via `react-calendly` `InlineWidget` with brand-themed `pageSettings` | Real Calendly URLs (see Calendly section below) |
+| 5 — Confirmation | Triggers on Calendly `event_scheduled` callback | Optionally hit Calendly API to fetch invitee details and persist to Supabase `leads` |
 
-Total in BookingModal review/payment steps is computed from `baseRate + addonTotal`. The base rate doesn't currently account for session length — needs a real pricing engine when wiring Stripe.
+What Calendly handles for us (no longer our responsibility):
+- Real availability (synced from engineer calendars in Calendly admin)
+- Contact details capture
+- Studio agreement (configurable in Calendly event settings)
+- Payment (configurable Calendly + Stripe integration)
+- Confirmation email + calendar invite to invitee
+- Day-of reminders
+
+What we still own:
+- Pre-Calendly UX (steps 1–3)
+- Tracking — fires `gtag('event', 'booking_scheduled', ...)` on success (uncomment GA4 first)
+- Optional: Calendly webhook → Supabase write for our own lead store
+
+---
+
+## Calendly
+
+Source of truth: [`src/lib/data.ts` `calendly` object](src/lib/data.ts).
+
+All Calendly URLs below are **placeholder slugs**. Replace with the real URLs from Legacy's Calendly account.
+
+| Use case | Placeholder URL | Notes |
+|---|---|---|
+| With engineer (default fallback) | `https://calendly.com/legacymusicgroup/recording-with-engineer` | Used if no per-engineer slug is set for the selected engineer |
+| With Marcus Cole | `https://calendly.com/legacymusicgroup/recording-with-marcus-cole` | Replace with real per-engineer slug if Marcus has one |
+| With Sofia Reyes | `https://calendly.com/legacymusicgroup/recording-with-sofia-reyes` | Replace with real per-engineer slug |
+| With David Byrne | `https://calendly.com/legacymusicgroup/recording-with-david-byrne` | Replace with real per-engineer slug |
+| With Jade Williams | `https://calendly.com/legacymusicgroup/recording-with-jade-williams` | Replace with real per-engineer slug |
+| Without engineer | `https://calendly.com/legacymusicgroup/studio-time` | General studio-time event type |
+
+**How the URL is selected at runtime:**
+```
+sessionType === 'without'  →  calendly.withoutEngineer
+sessionType === 'with'     →  calendly.withEngineer.byEngineerId[engineerId]
+                              ?? calendly.withEngineer.default
+```
+
+**What we pass to Calendly:**
+- UTM params: `utm_source=legacymusicgroup.com`, `utm_medium=website`, `utm_campaign=recording-with-engineer|studio-time`, `utm_content=<addons>`, `utm_term=<engineer name>`
+- Page styling: brand colors via `pageSettings` (`backgroundColor: 0A0A0A`, `textColor: F5F0E8`, `primaryColor: E8A33D`) — only applied if Calendly account is on Pro+ tier; ignored gracefully on free tier
+
+**Three valid Calendly setups (pick one):**
+1. **Single event type with branching questions** — point both `withEngineer.default` and `withoutEngineer` at the same URL; configure Calendly questions to capture session type / engineer choice from URL params
+2. **Two event types** — one for "with engineer" (auto-routes among engineers based on availability), one for "studio time" — current default scaffold
+3. **Per-engineer event types** — each engineer has their own Calendly event (most personalized, recommended for branded discovery from `/engineers/[id]` pages)
+
+**Optional follow-up integrations:**
+- Calendly → Stripe for deposit collection (configurable in Calendly event settings)
+- Calendly webhook → Supabase to mirror bookings into our own lead store
+- Calendly → Resend / Mailchimp / Klaviyo for post-session follow-up sequences
 
 ---
 

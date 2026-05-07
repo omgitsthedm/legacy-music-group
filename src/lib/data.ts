@@ -1,9 +1,48 @@
 /**
- * Centralized data store for engineers, services, FAQs, etc.
+ * Centralized data store for engineers, services, FAQs, Calendly URLs, etc.
  *
  * All entries marked `// PLACEHOLDER:` are temporary. See PLACEHOLDERS.md
  * at the repo root for the full inventory of what needs replacing.
  */
+
+// PLACEHOLDER: Calendly URLs.
+// Legacy Music Group uses Calendly for scheduling. Replace these slugs once
+// the real Calendly account / event types are confirmed.
+//
+// Pattern options:
+//   - One general event type that branches via Calendly's own questions
+//   - One event type per session category (with-engineer / studio-time)
+//   - One event type per engineer (most personalized)
+//
+// The current code passes session type + engineer + add-ons via UTM and
+// prefills, so any of the three patterns above will work — just point
+// `withEngineer.default` and `withoutEngineer` to the right slugs.
+//
+// See PLACEHOLDERS.md §Calendly for the full swap-out list.
+export const calendly = {
+  // Used when a specific engineer is selected (step 3). Falls back to `default`
+  // if no per-engineer slug is set yet.
+  withEngineer: {
+    default: 'https://calendly.com/legacymusicgroup/recording-with-engineer',
+    byEngineerId: {
+      '1': 'https://calendly.com/legacymusicgroup/recording-with-marcus-cole',
+      '2': 'https://calendly.com/legacymusicgroup/recording-with-sofia-reyes',
+      '3': 'https://calendly.com/legacymusicgroup/recording-with-david-byrne',
+      '4': 'https://calendly.com/legacymusicgroup/recording-with-jade-williams',
+    } as Record<string, string>,
+  },
+  // Used when "Without Engineer" is selected
+  withoutEngineer: 'https://calendly.com/legacymusicgroup/studio-time',
+  // Brand colors passed to Calendly's pageSettings to theme the embed
+  // (Calendly Pro+ feature; harmless if account is on free tier)
+  pageSettings: {
+    backgroundColor: '0A0A0A',
+    textColor: 'F5F0E8',
+    primaryColor: 'E8A33D',
+    hideEventTypeDetails: false,
+    hideLandingPageDetails: false,
+  },
+}
 
 export interface Engineer {
   id: string
@@ -115,7 +154,7 @@ export const faqs: FaqItem[] = [
     category: 'Booking',
     question: 'How do I book a session?',
     answer:
-      "Hit Book Now anywhere on the site. Pick your session type, choose an engineer if you want one, lock in a time, and you're done — under a minute. We'll confirm by email and text.",
+      "Hit Book Now anywhere on the site. Pick your session type, choose an engineer if you want one, then schedule via Calendly — confirmation email and calendar invite arrive instantly. The whole thing takes under a minute.",
   },
   {
     category: 'Booking',
@@ -187,6 +226,6 @@ export const faqs: FaqItem[] = [
     category: 'Payment',
     question: 'How do I pay?',
     answer:
-      'Online card payment at booking — Visa, Mastercard, AMEX, Discover. A deposit secures your time; balance is due before the session. (Live payment processing coming — placeholder for now.)',
+      'Card payment is collected through our Calendly booking flow at the time of scheduling. A deposit holds your slot; balance is due before the session. (Real payment processing is configured in Calendly — see PLACEHOLDERS.md if not yet enabled.)',
   },
 ]
