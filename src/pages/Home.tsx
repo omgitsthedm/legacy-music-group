@@ -92,15 +92,19 @@ export default function Home() {
             className="w-full h-full object-cover"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.3)] via-transparent to-[#0A0A0A]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0A0A0A_100%)]" />
+          {/* Vertical scrim — darkens top + ensures clean transition into next section */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.55)] via-[rgba(10,10,10,0.35)] to-[#0A0A0A]" />
+          {/* Center vignette — darkens behind the headline so lamp glow doesn't fight text */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(10,10,10,0.55)_0%,rgba(10,10,10,0.2)_55%,#0A0A0A_100%)]" />
+          {/* Soft horizontal band centered on the headline for extra contrast */}
+          <div className="absolute inset-x-0 top-1/4 h-1/2 bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(10,10,10,0.35)_0%,transparent_75%)]" />
         </div>
 
         <div className="relative z-10 text-center px-[clamp(1.5rem,5vw,4rem)] max-w-[820px] mx-auto">
           <p className="hero-tagline font-body text-[0.75rem] uppercase tracking-[3px] text-[#A38F7B] mb-6 opacity-0">
             Deep Ellum, Dallas
           </p>
-          <h1 className="hero-headline font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-[-2px] text-[#F5F0E8] opacity-0">
+          <h1 className="hero-headline font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-[-2px] text-[#F5F0E8] opacity-0 [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
             Record Your Legacy
           </h1>
           <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[520px] mx-auto mt-6 opacity-0">
