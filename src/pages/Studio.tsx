@@ -95,7 +95,7 @@ export default function Studio() {
                 <img
                   src="/images/studio-control-room.jpg"
                   alt="Legacy Music Group control room with mixing desk"
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform [transition-duration:1200ms] ease-out"
                   loading="lazy"
                 />
               </div>
@@ -112,7 +112,7 @@ export default function Studio() {
                 <img
                   src="/images/studio-lobby.jpg"
                   alt="Legacy Music Group studio lobby in Deep Ellum"
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform [transition-duration:1200ms] ease-out"
                   loading="lazy"
                 />
               </div>

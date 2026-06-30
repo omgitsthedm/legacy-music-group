@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -16,10 +16,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location.pathname])
 
   const navLinks = [
     { label: 'Studio', href: '/studio' },

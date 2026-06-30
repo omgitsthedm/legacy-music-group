@@ -346,7 +346,7 @@ export const services: Service[] = [
     intro:
       "Working voice actor with a regular client list or recording your first national spot — we run voiceover sessions like the broadcast clients they're for: tight, prepped, and ready for direction from your producer (in-room, on-line, or both).",
     body: [
-      "Phone patch, ipDTL, Source-Connect, Zoom — pick your remote-direction stack and we\'ll have it tested before you walk in. Engineer-directed sessions and self-direction both supported.",
+      "Phone patch, ipDTL, Source-Connect, Zoom — pick your remote-direction stack and we'll have it tested before you walk in. Engineer-directed sessions and self-direction both supported.",
       "We deliver broadcast-spec files (WAV, AIFF, MP3 — your spec) with leveling, de-noise, and edit cleanup applied. Tongue-clicks, breath edits, room tone — handled in-session so you walk out with usable audio.",
       "Audiobooks book as full-day or half-day sessions with quiet-room reads and engineer-driven edit cleanup. ACX-compliant masters available as add-on.",
     ],
@@ -391,9 +391,9 @@ export const services: Service[] = [
     intro:
       "Recording the song is the easy part. Releasing it, building an audience, and turning a song into a career is where most independent artists stall. Legacy's artist development is led by music business maven Matthew Medlock — a 10-year industry veteran with a Music Business degree and GRAMMYU background. Not a contract, not a percentage of your masters: a working relationship that helps you make the right decisions at the right time.",
     body: [
-      "Engagement levels run from one-off consultations (you\'re stuck on a release plan, you need a second pair of ears on a brand identity) to multi-month creative-direction relationships (we help you plan the rollout, the visuals, the social strategy, the positioning).",
-      "We don\'t do management. We don\'t take points on your masters. We help you make better decisions and connect you with the right people in the Dallas scene — venues, photographers, designers, distributors — when you need them.",
-      "Best fit: artists with at least one solid record under their belt who want to take the next step seriously. If you\'re still finding your sound, book recording time first and let\'s talk after a few sessions.",
+      "Engagement levels run from one-off consultations (you're stuck on a release plan, you need a second pair of ears on a brand identity) to multi-month creative-direction relationships (we help you plan the rollout, the visuals, the social strategy, the positioning).",
+      "We don't do management. We don't take points on your masters. We help you make better decisions and connect you with the right people in the Dallas scene — venues, photographers, designers, distributors — when you need them.",
+      "Best fit: artists with at least one solid record under their belt who want to take the next step seriously. If you're still finding your sound, book recording time first and let's talk after a few sessions.",
     ],
     whatsIncluded: [
       'Release strategy + roadmap',
@@ -788,10 +788,10 @@ export const neighborhoods: Neighborhood[] = [
     slug: 'uptown',
     name: 'Uptown Dallas',
     fullName: 'Uptown Dallas',
-    oneLiner: 'A 10-minute drive south for the artists building careers from Dallas\'s growth corridor.',
+    oneLiner: "A 10-minute drive south for the artists building careers from Dallas's growth corridor.",
     driveTime: '10 min · 4 miles',
     intro:
-      "Uptown is where a lot of Dallas\'s working creative class lives — designers, musicians, producers all sharing rent in the same towers and walk-up brownstones. Legacy is a quick highway hop or a 10-minute Lyft from anywhere in Uptown.",
+      "Uptown is where a lot of Dallas's working creative class lives — designers, musicians, producers all sharing rent in the same towers and walk-up brownstones. Legacy is a quick highway hop or a 10-minute Lyft from anywhere in Uptown.",
     body: [
       "If you live in Uptown, you have your pick of recording studios in the metro area, but most of the bigger commercial ones are 25–40 minutes north or east. Legacy in Deep Ellum is the closest premium studio with engineer-driven sessions.",
       "Uptown artists typically book evening sessions — leave work, hit the studio for a four-hour block, grab dinner in Deep Ellum after. Sessions that start at 6 or 7 PM and run to 10 or 11 are the most common booking pattern from Uptown.",
@@ -815,8 +815,8 @@ export const neighborhoods: Neighborhood[] = [
       "Bishop Arts has its own creative density — independent artists, working musicians, design studios, and the kind of small-business culture that breeds collaboration. Legacy is a quick crossing of the Trinity River away.",
     body: [
       "Recording studios in Oak Cliff itself are limited, and most Bishop Arts artists end up booking either at home setups or trekking to North Dallas. Legacy in Deep Ellum is the nearest premium studio — close enough for weeknight sessions without the commitment of a north-side drive.",
-      "Bishop Arts is heavy on R&B, soul, and Latin music — Legacy\'s engineering chain runs particularly well for those genres. We have engineers who specialize in soul and R&B production specifically.",
-      "Cross the Margaret Hunt Hill Bridge or hit Houston Street and you\'re at the studio in 12 minutes. Park in our lot, work, eat in Deep Ellum, head home.",
+      "Bishop Arts is heavy on R&B, soul, and Latin music — Legacy's engineering chain runs particularly well for those genres. We have engineers who specialize in soul and R&B production specifically.",
+      "Cross the Margaret Hunt Hill Bridge or hit Houston Street and you're at the studio in 12 minutes. Park in our lot, work, eat in Deep Ellum, head home.",
     ],
     highlights: [
       { label: 'Drive time', detail: '12 minutes' },
@@ -834,9 +834,9 @@ export const neighborhoods: Neighborhood[] = [
     intro:
       "Plano artists looking for a real recording studio with engineer-driven sessions usually have one of two paths: stay local at the smaller Plano-area studios, or come down to Deep Ellum for the deeper Dallas music infrastructure. Legacy is the case for the second option.",
     body: [
-      "The drive is direct — Dallas North Tollway south to Woodall Rodgers, exit on the Deep Ellum side, you\'re at the studio. 25 minutes off-peak, 35–40 in rush traffic.",
-      "Most Plano clients book full-day sessions or 4-hour evening blocks specifically because the drive makes it worth doing more in one trip. We accommodate the schedule — full-day sessions get a dedicated parking spot and we\'re happy to coordinate dinner orders mid-day.",
-      "If you\'re recording in Plano regularly and the local options aren\'t hitting the mark on engineering depth or genre specialization, the Deep Ellum drive is worth doing once to feel the difference.",
+      "The drive is direct — Dallas North Tollway south to Woodall Rodgers, exit on the Deep Ellum side, you're at the studio. 25 minutes off-peak, 35–40 in rush traffic.",
+      "Most Plano clients book full-day sessions or 4-hour evening blocks specifically because the drive makes it worth doing more in one trip. We accommodate the schedule — full-day sessions get a dedicated parking spot and we're happy to coordinate dinner orders mid-day.",
+      "If you're recording in Plano regularly and the local options aren't hitting the mark on engineering depth or genre specialization, the Deep Ellum drive is worth doing once to feel the difference.",
     ],
     highlights: [
       { label: 'Drive time', detail: '25 minutes off-peak via Dallas North Tollway' },
@@ -856,8 +856,8 @@ export const neighborhoods: Neighborhood[] = [
       "Frisco is one of the fastest-growing music markets in the metro — and one of the most underserved by serious recording studios. Most working artists end up driving to Plano, Garland, or Dallas proper for engineer-driven sessions. Legacy is the Deep Ellum option.",
     body: [
       "Tollway south to Woodall Rodgers, ~35 minutes door-to-door. Worth doing for sessions where the engineering depth matters more than convenience.",
-      "Frisco artists tend to book full-day sessions and stack work — we\'ll record vocals in the morning, mix and master after lunch, and have you driving home with finished records by evening. This works particularly well for hip-hop and R&B artists juggling work schedules.",
-      "If you\'re looking for the kind of studio that has a real console, real engineers, and a real connection to the Dallas music scene — and the closer Frisco/Plano options aren\'t hitting that mark — Legacy is built for that exact gap.",
+      "Frisco artists tend to book full-day sessions and stack work — we'll record vocals in the morning, mix and master after lunch, and have you driving home with finished records by evening. This works particularly well for hip-hop and R&B artists juggling work schedules.",
+      "If you're looking for the kind of studio that has a real console, real engineers, and a real connection to the Dallas music scene — and the closer Frisco/Plano options aren't hitting that mark — Legacy is built for that exact gap.",
     ],
     highlights: [
       { label: 'Drive time', detail: '35 minutes off-peak via Dallas North Tollway' },
@@ -875,9 +875,9 @@ export const neighborhoods: Neighborhood[] = [
     intro:
       "Richardson sits between the deeper-suburb music scenes (Plano, Frisco) and the Dallas-proper studios. Most Richardson artists end up at home setups or making the trek south. Legacy is 20 minutes away — manageable for a weeknight session.",
     body: [
-      "75 South to Woodall Rodgers, exit Live Oak/Pacific, you\'re at the studio. 20 minutes off-peak, 25 in traffic.",
-      "Richardson has a sizable hip-hop and R&B scene from UTD and surrounding communities — Legacy\'s engineering depth in those genres makes the trip worthwhile for serious work. Evening blocks work well; we accommodate weekday post-work schedules.",
-      "If you\'re recording in Richardson regularly and want to step up to engineer-driven sessions in a treated room with real outboard gear, Legacy is the closest premium option south of LBJ.",
+      "75 South to Woodall Rodgers, exit Live Oak/Pacific, you're at the studio. 20 minutes off-peak, 25 in traffic.",
+      "Richardson has a sizable hip-hop and R&B scene from UTD and surrounding communities — Legacy's engineering depth in those genres makes the trip worthwhile for serious work. Evening blocks work well; we accommodate weekday post-work schedules.",
+      "If you're recording in Richardson regularly and want to step up to engineer-driven sessions in a treated room with real outboard gear, Legacy is the closest premium option south of LBJ.",
     ],
     highlights: [
       { label: 'Drive time', detail: '20 minutes off-peak via 75' },

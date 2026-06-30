@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Phone, Mail, Instagram, Music, Youtube } from 'lucide-react'
+import { MapPin, Phone, Mail, Instagram, Youtube } from 'lucide-react'
 import { useContext } from 'react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import { contact, services, neighborhoods } from '../lib/data'
 
 export default function Footer() {
@@ -32,7 +32,7 @@ export default function Footer() {
             </button>
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://www.instagram.com/legacymusicgroup"
+                href={contact.social.instagram}
                 aria-label="Instagram"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -41,16 +41,7 @@ export default function Footer() {
                 <Instagram size={15} />
               </a>
               <a
-                href="https://open.spotify.com/playlist/PLACEHOLDER"
-                aria-label="Spotify"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
-              >
-                <Music size={15} />
-              </a>
-              <a
-                href="https://www.youtube.com/@legacymusicgroup"
+                href={contact.social.youtube}
                 aria-label="YouTube"
                 target="_blank"
                 rel="noopener noreferrer"

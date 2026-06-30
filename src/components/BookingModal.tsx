@@ -9,7 +9,7 @@ import {
   Check,
   ExternalLink,
 } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import { engineers, calendly } from '../lib/data'
 import CalendlyPicker from './CalendlyPicker'
 

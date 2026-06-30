@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'

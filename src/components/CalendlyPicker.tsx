@@ -60,8 +60,6 @@ export default function CalendlyPicker({
   // limits each query to a 7-day window).
   useEffect(() => {
     let cancelled = false
-    setLoading(true)
-    setError(null)
 
     const monthStart = new Date(visibleMonth)
     const nextMonthStart = new Date(visibleMonth)
@@ -79,6 +77,12 @@ export default function CalendlyPicker({
       ranges.push({ start: new Date(cursor), end: next > queryEnd ? queryEnd : next })
       cursor = next
     }
+
+    queueMicrotask(() => {
+      if (cancelled) return
+      setLoading(true)
+      setError(null)
+    })
 
     Promise.all(
       ranges.map((r) => {
@@ -136,16 +140,14 @@ export default function CalendlyPicker({
     return map
   }, [slots])
 
-  // Auto-select first available date when slots arrive
-  useEffect(() => {
-    if (selectedDate && slotsByDate.has(selectedDate)) return
-    const firstAvailable = [...slotsByDate.keys()].sort()[0]
-    if (firstAvailable) setSelectedDate(firstAvailable)
-  }, [slotsByDate, selectedDate])
+  const firstAvailableDate = useMemo(() => [...slotsByDate.keys()].sort()[0] ?? null, [slotsByDate])
+  const effectiveSelectedDate = selectedDate && slotsByDate.has(selectedDate)
+    ? selectedDate
+    : firstAvailableDate
 
   const calendarCells = useMemo(() => buildMonthCells(visibleMonth), [visibleMonth])
 
-  const selectedSlots = selectedDate ? slotsByDate.get(selectedDate) ?? [] : []
+  const selectedSlots = effectiveSelectedDate ? slotsByDate.get(effectiveSelectedDate) ?? [] : []
 
   return (
     <div className="px-6 pb-6">
@@ -215,7 +217,7 @@ export default function CalendlyPicker({
               const key = formatLocalDateKey(cell)
               const isPast = cell < today
               const has = slotsByDate.has(key) && slotsByDate.get(key)!.length > 0
-              const isSelected = selectedDate === key
+              const isSelected = effectiveSelectedDate === key
               const isDisabled = isPast || !has
 
               return (
@@ -252,8 +254,8 @@ export default function CalendlyPicker({
           <div className="flex items-center gap-2 mb-3 text-[#A38F7B]">
             <Clock size={13} />
             <p className="font-body text-[0.7rem] uppercase tracking-[1.5px]">
-              {selectedDate
-                ? new Date(selectedDate).toLocaleDateString('en-US', {
+              {effectiveSelectedDate
+                ? new Date(effectiveSelectedDate).toLocaleDateString('en-US', {
                     weekday: 'short',
                     month: 'short',
                     day: 'numeric',

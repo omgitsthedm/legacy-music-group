@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { Headphones, User, ChevronRight } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from './ScrollReveal'
 
 /**

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Mic, Sliders, Star, Check, ChevronRight } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'

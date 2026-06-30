@@ -1,11 +1,12 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect, useState, createContext, lazy, Suspense } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BookingModal from './components/BookingModal'
 import JsonLd from './components/JsonLd'
 import BookingHowToSchema from './components/HowToSchema'
 import Home from './pages/Home'
+import { BookingContext } from './lib/booking-context'
 import { organizationSchema, localBusinessSchema, websiteSchema } from './lib/schemas'
 
 // Code-split secondary routes for faster initial paint.
@@ -27,12 +28,6 @@ const FAQ = lazy(() => import('./pages/FAQ'))
 const Policies = lazy(() => import('./pages/Policies'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
-
-export const BookingContext = createContext<{
-  isOpen: boolean
-  setIsOpen: (open: boolean) => void
-  openBooking: () => void
-}>({ isOpen: false, setIsOpen: () => {}, openBooking: () => {} })
 
 function PageLoader() {
   return (

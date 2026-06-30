@@ -1,7 +1,7 @@
 import { useEffect, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Mic, Sliders, Star, Play, ChevronRight, Users, MapPin, Clock } from 'lucide-react'
-import { BookingContext } from '../App'
+import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
 import Quickbook from '../components/Quickbook'
 import NewsletterSignup from '../components/NewsletterSignup'
@@ -166,7 +166,7 @@ export default function Home() {
                 <img
                   src="/images/about-studio-wide.jpg"
                   alt="Inside Legacy Music Group's Deep Ellum studio"
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform [transition-duration:1200ms] ease-out"
                   loading="lazy"
                 />
               </div>

@@ -149,7 +149,7 @@ When ready to publish:
 1. `public/robots.txt` → switch from `Disallow: /` to `Allow: /` + `Sitemap:` line
 2. `index.html` `<meta name="robots">` default → `index, follow`
 3. `src/lib/seo.ts` `useSeo` default `noindex: false`
-4. `index.html` → uncomment GA4 block + replace `G-XXXXXXXXXX` with real measurement ID
+4. `index.html` → add GA4 script with the real measurement ID
 5. Add real OG image at `/og-image.jpg` (1200×630)
 6. Convert images to `.webp` per LiFi NYC client rules
 7. Run `/audit-website`, `/seo-audit`, `/perf-audit`, `/security-audit`, `/ultraship`
