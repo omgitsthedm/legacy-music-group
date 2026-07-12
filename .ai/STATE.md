@@ -63,7 +63,7 @@ These represent in-progress work (booking/Calendly/quickbook + new pages). Onboa
 - `.env`/secrets.
 - The 25 pre-existing dirty files (no clean/stage/commit).
 - The `legacy-music-group-preview` Netlify site.
-- Any push to `master` / deploy without `APPROVE LIVE CHANGE`.
+- Any push to `master` / deploy without clear, scoped confirmation from David.
 
 ## Proposed Changes / Inbox
 

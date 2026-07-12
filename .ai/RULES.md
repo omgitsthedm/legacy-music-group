@@ -58,7 +58,7 @@ Vite 7 + React 19 + TS, Tailwind + shadcn/ui, react-router-dom v7, GSAP, react-h
 - Dev server: `npm run dev`
 - Build: `npm run build`
 - Lint: `npm run lint`
-- Deploy: DO NOT push/deploy — git diverged/stale; gated by `APPROVE LIVE CHANGE` (David-run).
+- Deploy: DO NOT push/deploy — git diverged/stale; gated by clear, scoped confirmation from David (David-run).
 
 ## Locked Rules
 
@@ -90,7 +90,6 @@ Agents must recognize these exact commands:
 
 - `SESSION START`
 - `SESSION CLOSEOUT`
-- `APPROVE LIVE CHANGE`
 - `STOP`
 - `HALT`
 
@@ -149,9 +148,9 @@ In Emergency Mode:
 
 If a STOP or HALT conflicts with automation, human instruction wins.
 
-## APPROVE LIVE CHANGE Protocol
+## Live Change Confirmation Protocol
 
-`APPROVE LIVE CHANGE` is required before any live transactional action unless the action is sandboxed, staged, explicitly David-run, or already protected by a project-specific approved safe path.
+Clear scoped confirmation is required before any live transactional action unless the action is sandboxed, staged, explicitly David-run, or already protected by a project-specific approved safe path.
 
 Approval must be scoped to a specific action. It does not authorize unrelated live changes.
 
@@ -185,7 +184,7 @@ Documentation, generated rules, and state files still require visibility when th
 
 Observational production QA is allowed when it only reads public or authorized state and does not create, mutate, submit, send, buy, book, upload, export, or persist anything.
 
-Transactional production QA is not allowed unless sandboxed, staged, explicitly David-run, or gated by `APPROVE LIVE CHANGE` plus a safe test path.
+Transactional production QA is not allowed unless sandboxed, staged, explicitly David-run, or gated by clear, scoped confirmation from David plus a safe test path.
 
 If a `qa:prod` harness exists, run it instead of improvising checks.
 
@@ -215,9 +214,9 @@ Dangerous operations include:
 - running live transactional QA
 - changing production infrastructure
 
-The required approval phrase for live danger is `APPROVE LIVE CHANGE`.
+Live danger requires clear confirmation from David that identifies the intended production action and scope.
 
-No standing autonomy, Emergency Mode, or "do it all / don't ask" instruction elevates past this gate. Transactional production actions always require `APPROVE LIVE CHANGE`, scoped to the single action.
+Broad standing autonomy does not cover ambiguous or destructive production changes. Confirm the intended live action and scope in plain language before proceeding.
 
 ## Stale State Protocol
 

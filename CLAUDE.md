@@ -6,7 +6,7 @@
 - Dev server: `npm run dev` (Vite)
 - Build: `npm run build` (outputs `dist/`)
 - Lint: `npm run lint`
-- Deploy: **DO NOT push/deploy.** ⚠️ git is DIVERGENT/STALE vs live and the tree has 25 uncommitted changes. The live site (legacy-music-group.netlify.app) was a CLI/manual deploy (`commit_ref = null`) that does NOT match git HEAD. A GH Action (`netlify-deploy.yml`) may deploy on push. Any deploy is a gated, David-run action (`APPROVE LIVE CHANGE`). This corrects the auto-deploy claim under "Three-Way Sync" below.
+- Deploy: **DO NOT push/deploy.** ⚠️ git is DIVERGENT/STALE vs live and the tree has 25 uncommitted changes. The live site (legacy-music-group.netlify.app) was a CLI/manual deploy (`commit_ref = null`) that does NOT match git HEAD. A GH Action (`netlify-deploy.yml`) may deploy on push. Any deploy is a gated, David-run action (clear, scoped confirmation from David). This corrects the auto-deploy claim under "Three-Way Sync" below.
 
 ## AI-Ops Deploy Note (2026-06-28)
 The "Auto-deploy via GitHub Actions on push" described below is NOT reliable as the live source of truth: Netlify shows `commit_ref = null` (manual/CLI deploy) and the live deploy does not match git HEAD. Treat any push as a production deploy trigger and never push without approval. See `.ai/STATE.md`.

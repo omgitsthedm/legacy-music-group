@@ -47,7 +47,7 @@ Vite 7 + React 19 + TypeScript, Tailwind 3.4 + shadcn/ui, react-router-dom v7, G
 - Dev server: `npm run dev`
 - Build: `npm run build`
 - Lint: `npm run lint`
-- Deploy: **DO NOT** — git push to `master` may trigger the GH Action deploy, and live is already divergent/stale. Any deploy is gated by `APPROVE LIVE CHANGE` and should be a deliberate David-run action.
+- Deploy: **DO NOT** — git push to `master` may trigger the GH Action deploy, and live is already divergent/stale. Any deploy is gated by clear, scoped confirmation from David and should be a deliberate David-run action.
 
 ## Locked Rules
 
