@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Star, ChevronRight } from 'lucide-react'
 import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
@@ -19,7 +19,7 @@ export default function Reviews() {
   const ratingCount = contact.rating.count
 
   useSeo({
-    title: 'Reviews — 4.4★ on Google · 128 Reviews',
+    title: 'Reviews - 4.4★ on Google · 128 Reviews',
     description:
       'Legacy Music Group is rated 4.4 stars across 128 Google reviews. Read what artists, producers, podcasters, and voice actors say about recording at our Deep Ellum studio.',
     path: '/reviews',
@@ -62,11 +62,11 @@ export default function Reviews() {
             </span>
             <h1
               data-speakable
-              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
+              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3"
             >
               Reviews
             </h1>
-            <div className="mt-6 inline-flex items-center gap-3 bg-[#111111] border border-[rgba(232,163,61,0.25)] rounded-full px-5 py-2.5">
+            <div className="mt-6 inline-flex items-center gap-3 bg-[#14171a] border border-[rgba(232,163,61,0.25)] rounded-sm px-5 py-2.5">
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((n) => (
                   <Star
@@ -81,13 +81,13 @@ export default function Reviews() {
                   />
                 ))}
               </div>
-              <span className="font-body text-[0.9rem] text-[#F5F0E8]">
+              <span className="font-body text-[0.9rem] text-[#f1f1ee]">
                 <strong>{avgRating.toFixed(1)}</strong> · {ratingCount} Google reviews
               </span>
             </div>
-            <p className="font-body text-[0.85rem] text-[#A38F7B] mt-4 max-w-[520px] mx-auto leading-[1.6]">
+            <p className="font-body text-[0.85rem] text-[#b7bcc2] mt-4 max-w-[520px] mx-auto leading-[1.6]">
               Aggregate rating reflects all {ratingCount} verified Google reviews. Three
-              recent highlights below — the full list lives on{' '}
+              recent highlights below - the full list lives on{' '}
               <a
                 href="https://www.google.com/search?q=Legacy+Music+Group+Dallas"
                 target="_blank"
@@ -107,7 +107,7 @@ export default function Reviews() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {reviews.map((r, i) => (
               <ScrollReveal key={i} delay={i * 60}>
-                <article className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 h-full">
+                <article className="bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-sm p-6 h-full">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-0.5">
                       {[1, 2, 3, 4, 5].map((n) => (
@@ -123,21 +123,21 @@ export default function Reviews() {
                         />
                       ))}
                     </div>
-                    <span className="font-body text-[0.7rem] uppercase tracking-[1.5px] text-[#A38F7B]">
+                    <span className="font-body text-[0.7rem] uppercase tracking-[1.5px] text-[#b7bcc2]">
                       {r.source}
                     </span>
                   </div>
                   <p
                     data-speakable
-                    className="font-body text-[0.95rem] text-[#F5F0E8] leading-[1.7] mb-4"
+                    className="font-body text-[0.95rem] text-[#f1f1ee] leading-[1.7] mb-4"
                   >
                     "{r.body}"
                   </p>
                   <div className="flex items-center justify-between">
-                    <p className="font-body text-[0.85rem] text-[#A38F7B] font-medium">
+                    <p className="font-body text-[0.85rem] text-[#b7bcc2] font-medium">
                       {r.author}
                     </p>
-                    <p className="font-body text-[0.75rem] text-[#A38F7B]">
+                    <p className="font-body text-[0.75rem] text-[#b7bcc2]">
                       {new Date(r.date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
@@ -153,14 +153,14 @@ export default function Reviews() {
             <div className="mt-12 text-center">
               <button
                 onClick={openBooking}
-                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-10 py-3.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+                className="bg-[#E8A33D] text-[#0b0c0d] font-body text-[0.95rem] font-medium px-10 py-3.5 rounded-sm hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
               >
                 Book a Session
               </button>
               <div className="mt-6">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                  className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#b7bcc2] hover:text-[#f1f1ee] transition-colors duration-300"
                 >
                   Have feedback after a session? Get in touch <ChevronRight size={14} />
                 </Link>

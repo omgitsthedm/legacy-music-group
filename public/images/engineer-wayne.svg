@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864 1184" role="img" aria-labelledby="title">
+  <title id="title">Wayne identity slate</title>
+  <rect width="864" height="1184" fill="#14171a"/>
+  <path d="M0 170h864M0 370h864M0 570h864M0 770h864M0 970h864" stroke="#f1f1ee" stroke-opacity=".08"/>
+  <path d="M116 94v812M258 94v542M400 94v712M542 94v622M684 94v782" stroke="#f1f1ee" stroke-opacity=".14" stroke-width="4"/>
+  <rect x="96" y="234" width="40" height="126" fill="#E8A33D"/>
+  <rect x="238" y="440" width="40" height="126" fill="#E8A33D"/>
+  <rect x="380" y="324" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="522" y="534" width="40" height="126" fill="#E8A33D"/>
+  <rect x="664" y="204" width="40" height="126" fill="#f1f1ee"/>
+  <text x="72" y="1016" fill="#f1f1ee" font-family="Arial Narrow, Arial, sans-serif" font-size="210" font-weight="700" letter-spacing="-8">W</text>
+  <text x="76" y="1092" fill="#E8A33D" font-family="monospace" font-size="24" letter-spacing="5">ENGINEER / PRODUCER</text>
+</svg>

@@ -1,11 +1,14 @@
 import { useEffect } from 'react'
 
+const publicSiteUrl = (import.meta.env.VITE_SITE_URL || 'https://legacy-music-group.netlify.app')
+  .replace(/\/$/, '')
+
 const SITE = {
   name: 'Legacy Music Group',
-  url: 'https://legacymusicgroup.com',
+  url: publicSiteUrl,
   defaultDescription:
-    "Hit-quality recordings at affordable rates from Dallas' top-tier audio engineers. Recording, mixing, mastering, and artist development in Deep Ellum. Book in under a minute.",
-  defaultOgImage: '/images/hero-studio-dark.jpg',
+    'Engineer-led recording, mixing, mastering and artist development in Deep Ellum, Dallas. Published studio rates start at $45 per hour.',
+  defaultOgImage: '/images/legacy-social-card-gold.jpg',
   twitterHandle: '@LegacyMusicGrp',
   locale: 'en_US',
 } as const

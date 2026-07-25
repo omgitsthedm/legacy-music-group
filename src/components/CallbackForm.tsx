@@ -1,37 +1,58 @@
 import { useState } from 'react'
-import { Phone, Check } from 'lucide-react'
+import { AlertCircle, Check, Phone } from 'lucide-react'
 
-/**
- * Callback request form. Captures name + phone + best time to call.
- *
- * PLACEHOLDER ACTION: submit currently no-ops and shows a success state.
- * Needs wiring to Supabase / Resend / Netlify Forms before launch.
- * See PLACEHOLDERS.md §Lead capture.
- */
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
+
+const encode = (values: Record<string, string>) =>
+  new URLSearchParams(values).toString()
+
 export default function CallbackForm() {
-  const [submitted, setSubmitted] = useState(false)
-  const [data, setData] = useState({ name: '', phone: '', time: 'anytime', interest: '' })
+  const [state, setState] = useState<SubmitState>('idle')
+  const [data, setData] = useState({
+    name: '',
+    phone: '',
+    time: 'anytime',
+    interest: '',
+    botField: '',
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // PLACEHOLDER: send to backend (Supabase + Resend)
-    // For now: optimistic local-only state
-    setSubmitted(true)
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (state === 'submitting') return
+    setState('submitting')
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({
+          'form-name': 'legacy-callback',
+          name: data.name,
+          phone: data.phone,
+          time: data.time,
+          interest: data.interest,
+          'bot-field': data.botField,
+        }),
+      })
+      if (!response.ok) throw new Error('Submission failed')
+      setState('success')
+    } catch {
+      setState('error')
+    }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setData((previous) => ({ ...previous, [event.target.name]: event.target.value }))
   }
 
-  if (submitted) {
+  if (state === 'success') {
     return (
-      <div className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 text-center">
-        <div className="w-12 h-12 rounded-full bg-[rgba(74,124,89,0.2)] flex items-center justify-center mx-auto mb-4">
-          <Check size={20} className="text-[#4A7C59]" />
-        </div>
-        <h3 className="font-body text-[1.05rem] font-medium text-[#F5F0E8]">Got it.</h3>
-        <p className="font-body text-[0.9rem] text-[#A38F7B] mt-2">
-          We'll call {data.name || 'you'} {data.time === 'anytime' ? 'shortly' : `during ${data.time}`}.
+      <div className="border border-white/10 bg-[#14171a] p-7 text-left" role="status">
+        <Check aria-hidden="true" size={22} className="text-[#E8A33D]" />
+        <h3 className="mt-5 font-display text-3xl uppercase text-[#f1f1ee]">Request received.</h3>
+        <p className="mt-2 font-body text-sm leading-6 text-[#b7bcc2]">
+          The Legacy team will call {data.name || 'you'}{' '}
+          {data.time === 'anytime' ? 'as soon as they can' : `during the ${data.time}`}.
         </p>
       </div>
     )
@@ -39,86 +60,121 @@ export default function CallbackForm() {
 
   return (
     <form
+      name="legacy-callback"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 space-y-4"
+      className="space-y-5 border border-white/10 bg-[#14171a] p-6 sm:p-7"
     >
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center shrink-0">
-          <Phone size={18} className="text-[#E8A33D]" />
-        </div>
+      <input type="hidden" name="form-name" value="legacy-callback" />
+      <p className="hidden" aria-hidden="true">
+        <label>
+          Do not fill this out
+          <input
+            name="bot-field"
+            tabIndex={-1}
+            autoComplete="off"
+            value={data.botField}
+            onChange={handleChange}
+          />
+        </label>
+      </p>
+
+      <div className="flex items-start gap-4">
+        <Phone aria-hidden="true" size={20} className="mt-1 shrink-0 text-[#E8A33D]" />
         <div>
-          <h3 className="font-body text-[1.05rem] font-medium text-[#F5F0E8]">Request a Callback</h3>
-          <p className="font-body text-[0.85rem] text-[#A38F7B]">Faster than email when you have questions.</p>
+          <h3 className="font-display text-2xl uppercase text-[#f1f1ee]">Request a callback</h3>
+          <p className="mt-1 font-body text-sm text-[#b7bcc2]">For project and scheduling questions.</p>
         </div>
       </div>
 
-      <div>
-        <label className="block font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-          Name
-        </label>
+      <Field label="Name" htmlFor="callback-name">
         <input
+          id="callback-name"
           type="text"
           name="name"
+          autoComplete="name"
           required
           value={data.name}
           onChange={handleChange}
-          className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
+          className="form-control"
           placeholder="Your name"
         />
-      </div>
+      </Field>
 
-      <div>
-        <label className="block font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-          Phone
-        </label>
+      <Field label="Phone" htmlFor="callback-phone">
         <input
+          id="callback-phone"
           type="tel"
           name="phone"
+          autoComplete="tel"
           required
           value={data.phone}
           onChange={handleChange}
-          className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
-          placeholder="(214) 555-0199"
+          className="form-control"
+          placeholder="(214) 377-9729"
         />
-      </div>
+      </Field>
 
-      <div>
-        <label className="block font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-          Best time to call
-        </label>
+      <Field label="Best time to call" htmlFor="callback-time">
         <select
+          id="callback-time"
           name="time"
           value={data.time}
           onChange={handleChange}
-          className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
+          className="form-control"
         >
           <option value="anytime">Anytime today</option>
           <option value="morning">Morning</option>
           <option value="afternoon">Afternoon</option>
           <option value="evening">Evening</option>
         </select>
-      </div>
+      </Field>
 
-      <div>
-        <label className="block font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
-          What's the project? (optional)
-        </label>
+      <Field label="What is the project? (optional)" htmlFor="callback-interest">
         <input
+          id="callback-interest"
           type="text"
           name="interest"
           value={data.interest}
           onChange={handleChange}
-          className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
+          className="form-control"
           placeholder="Recording, mixing, mastering..."
         />
-      </div>
+      </Field>
 
       <button
         type="submit"
-        className="w-full bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-6 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.01]"
+        disabled={state === 'submitting'}
+        className="signal-button w-full justify-center disabled:cursor-wait disabled:opacity-60"
       >
-        Request Callback
+        {state === 'submitting' ? 'Sending request' : 'Request callback'}
       </button>
+      {state === 'error' && (
+        <p role="alert" className="flex items-center gap-2 font-body text-sm text-[#ff8a80]">
+          <AlertCircle aria-hidden="true" size={15} />
+          That did not send. Call (214) 377-9729 or try again.
+        </p>
+      )}
     </form>
+  )
+}
+
+function Field({
+  label,
+  htmlFor,
+  children,
+}: {
+  label: string
+  htmlFor: string
+  children: React.ReactNode
+}) {
+  return (
+    <div>
+      <label htmlFor={htmlFor} className="control-label mb-2 block">
+        {label}
+      </label>
+      {children}
+    </div>
   )
 }

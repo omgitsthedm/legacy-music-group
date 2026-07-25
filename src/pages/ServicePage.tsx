@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
@@ -25,7 +25,7 @@ export default function ServicePage() {
   if (!service) {
     return (
       <div className="pt-40 pb-20 text-center px-4">
-        <h1 className="font-display text-3xl text-[#F5F0E8]">Service not found</h1>
+        <h1 className="font-display text-3xl text-[#f1f1ee]">Service not found</h1>
         <Link to="/services" className="mt-4 inline-block text-[#E8A33D] hover:underline">
           Back to services
         </Link>
@@ -64,7 +64,7 @@ export default function ServicePage() {
           <ScrollReveal>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 mb-6"
+              className="inline-flex items-center gap-2 font-body text-[0.9rem] text-[#b7bcc2] hover:text-[#f1f1ee] transition-colors duration-300 mb-6"
             >
               <ChevronLeft size={16} /> All Services
             </Link>
@@ -73,22 +73,22 @@ export default function ServicePage() {
             </span>
             <h1
               data-speakable
-              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
+              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3"
             >
               {service.name}
             </h1>
-            <p className="font-body text-[1.15rem] text-[#A38F7B] mt-4 max-w-[640px] leading-[1.7]">
+            <p className="font-body text-[1.15rem] text-[#b7bcc2] mt-4 max-w-[640px] leading-[1.7]">
               {service.oneLiner}
             </p>
             <div className="mt-7 flex items-center gap-4 flex-wrap">
               <button
                 onClick={openBooking}
-                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+                className="bg-[#E8A33D] text-[#0b0c0d] font-body text-[0.95rem] font-medium px-8 py-3 rounded-sm hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
               >
                 Book a Session
               </button>
-              <span className="font-body text-[0.9rem] text-[#A38F7B]">
-                Starting from <span className="text-[#F5F0E8] font-medium">{service.startingPrice}</span>
+              <span className="font-body text-[0.9rem] text-[#b7bcc2]">
+                Starting from <span className="text-[#f1f1ee] font-medium">{service.startingPrice}</span>
               </span>
             </div>
           </ScrollReveal>
@@ -98,7 +98,7 @@ export default function ServicePage() {
       <section className="px-[clamp(1.5rem,5vw,4rem)] pb-12">
         <div className="mx-auto max-w-[900px]">
           <ScrollReveal>
-            <div className="aspect-[16/8] rounded-xl overflow-hidden">
+            <div className="aspect-[16/8] rounded-sm overflow-hidden">
               <img
                 src={service.hero}
                 alt={service.name}
@@ -113,24 +113,24 @@ export default function ServicePage() {
       <section className="pb-12 px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[800px] space-y-6">
           <ScrollReveal>
-            <p data-speakable className="font-body text-[1.1rem] text-[#F5F0E8] leading-[1.7]">
+            <p data-speakable className="font-body text-[1.1rem] text-[#f1f1ee] leading-[1.7]">
               {service.intro}
             </p>
           </ScrollReveal>
           {service.body.map((p, i) => (
             <ScrollReveal key={i} delay={i * 60}>
-              <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">{p}</p>
+              <p className="font-body text-[1rem] text-[#b7bcc2] leading-[1.7]">{p}</p>
             </ScrollReveal>
           ))}
         </div>
       </section>
 
-      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
+      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#14171a]">
         <div className="mx-auto max-w-[800px]">
           <ScrollReveal>
             <h2
               data-speakable
-              className="font-body text-[1.5rem] font-medium text-[#F5F0E8] mb-6"
+              className="font-body text-[1.5rem] font-medium text-[#f1f1ee] mb-6"
             >
               What's Included
             </h2>
@@ -138,7 +138,7 @@ export default function ServicePage() {
               {service.whatsIncluded.map((f) => (
                 <li key={f} className="flex items-start gap-3">
                   <Check size={18} className="text-[#4A7C59] shrink-0 mt-1" />
-                  <span className="font-body text-[1rem] text-[#F5F0E8] leading-[1.6]">{f}</span>
+                  <span className="font-body text-[1rem] text-[#f1f1ee] leading-[1.6]">{f}</span>
                 </li>
               ))}
             </ul>
@@ -161,23 +161,23 @@ export default function ServicePage() {
                   <Link
                     key={eng.id}
                     to={`/engineers/${eng.id}`}
-                    className="group flex items-center gap-4 bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-4 hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
+                    className="group flex items-center gap-4 bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-sm p-4 hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
                   >
                     <img
                       src={eng.image}
                       alt={eng.name}
-                      className="w-14 h-14 rounded-full object-cover"
+                      className="w-14 h-14 rounded-sm object-cover"
                       loading="lazy"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-body text-[1rem] font-medium text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
+                      <h3 className="font-body text-[1rem] font-medium text-[#f1f1ee] group-hover:text-[#E8A33D] transition-colors duration-300">
                         {eng.name}
                       </h3>
-                      <p className="font-body text-[0.8rem] text-[#A38F7B] uppercase tracking-[1px] mt-0.5">
+                      <p className="font-body text-[0.8rem] text-[#b7bcc2] uppercase tracking-[1px] mt-0.5">
                         {eng.specialty}
                       </p>
                     </div>
-                    <ChevronRight size={16} className="text-[#A38F7B]" />
+                    <ChevronRight size={16} className="text-[#b7bcc2]" />
                   </Link>
                 ))}
               </div>
@@ -186,12 +186,12 @@ export default function ServicePage() {
         </section>
       )}
 
-      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
+      <section className="py-12 px-[clamp(1.5rem,5vw,4rem)] bg-[#14171a]">
         <div className="mx-auto max-w-[800px]">
           <ScrollReveal className="mb-8">
             <h2
               data-speakable
-              className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#F5F0E8]"
+              className="font-display text-[clamp(1.75rem,3vw,2.5rem)] text-[#f1f1ee]"
             >
               Frequently Asked
             </h2>
@@ -199,18 +199,18 @@ export default function ServicePage() {
           <div className="space-y-3">
             {service.faqs.map((faq, i) => (
               <ScrollReveal key={i} delay={i * 50}>
-                <details className="group bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300">
+                <details className="group bg-[#0b0c0d] border border-[rgba(241,241,238,0.08)] rounded-sm overflow-hidden hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300">
                   <summary className="cursor-pointer list-none flex items-center justify-between gap-4 p-5">
-                    <h3 className="font-body text-[1rem] font-medium text-[#F5F0E8]">
+                    <h3 className="font-body text-[1rem] font-medium text-[#f1f1ee]">
                       {faq.question}
                     </h3>
-                    <span className="shrink-0 w-7 h-7 rounded-full border border-[rgba(245,240,232,0.2)] flex items-center justify-center text-[#A38F7B] group-open:bg-[#E8A33D] group-open:border-[#E8A33D] group-open:text-[#0A0A0A] transition-all duration-300">
+                    <span className="shrink-0 w-7 h-7 rounded-sm border border-[rgba(241,241,238,0.2)] flex items-center justify-center text-[#b7bcc2] group-open:bg-[#E8A33D] group-open:border-[#E8A33D] group-open:text-[#0b0c0d] transition-all duration-300">
                       <span className="block group-open:hidden text-lg leading-none">+</span>
                       <span className="hidden group-open:block text-lg leading-none">−</span>
                     </span>
                   </summary>
                   <div className="px-5 pb-5">
-                    <p className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.7]">
+                    <p className="font-body text-[0.95rem] text-[#b7bcc2] leading-[1.7]">
                       {faq.answer}
                     </p>
                   </div>
@@ -224,15 +224,15 @@ export default function ServicePage() {
       <section className="py-[clamp(4rem,8vw,6rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[700px] text-center">
           <ScrollReveal>
-            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-[1.1] tracking-[-1px] text-[#f1f1ee]">
               Ready to book {service.shortName.toLowerCase()}?
             </h2>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-3 mb-7 max-w-[520px] mx-auto">
-              From {service.startingPrice}. Booking takes a minute.
+            <p className="font-body text-[1rem] text-[#b7bcc2] mt-3 mb-7 max-w-[520px] mx-auto">
+              Starting at {service.startingPrice}. The studio confirms availability and final scope.
             </p>
             <button
               onClick={openBooking}
-              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-10 py-3.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+              className="bg-[#E8A33D] text-[#0b0c0d] font-body text-[0.95rem] font-medium px-10 py-3.5 rounded-sm hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
             >
               Book a Session
             </button>

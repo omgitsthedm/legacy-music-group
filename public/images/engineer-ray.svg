@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864 1184" role="img" aria-labelledby="title">
+  <title id="title">Ray Dallas identity slate</title>
+  <rect width="864" height="1184" fill="#14171a"/>
+  <path d="M0 150h864M0 350h864M0 550h864M0 750h864M0 950h864" stroke="#f1f1ee" stroke-opacity=".08"/>
+  <path d="M116 94v692M258 94v792M400 94v532M542 94v742M684 94v612" stroke="#f1f1ee" stroke-opacity=".14" stroke-width="4"/>
+  <rect x="96" y="378" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="238" y="182" width="40" height="126" fill="#E8A33D"/>
+  <rect x="380" y="462" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="522" y="264" width="40" height="126" fill="#E8A33D"/>
+  <rect x="664" y="548" width="40" height="126" fill="#E8A33D"/>
+  <text x="72" y="1016" fill="#f1f1ee" font-family="Arial Narrow, Arial, sans-serif" font-size="190" font-weight="700" letter-spacing="-8">RD</text>
+  <text x="76" y="1092" fill="#E8A33D" font-family="monospace" font-size="24" letter-spacing="5">HEAD ENGINEER</text>
+</svg>

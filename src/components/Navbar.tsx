@@ -1,59 +1,109 @@
-import { useState, useEffect, useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { Link, useLocation } from 'react-router'
 import { BookingContext } from '../lib/booking-context'
 
+const navLinks = [
+  { label: 'Studio', href: '/studio' },
+  { label: 'Services', href: '/services' },
+  { label: 'Engineers', href: '/engineers' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Journal', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+]
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const location = useLocation()
   const { openBooking } = useContext(BookingContext)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const navLinks = [
-    { label: 'Studio', href: '/studio' },
-    { label: 'Services', href: '/services' },
-    { label: 'Engineers', href: '/engineers' },
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'Journal', href: '/blog' },
-    { label: 'Contact', href: '/contact' },
-  ]
-
   const isActive = (href: string) =>
-    location.pathname === href || location.pathname.startsWith(href + '/')
+    location.pathname === href || location.pathname.startsWith(`${href}/`)
+
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    const menuButton = menuButtonRef.current
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setMenuOpen(false)
+        return
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+        ),
+      )
+      const first = focusable[0]
+      const last = focusable.at(-1)
+      if (!first || !last) return
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    const backgroundRegions = [
+      document.getElementById('site-navigation-bar'),
+      document.getElementById('main-content'),
+      document.querySelector<HTMLElement>('footer'),
+    ].filter((region): region is HTMLElement => Boolean(region))
+
+    for (const region of backgroundRegions) {
+      region.setAttribute('aria-hidden', 'true')
+      region.inert = true
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    requestAnimationFrame(() => closeButtonRef.current?.focus())
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+      for (const region of backgroundRegions) {
+        region.removeAttribute('aria-hidden')
+        region.inert = false
+      }
+      menuButton?.focus()
+    }
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[rgba(10,10,10,0.85)] backdrop-blur-xl border-b border-[rgba(245,240,232,0.08)]'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="mx-auto max-w-[1400px] h-full flex items-center justify-between px-[clamp(1.5rem,5vw,4rem)]">
+      <nav id="site-navigation-bar" className="fixed inset-x-0 top-0 z-50 h-20 border-b border-white/15 bg-[#0b0c0d]/95 backdrop-blur-md">
+        <div className="site-shell flex h-full items-center justify-between gap-6">
           <Link
             to="/"
-            className="font-display text-[1.25rem] tracking-[4px] uppercase text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300"
-            aria-label="Legacy Music Group home"
+            className="flex min-h-11 items-center gap-3 text-[#f1f1ee] hover:text-[#E8A33D]"
           >
-            Legacy
+            <span className="font-display text-2xl font-semibold uppercase tracking-[0.1em]">Legacy</span>
+            <span className="hidden border-l border-white/20 pl-3 font-control text-[0.62rem] uppercase leading-4 tracking-[0.12em] text-[#b7bcc2] sm:block">
+              Music<br />Group
+            </span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`font-body text-[0.78rem] uppercase tracking-[2px] transition-colors duration-300 ${
-                  isActive(link.href) ? 'text-[#F5F0E8]' : 'text-[#A38F7B] hover:text-[#F5F0E8]'
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={`flex min-h-11 items-center border-b text-[0.74rem] font-bold uppercase tracking-[0.08em] transition-colors ${
+                  isActive(link.href)
+                    ? 'border-[#E8A33D] text-[#f1f1ee]'
+                    : 'border-transparent text-[#b7bcc2] hover:text-[#f1f1ee]'
                 }`}
               >
                 {link.label}
@@ -61,76 +111,89 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button
+              ref={menuButtonRef}
+              type="button"
               onClick={openBooking}
-              className="hidden sm:inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+              className="signal-button hidden sm:inline-flex"
             >
-              Book Now
+              Book a session
             </button>
             <button
-              className="lg:hidden text-[#F5F0E8] p-2"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              type="button"
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-[#f1f1ee] lg:hidden"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation"
               aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu aria-hidden="true" size={22} strokeWidth={1.7} />
             </button>
           </div>
         </div>
       </nav>
 
-      <div
-        className={`fixed inset-0 z-40 bg-[#0A0A0A] transition-all duration-500 lg:hidden overflow-y-auto ${
-          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-        }`}
-      >
-        <div className="flex flex-col items-center justify-center min-h-full py-24 gap-6 px-6">
-          {navLinks.map((link, i) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-display text-[2rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300"
-              style={{ transitionDelay: menuOpen ? `${i * 50}ms` : '0ms' }}
+      {menuOpen && (
+        <div
+          ref={dialogRef}
+          id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
+          className="fixed inset-0 z-[60] bg-[#0b0c0d]"
+        >
+          <div className="site-shell flex h-20 items-center justify-between border-b border-white/15">
+            <span className="font-display text-2xl font-semibold uppercase tracking-[0.1em] text-[#f1f1ee]">
+              Legacy
+            </span>
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={closeMenu}
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-[#f1f1ee]"
+              aria-label="Close navigation"
             >
-              {link.label}
-            </Link>
-          ))}
-          <div className="flex items-center gap-5 mt-2">
-            <Link
-              to="/faq"
-              onClick={() => setMenuOpen(false)}
-              className="font-body text-[0.85rem] uppercase tracking-[1.5px] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-            >
-              FAQ
-            </Link>
-            <Link
-              to="/gear"
-              onClick={() => setMenuOpen(false)}
-              className="font-body text-[0.85rem] uppercase tracking-[1.5px] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-            >
-              Gear
-            </Link>
-            <Link
-              to="/reviews"
-              onClick={() => setMenuOpen(false)}
-              className="font-body text-[0.85rem] uppercase tracking-[1.5px] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-            >
-              Reviews
-            </Link>
+              <X aria-hidden="true" size={22} strokeWidth={1.7} />
+            </button>
           </div>
-          <button
-            onClick={() => {
-              setMenuOpen(false)
-              openBooking()
-            }}
-            className="mt-3 bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300"
-          >
-            Book Now
-          </button>
+
+          <div className="site-shell flex min-h-[calc(100dvh-5rem)] flex-col justify-between py-8">
+            <div className="grid">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={closeMenu}
+                  aria-current={isActive(link.href) ? 'page' : undefined}
+                  className="border-b border-white/15 py-3 font-display text-[clamp(2.8rem,14vw,5rem)] font-medium uppercase leading-none text-[#f1f1ee] hover:text-[#E8A33D]"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-4 border-t border-white/15 pt-6">
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#b7bcc2]">
+                <Link to="/gear" onClick={closeMenu} className="hover:text-[#f1f1ee]">Gear</Link>
+                <Link to="/reviews" onClick={closeMenu} className="hover:text-[#f1f1ee]">Reviews</Link>
+                <Link to="/events" onClick={closeMenu} className="hover:text-[#f1f1ee]">Events</Link>
+                <Link to="/faq" onClick={closeMenu} className="hover:text-[#f1f1ee]">FAQ</Link>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenu()
+                  openBooking()
+                }}
+                className="signal-button mt-2 w-full"
+              >
+                Book a session
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

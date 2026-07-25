@@ -1,205 +1,99 @@
-import { Link } from 'react-router-dom'
-import { MapPin, Phone, Mail, Instagram, Youtube } from 'lucide-react'
 import { useContext } from 'react'
+import { Link } from 'react-router'
 import { BookingContext } from '../lib/booking-context'
-import { contact, services, neighborhoods } from '../lib/data'
+import { contact } from '../lib/data'
+
+const primaryLinks = [
+  { label: 'Studio', href: '/studio' },
+  { label: 'Services', href: '/services' },
+  { label: 'Engineers', href: '/engineers' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Gear', href: '/gear' },
+  { label: 'Journal', href: '/blog' },
+  { label: 'Events', href: '/events' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
+]
 
 export default function Footer() {
   const { openBooking } = useContext(BookingContext)
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#111111] border-t border-[rgba(245,240,232,0.08)]">
-      <div className="mx-auto max-w-[1400px] px-[clamp(1.5rem,5vw,4rem)] py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
-          {/* Brand */}
-          <div className="space-y-4 col-span-2">
+    <footer className="border-t border-white/15 bg-[#0b0c0d]">
+      <div className="site-shell section-space">
+        <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-24">
+          <div>
             <Link
               to="/"
-              className="font-display text-[1.25rem] tracking-[4px] uppercase text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300"
+              className="font-display text-[clamp(4rem,10vw,8.5rem)] font-semibold uppercase leading-[0.76] tracking-[-0.04em] text-[#f1f1ee] hover:text-[#E8A33D]"
             >
               Legacy
             </Link>
-            <p className="font-body text-[0.9rem] text-[#A38F7B] leading-relaxed max-w-[320px]">
-              Deep Ellum recording studio and artist development brand. Built to help
-              independent artists make professional music in Dallas.
+            <p className="mt-7 max-w-[42ch] text-base leading-7 text-[#b7bcc2]">
+              Independent recording, production and artist development in Deep Ellum, Dallas.
             </p>
-            <button
-              onClick={openBooking}
-              className="inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
-            >
-              Book a Session
+            <button type="button" onClick={openBooking} className="signal-button mt-8">
+              Book a session
             </button>
-            <div className="flex items-center gap-3 pt-2">
+          </div>
+
+          <div className="grid gap-10 sm:grid-cols-2">
+            <div>
+              <p className="control-label mb-4">Visit</p>
+              <address className="not-italic text-sm leading-7 text-[#f1f1ee]">
+                <span className="block">{contact.addressLine1}</span>
+                <span className="block">{contact.addressLine2}</span>
+              </address>
+              <p className="mt-3 text-sm text-[#b7bcc2]">{contact.hours}</p>
+            </div>
+            <div>
+              <p className="control-label mb-4">Contact</p>
               <a
-                href={contact.social.instagram}
-                aria-label="Instagram"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
+                href={`tel:${contact.phoneE164}`}
+                className="block min-h-11 text-sm font-bold text-[#f1f1ee] hover:text-[#E8A33D]"
               >
-                <Instagram size={15} />
+                {contact.phone}
               </a>
               <a
-                href={contact.social.youtube}
-                aria-label="YouTube"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[rgba(245,240,232,0.15)] flex items-center justify-center text-[#A38F7B] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-colors duration-300"
+                href={`mailto:${contact.email}`}
+                className="block min-h-11 break-all text-sm font-bold text-[#f1f1ee] hover:text-[#E8A33D]"
               >
-                <Youtube size={15} />
+                {contact.email}
               </a>
             </div>
           </div>
-
-          {/* Explore */}
-          <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
-              Explore
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { label: 'Studio', href: '/studio' },
-                { label: 'Gear', href: '/gear' },
-                { label: 'Engineers', href: '/engineers' },
-                { label: 'Pricing', href: '/pricing' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
-              Services
-            </h4>
-            <ul className="space-y-3">
-              {services.slice(0, 5).map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    to={`/services/${s.slug}`}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-                  >
-                    {s.shortName}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
-              Resources
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { label: 'Journal', href: '/blog' },
-                { label: 'Reviews', href: '/reviews' },
-                { label: 'Events', href: '/events' },
-                { label: 'FAQ', href: '/faq' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connect */}
-          <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
-              Connect
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-[#A38F7B]">
-                <MapPin size={14} className="mt-1 shrink-0" />
-                <span className="font-body text-[0.9rem]">
-                  {contact.addressLine1}<br />
-                  {contact.addressLine2}
-                </span>
-              </li>
-              <li>
-                <a
-                  href={`tel:${contact.phoneE164}`}
-                  className="flex items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
-                >
-                  <Phone size={14} />
-                  <span className="font-body text-[0.9rem]">{contact.phone}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="flex items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 break-all"
-                >
-                  <Mail size={14} />
-                  <span className="font-body text-[0.9rem]">{contact.email}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        {/* Neighborhoods strip */}
-        <div className="mt-12 pt-8 border-t border-[rgba(245,240,232,0.08)]">
-          <p className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium mb-3">
-            Serving North Dallas
-          </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {neighborhoods.map((n) => (
+        <nav aria-label="Footer navigation" className="mt-16 border-y border-white/15 py-6">
+          <div className="flex flex-wrap gap-x-7 gap-y-3">
+            {primaryLinks.map((link) => (
               <Link
-                key={n.slug}
-                to={`/neighborhoods/${n.slug}`}
-                className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
+                key={link.href}
+                to={link.href}
+                className="text-sm font-semibold text-[#b7bcc2] hover:text-[#f1f1ee]"
               >
-                {n.name}
+                {link.label}
               </Link>
             ))}
           </div>
-        </div>
+        </nav>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-[rgba(245,240,232,0.08)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-[0.85rem] text-[#A38F7B]">
-            © {year} Legacy Music Group. All rights reserved.
-          </p>
-          <div className="flex items-center gap-5 flex-wrap justify-center">
-            <Link to="/policies" className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300">
-              Policies
-            </Link>
-            <Link to="/privacy" className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300">
-              Privacy
-            </Link>
-            <Link to="/terms" className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300">
-              Terms
-            </Link>
+        <div className="mt-7 flex flex-col justify-between gap-6 text-xs leading-5 text-[#8f969d] sm:flex-row">
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <span>© {year} Legacy Music Group</span>
+            <Link to="/policies" className="hover:text-[#f1f1ee]">Policies</Link>
+            <Link to="/privacy" className="hover:text-[#f1f1ee]">Privacy</Link>
+            <Link to="/terms" className="hover:text-[#f1f1ee]">Terms</Link>
           </div>
-        </div>
-
-        {/* LiFi NYC attribution */}
-        <div className="mt-6 pt-6 border-t border-[rgba(245,240,232,0.04)] text-center">
-          <a
-            href="https://littlefightnyc.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-[0.75rem] tracking-[1px] text-[#E8A33D] hover:text-[#FF6B35] transition-colors duration-300"
-          >
-            Designed, Hosted and Cared For by LittleFightNYC.com
-          </a>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 sm:justify-end">
+            <a href={contact.social.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#f1f1ee]">Instagram</a>
+            <a href={contact.social.youtube} target="_blank" rel="noopener noreferrer" className="hover:text-[#f1f1ee]">YouTube</a>
+            <a href="https://littlefightnyc.com" target="_blank" rel="noopener noreferrer" className="text-[#E8A33D] hover:text-[#f1f1ee]">
+              Site by Little Fight NYC
+            </a>
+          </div>
         </div>
       </div>
     </footer>

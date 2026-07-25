@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { ChevronRight } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import JsonLd from '../components/JsonLd'
@@ -10,7 +10,7 @@ export default function Engineers() {
   useSeo({
     title: 'Engineers',
     description:
-      'Meet the engineers and producers behind Legacy Music Group — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, and Soul specialists in Deep Ellum, Dallas.',
+      'Meet the engineers and producers behind Legacy Music Group - Hip-Hop, R&B, Pop, Electronic, Rock, Folk, and Soul specialists in Deep Ellum, Dallas.',
     path: '/engineers',
   })
 
@@ -30,11 +30,11 @@ export default function Engineers() {
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
               The Team
             </span>
-            <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3">
+            <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3">
               Meet the Engineers
             </h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[600px] leading-[1.7]">
-              Our team of producers and engineers bring decades of combined experience across every major genre — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, Soul, and beyond.
+            <p className="font-body text-[1rem] text-[#b7bcc2] mt-4 max-w-[600px] leading-[1.7]">
+              Our team of producers and engineers bring decades of combined experience across every major genre - Hip-Hop, R&B, Pop, Electronic, Rock, Folk, Soul, and beyond.
             </p>
           </ScrollReveal>
         </div>
@@ -47,27 +47,27 @@ export default function Engineers() {
               <ScrollReveal key={eng.id} delay={i * 100}>
                 <Link
                   to={`/engineers/${eng.id}`}
-                  className="group block bg-[#111111] rounded-xl overflow-hidden border border-[rgba(245,240,232,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+                  className="group block bg-[#14171a] rounded-sm overflow-hidden border border-[rgba(241,241,238,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
                 >
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={eng.image}
-                      alt={`${eng.name} — ${eng.specialty} engineer`}
+                      alt={`${eng.name} - ${eng.specialty} engineer`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-body text-[1.25rem] font-medium text-[#F5F0E8]">
+                    <h3 className="font-body text-[1.25rem] font-medium text-[#f1f1ee]">
                       {eng.name}
                     </h3>
                     <p className="font-body text-[0.85rem] text-[#E8A33D] uppercase tracking-[1px] mt-1">
                       {eng.specialty}
                     </p>
-                    <p className="font-body text-[0.9rem] text-[#A38F7B] mt-3 leading-[1.6] line-clamp-2">
+                    <p className="font-body text-[0.9rem] text-[#b7bcc2] mt-3 leading-[1.6] line-clamp-2">
                       {eng.bio}
                     </p>
-                    <span className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#F5F0E8] mt-4 group-hover:text-[#E8A33D] transition-colors duration-300">
+                    <span className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#f1f1ee] mt-4 group-hover:text-[#E8A33D] transition-colors duration-300">
                       View Profile <ChevronRight size={14} />
                     </span>
                   </div>

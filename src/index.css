@@ -1,75 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 36 30% 94%;
-    --card: 0 0% 7%;
-    --card-foreground: 36 30% 94%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 36 30% 94%;
+    color-scheme: dark;
+    --background: 210 8% 4%;
+    --foreground: 60 10% 94%;
+    --card: 210 8% 8%;
+    --card-foreground: 60 10% 94%;
+    --popover: 210 8% 8%;
+    --popover-foreground: 60 10% 94%;
     --primary: 36 80% 57%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 36 30% 94%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 28 18% 56%;
+    --primary-foreground: 210 8% 4%;
+    --secondary: 210 7% 12%;
+    --secondary-foreground: 60 10% 94%;
+    --muted: 210 7% 12%;
+    --muted-foreground: 210 7% 70%;
     --accent: 36 80% 57%;
-    --accent-foreground: 0 0% 4%;
+    --accent-foreground: 210 8% 4%;
     --destructive: 0 65% 48%;
-    --destructive-foreground: 36 30% 94%;
-    --border: 36 30% 94% / 0.08;
-    --input: 36 30% 94% / 0.1;
+    --destructive-foreground: 60 10% 94%;
+    --border: 60 10% 94% / 0.15;
+    --input: 60 10% 94% / 0.18;
     --ring: 36 80% 57%;
-    --radius: 0.75rem;
-  }
-}
+    --radius: 0.2rem;
 
-@layer base {
+    --ink: #0b0c0d;
+    --surface: #14171a;
+    --surface-raised: #1c2024;
+    --paper: #f1f1ee;
+    --muted-copy: #b7bcc2;
+    --signal: #E8A33D;
+    --signal-deep: #D4873C;
+    --line: rgba(241, 241, 238, 0.15);
+    --line-strong: rgba(241, 241, 238, 0.28);
+  }
+
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  body {
-    @apply bg-[#0A0A0A] text-[#F5F0E8];
-    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-    overflow-x: hidden;
+    background: var(--ink);
   }
 
-  /* Keyboard-only focus ring — never shown on mouse click */
-  :focus-visible {
-    outline: 2px solid #E8A33D;
-    outline-offset: 3px;
-    border-radius: 4px;
+  body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at 78% -10%, rgba(232, 163, 61, 0.07), transparent 32rem),
+      var(--ink);
+    color: var(--paper);
+    font-family: 'Manrope Variable', 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
   }
-  /* Most native :focus is muted in favor of focus-visible above */
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
   :focus:not(:focus-visible) {
     outline: none;
   }
 
-  /* Selection color matches the brand */
   ::selection {
-    background: rgba(232, 163, 61, 0.35);
-    color: #F5F0E8;
+    background: rgba(232, 163, 61, 0.42);
+    color: var(--paper);
   }
 
-  /* Type tightening for premium serif headlines */
-  .font-display {
-    font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
-  }
-
-  /* Tap-target safety on touch devices — buttons and links min 44x44 */
   @media (pointer: coarse) {
     button,
     a,
@@ -78,7 +103,7 @@
     input[type='radio'] {
       min-height: 44px;
     }
-    /* Inputs in forms should be comfortable too */
+
     input[type='text'],
     input[type='email'],
     input[type='tel'],
@@ -86,125 +111,230 @@
     input[type='search'],
     select,
     textarea {
-      min-height: 44px;
-      font-size: 16px; /* prevents iOS zoom-on-focus */
+      min-height: 48px;
+      font-size: 16px;
     }
+  }
+}
+
+@layer components {
+  .site-shell {
+    width: min(100% - clamp(2rem, 7vw, 7rem), 1440px);
+    margin-inline: auto;
+  }
+
+  .section-space {
+    padding-block: clamp(5rem, 10vw, 9rem);
+  }
+
+  .control-label {
+    color: var(--muted-copy);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .signal-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border: 1px solid var(--signal);
+    border-radius: 2px;
+    background: var(--signal);
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    padding: 0.8rem 1.2rem;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .signal-button:hover {
+    border-color: #ff665b;
+    background: #ff665b;
+  }
+
+  .signal-button:active {
+    transform: translateY(1px);
+  }
+
+  .signal-button-secondary {
+    border-color: var(--line-strong);
+    background: rgba(11, 12, 13, 0.72);
+    color: var(--paper);
+  }
+
+  .signal-button-secondary:hover {
+    border-color: var(--paper);
+    background: var(--surface);
+  }
+
+  .console-panel {
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 35%),
+      var(--surface);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .session-rule {
+    height: 1px;
+    border: 0;
+    background: var(--line);
+  }
+
+  .form-control {
+    min-height: 48px;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Manrope Variable', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    transition: border-color 180ms ease;
+  }
+
+  .form-control::placeholder {
+    color: #777d83;
+  }
+
+  .form-control:focus {
+    border-color: var(--signal);
+    outline: 0;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
+
   .font-body {
-    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Manrope Variable', 'Helvetica Neue', Arial, sans-serif;
   }
+
+  .font-control {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
+
   .text-pretty {
     text-wrap: pretty;
   }
 
-  /* Animated underline on inline links — applies via .link-underline */
   .link-underline {
     background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100%;
+    background-position: 0 100%;
     background-repeat: no-repeat;
-    background-size: 0% 1px;
-    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background-size: 0 1px;
+    transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
+
   .link-underline:hover,
   .link-underline:focus-visible {
     background-size: 100% 1px;
   }
 
-  /* Card hover lift + amber glow — apply via .card-lift */
   .card-lift {
     transition:
-      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.3s ease;
-  }
-  .card-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease,
+      background-color 220ms ease;
   }
 
-  /* Buttons get a subtle press feedback when active */
+  .card-lift:hover {
+    transform: translateY(-2px);
+  }
+
   .btn-press:active {
-    transform: scale(0.97);
+    transform: translateY(1px);
   }
 }
 
-/* Reduced motion: respect user preference and disable our motion-heavy effects */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
+
   html {
     scroll-behavior: auto;
   }
-  /* Force any opacity-0 elements to be visible (kills GSAP entrance fades) */
-  .hero-tagline,
-  .hero-headline,
-  .hero-subheadline,
-  .hero-cta {
+
+  [data-hero-reveal] {
     opacity: 1 !important;
     transform: none !important;
   }
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0A0A0A;
-}
-::-webkit-scrollbar-thumb {
-  background: #1A1A1A;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #A38F7B;
+  width: 8px;
+  height: 8px;
 }
 
-/* Calendar dark theme overrides */
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: #3a3f44;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--signal);
+}
+
 .rdp {
-  --rdp-accent-color: #E8A33D !important;
-  --rdp-background-color: #1A1A1A !important;
+  --rdp-accent-color: var(--signal) !important;
+  --rdp-background-color: var(--surface-raised) !important;
 }
+
 .rdp-day_selected {
-  background-color: #E8A33D !important;
-  color: #0A0A0A !important;
+  background-color: var(--signal) !important;
+  color: var(--ink) !important;
 }
+
 .rdp-day_selected:hover {
-  background-color: #D4873C !important;
+  background-color: #ff665b !important;
 }
+
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-  background-color: rgba(232, 163, 61, 0.15) !important;
-  color: #F5F0E8 !important;
+  background-color: rgba(232, 163, 61, 0.14) !important;
+  color: var(--paper) !important;
 }
-.rdp-button {
-  color: #F5F0E8 !important;
-}
-.rdp-head_cell {
-  color: #A38F7B !important;
-}
+
+.rdp-button,
 .rdp-caption_label {
-  color: #F5F0E8 !important;
+  color: var(--paper) !important;
 }
+
+.rdp-head_cell,
 .rdp-nav_button {
-  color: #A38F7B !important;
+  color: var(--muted-copy) !important;
 }
+
 .rdp-nav_button:hover {
-  background-color: rgba(232, 163, 61, 0.15) !important;
-  color: #F5F0E8 !important;
+  background-color: rgba(232, 163, 61, 0.14) !important;
+  color: var(--paper) !important;
 }

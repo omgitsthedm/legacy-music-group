@@ -1,65 +1,83 @@
 import { useState } from 'react'
-import { Mail, Check } from 'lucide-react'
+import { AlertCircle, Check, Mail } from 'lucide-react'
 
 interface NewsletterSignupProps {
   variant?: 'inline' | 'block'
   label?: string
 }
 
-/**
- * Artist list opt-in. Captures email for the Legacy artist newsletter
- * (release tips, event invites, studio updates).
- *
- * PLACEHOLDER ACTION: submit currently no-ops and shows success state.
- * Needs wiring to email provider (Klaviyo / Resend / Mailchimp) before launch.
- * See PLACEHOLDERS.md §Lead capture.
- */
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
+
+const encode = (values: Record<string, string>) =>
+  new URLSearchParams(values).toString()
+
 export default function NewsletterSignup({
   variant = 'block',
   label = 'Join the Artist List',
 }: NewsletterSignupProps) {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [state, setState] = useState<SubmitState>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    // PLACEHOLDER: send to email provider
-    setSubmitted(true)
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!email || state === 'submitting') return
+    setState('submitting')
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({ 'form-name': 'legacy-newsletter', email }),
+      })
+      if (!response.ok) throw new Error('Submission failed')
+      setState('success')
+    } catch {
+      setState('error')
+    }
   }
 
   if (variant === 'inline') {
     return (
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 max-w-md">
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={submitted}
-          className="flex-1 bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-full px-4 py-2.5 text-[#F5F0E8] font-body text-[0.9rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300 disabled:opacity-50"
-          placeholder="your@email.com"
-        />
-        <button
-          type="submit"
-          disabled={submitted}
-          className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-5 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 disabled:opacity-50 whitespace-nowrap"
-        >
-          {submitted ? 'Subscribed' : 'Subscribe'}
-        </button>
+      <form
+        name="legacy-newsletter"
+        data-netlify="true"
+        onSubmit={handleSubmit}
+        className="max-w-md"
+      >
+        <div className="flex items-center gap-2">
+          <input type="hidden" name="form-name" value="legacy-newsletter" />
+          <input
+            aria-label="Email address"
+            type="email"
+            name="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            disabled={state === 'submitting' || state === 'success'}
+            className="min-h-12 flex-1 border border-white/15 bg-[#0b0c0d] px-4 font-body text-sm text-[#f1f1ee] outline-none transition-colors placeholder:text-[#777d83] focus:border-[#E8A33D] disabled:opacity-60"
+            placeholder="your@email.com"
+          />
+          <button
+            type="submit"
+            disabled={state === 'submitting' || state === 'success'}
+            className="signal-button min-h-12 disabled:cursor-wait disabled:opacity-60"
+          >
+            {state === 'success' ? 'Subscribed' : state === 'submitting' ? 'Sending' : 'Subscribe'}
+          </button>
+        </div>
+        <FormStatus state={state} />
       </form>
     )
   }
 
-  if (submitted) {
+  if (state === 'success') {
     return (
-      <div className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 text-center">
-        <div className="w-12 h-12 rounded-full bg-[rgba(74,124,89,0.2)] flex items-center justify-center mx-auto mb-4">
-          <Check size={20} className="text-[#4A7C59]" />
-        </div>
-        <h3 className="font-body text-[1.05rem] font-medium text-[#F5F0E8]">You're in.</h3>
-        <p className="font-body text-[0.9rem] text-[#A38F7B] mt-2">
-          We'll send the next drop straight to your inbox.
+      <div className="border border-white/10 bg-[#14171a] p-7 text-left" role="status">
+        <Check aria-hidden="true" size={22} className="text-[#E8A33D]" />
+        <h3 className="mt-5 font-display text-3xl uppercase text-[#f1f1ee]">You are on the list.</h3>
+        <p className="mt-2 font-body text-sm text-[#b7bcc2]">
+          The next studio drop will go to {email}.
         </p>
       </div>
     )
@@ -67,41 +85,55 @@ export default function NewsletterSignup({
 
   return (
     <form
+      name="legacy-newsletter"
+      data-netlify="true"
       onSubmit={handleSubmit}
-      className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 space-y-4"
+      className="space-y-5 border border-white/10 bg-[#14171a] p-6 sm:p-7"
     >
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center shrink-0">
-          <Mail size={18} className="text-[#E8A33D]" />
-        </div>
+      <input type="hidden" name="form-name" value="legacy-newsletter" />
+      <div className="flex items-start gap-4">
+        <Mail aria-hidden="true" size={20} className="mt-1 shrink-0 text-[#E8A33D]" />
         <div>
-          <h3 className="font-body text-[1.05rem] font-medium text-[#F5F0E8]">{label}</h3>
-          <p className="font-body text-[0.85rem] text-[#A38F7B]">
-            Studio drops, release tips, Dallas music events. No spam.
+          <h3 className="font-display text-2xl uppercase text-[#f1f1ee]">{label}</h3>
+          <p className="mt-1 font-body text-sm text-[#b7bcc2]">
+            Studio drops, release tips and Dallas music events. No spam.
           </p>
         </div>
       </div>
-
       <div>
-        <label className="block font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mb-2">
+        <label htmlFor="newsletter-email" className="control-label mb-2 block">
           Email
         </label>
         <input
+          id="newsletter-email"
           type="email"
+          name="email"
+          autoComplete="email"
           required
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-[#0A0A0A] border border-[rgba(245,240,232,0.1)] rounded-lg px-4 py-3 text-[#F5F0E8] font-body text-[0.95rem] placeholder:text-[rgba(163,143,123,0.5)] focus:border-[#E8A33D] focus:outline-none transition-colors duration-300"
+          onChange={(event) => setEmail(event.target.value)}
+          className="min-h-12 w-full border border-white/15 bg-[#0b0c0d] px-4 font-body text-sm text-[#f1f1ee] outline-none transition-colors placeholder:text-[#777d83] focus:border-[#E8A33D]"
           placeholder="your@email.com"
         />
       </div>
-
       <button
         type="submit"
-        className="w-full bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-6 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.01]"
+        disabled={state === 'submitting'}
+        className="signal-button w-full justify-center disabled:cursor-wait disabled:opacity-60"
       >
-        Subscribe
+        {state === 'submitting' ? 'Sending' : 'Subscribe'}
       </button>
+      <FormStatus state={state} />
     </form>
+  )
+}
+
+function FormStatus({ state }: { state: SubmitState }) {
+  if (state !== 'error') return null
+  return (
+    <p role="alert" className="mt-3 flex items-center gap-2 font-body text-sm text-[#ff8a80]">
+      <AlertCircle aria-hidden="true" size={15} />
+      That did not send. Try again or email info@legacymusicgroup.com.
+    </p>
   )
 }

@@ -22,9 +22,6 @@ const BUSINESS = {
     longitude: -96.7780,
   },
   priceRange: '$$',
-  // PLACEHOLDER: real founding year not surfaced on legacymusicgroup.com or GBP.
-  // Estimated from team tenure (10-yr veteran owner). Confirm with owner.
-  founded: '2014',
   sameAs: [
     'https://www.instagram.com/legacymusicgroup/',
     'https://www.facebook.com/theLegacymusicgroup',
@@ -43,7 +40,7 @@ export const organizationSchema = {
   '@id': ORG_REF,
   name: BUSINESS.legalName,
   url: SITE.url,
-  logo: `${SITE.url}/images/hero-studio-dark.jpg`,
+  logo: `${SITE.url}/icon-512.png`,
   description: BUSINESS.description,
   sameAs: BUSINESS.sameAs,
   contactPoint: {
@@ -66,7 +63,7 @@ export const localBusinessSchema = {
   telephone: BUSINESS.phone,
   email: BUSINESS.email,
   priceRange: BUSINESS.priceRange,
-  image: `${SITE.url}/images/hero-studio-dark.jpg`,
+  image: `${SITE.url}/images/legacy-social-card-gold.jpg`,
   sameAs: BUSINESS.sameAs,
   address: {
     '@type': 'PostalAddress',
@@ -110,7 +107,6 @@ export const localBusinessSchema = {
       closes: '01:00',
     },
   ],
-  foundingDate: BUSINESS.founded,
   potentialAction: {
     '@type': 'ReserveAction',
     target: {
@@ -147,14 +143,6 @@ export const websiteSchema = {
   name: SITE.name,
   publisher: { '@id': ORG_REF },
   inLanguage: 'en-US',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${SITE.url}/?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
 }
 
 // --- FAQ + Speakable -----------------------------------------------------
@@ -199,7 +187,7 @@ export const buildPersonSchema = (engineer: {
   '@type': 'Person',
   '@id': `${SITE.url}/engineers/${engineer.id}#person`,
   name: engineer.name,
-  jobTitle: `Recording Engineer — ${engineer.specialty}`,
+  jobTitle: `Recording Engineer - ${engineer.specialty}`,
   worksFor: { '@id': ORG_REF },
   image: `${SITE.url}${engineer.image}`,
   description: engineer.bio,
@@ -236,7 +224,7 @@ export interface ServiceSchemaInput {
 }
 
 /**
- * Service schema — applied to /services and per-service landing pages
+ * Service schema - applied to /services and per-service landing pages
  * (rap-recording, r-and-b, podcasts, voiceover, artist-development).
  * Bundles in `Offer` if pricing is known.
  */
@@ -344,7 +332,7 @@ export const buildArticleSchema = (a: ArticleSchemaInput) => ({
   '@id': `${SITE.url}/blog/${a.slug}#article`,
   headline: a.title,
   description: a.description,
-  image: `${SITE.url}${a.image ?? '/images/hero-studio-dark.jpg'}`,
+  image: `${SITE.url}${a.image ?? '/images/legacy-social-card-gold.jpg'}`,
   datePublished: a.datePublished,
   dateModified: a.dateModified ?? a.datePublished,
   author: {

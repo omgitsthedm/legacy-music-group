@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864 1184" role="img" aria-labelledby="title">
+  <title id="title">Matthew Medlock identity slate</title>
+  <rect width="864" height="1184" fill="#14171a"/>
+  <path d="M0 120h864M0 320h864M0 520h864M0 720h864M0 920h864" stroke="#f1f1ee" stroke-opacity=".08"/>
+  <path d="M116 94v742M258 94v612M400 94v832M542 94v522M684 94v690" stroke="#f1f1ee" stroke-opacity=".14" stroke-width="4"/>
+  <rect x="96" y="214" width="40" height="126" fill="#E8A33D"/>
+  <rect x="238" y="410" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="380" y="292" width="40" height="126" fill="#E8A33D"/>
+  <rect x="522" y="492" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="664" y="176" width="40" height="126" fill="#E8A33D"/>
+  <text x="72" y="1016" fill="#f1f1ee" font-family="Arial Narrow, Arial, sans-serif" font-size="190" font-weight="700" letter-spacing="-8">MM</text>
+  <text x="76" y="1092" fill="#E8A33D" font-family="monospace" font-size="24" letter-spacing="5">STUDIO OWNER / MANAGER</text>
+</svg>

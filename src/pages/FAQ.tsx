@@ -42,10 +42,10 @@ export default function FAQ() {
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
               Answers
             </span>
-            <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3">
+            <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3">
               Frequently Asked Questions
             </h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[600px]">
+            <p className="font-body text-[1rem] text-[#b7bcc2] mt-4 leading-[1.7] max-w-[600px]">
               Quick answers about booking, sessions, mixing, mastering, and how Legacy works.
               Don't see what you need? <a href="/contact" className="text-[#E8A33D] hover:underline">Get in touch</a>.
             </p>
@@ -64,19 +64,19 @@ export default function FAQ() {
                 {items.map((faq, i) => (
                   <details
                     key={i}
-                    className="group bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300"
+                    className="group bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-sm overflow-hidden hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300"
                   >
                     <summary className="cursor-pointer list-none flex items-center justify-between gap-4 p-5 sm:p-6">
-                      <h3 className="font-body text-[1rem] sm:text-[1.05rem] font-medium text-[#F5F0E8]">
+                      <h3 className="font-body text-[1rem] sm:text-[1.05rem] font-medium text-[#f1f1ee]">
                         {faq.question}
                       </h3>
-                      <span className="shrink-0 w-7 h-7 rounded-full border border-[rgba(245,240,232,0.2)] flex items-center justify-center text-[#A38F7B] group-open:bg-[#E8A33D] group-open:border-[#E8A33D] group-open:text-[#0A0A0A] transition-all duration-300">
+                      <span className="shrink-0 w-7 h-7 rounded-sm border border-[rgba(241,241,238,0.2)] flex items-center justify-center text-[#b7bcc2] group-open:bg-[#E8A33D] group-open:border-[#E8A33D] group-open:text-[#0b0c0d] transition-all duration-300">
                         <span className="block group-open:hidden text-lg leading-none">+</span>
                         <span className="hidden group-open:block text-lg leading-none">−</span>
                       </span>
                     </summary>
                     <div className="px-5 sm:px-6 pb-5 sm:pb-6">
-                      <p className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.7]">
+                      <p className="font-body text-[0.95rem] text-[#b7bcc2] leading-[1.7]">
                         {faq.answer}
                       </p>
                     </div>

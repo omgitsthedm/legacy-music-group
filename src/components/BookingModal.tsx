@@ -1,11 +1,10 @@
-import { useContext, useState, useRef, useEffect, useMemo } from 'react'
+import { useCallback, useContext, useState, useRef, useEffect, useMemo } from 'react'
 import {
   X,
   ChevronRight,
   Headphones,
   User,
   Sliders,
-  Package,
   Check,
   ExternalLink,
 } from 'lucide-react'
@@ -15,8 +14,6 @@ import CalendlyPicker from './CalendlyPicker'
 
 type Step = 1 | 2 | 3 | 4 | 5
 
-const TOTAL_VISIBLE_STEPS = 4
-
 export default function BookingModal() {
   const { isOpen, setIsOpen } = useContext(BookingContext)
   const [step, setStep] = useState<Step>(1)
@@ -24,31 +21,82 @@ export default function BookingModal() {
   const [addons, setAddons] = useState<string[]>([])
   const [selectedEngineer, setSelectedEngineer] = useState<string | null>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [isOpen])
-
-  const reset = () => {
+  const reset = useCallback(() => {
     setStep(1)
     setSessionType(null)
     setAddons([])
     setSelectedEngineer(null)
-  }
+  }, [])
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false)
     setTimeout(reset, 300)
-  }
+  }, [reset, setIsOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    previousFocusRef.current = document.activeElement as HTMLElement | null
+    const backgroundRegions = [
+      document.getElementById('site-navigation-bar'),
+      document.getElementById('main-content'),
+      document.querySelector<HTMLElement>('footer'),
+    ].filter((region): region is HTMLElement => Boolean(region))
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        handleClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    for (const region of backgroundRegions) {
+      region.setAttribute('aria-hidden', 'true')
+      region.inert = true
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    requestAnimationFrame(() => closeButtonRef.current?.focus())
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+      for (const region of backgroundRegions) {
+        region.removeAttribute('aria-hidden')
+        region.inert = false
+      }
+      previousFocusRef.current?.focus()
+    }
+  }, [handleClose, isOpen])
 
   const goNext = () => {
-    if (step === 1 && sessionType === 'without') {
-      setStep(2)
+    if (step === 2 && sessionType === 'without') {
+      setStep(4)
       return
     }
     setStep((step + 1) as Step)
@@ -67,9 +115,7 @@ export default function BookingModal() {
   }
 
   const toggleAddon = (id: string) => {
-    setAddons((prev) =>
-      prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id],
-    )
+    setAddons((previous) => (previous.includes(id) ? [] : [id]))
   }
 
   const canAdvance = useMemo(() => {
@@ -81,11 +127,13 @@ export default function BookingModal() {
     }
   }, [step, sessionType, selectedEngineer])
 
+  const totalVisibleSteps = sessionType === 'without' ? 3 : 4
+
   const visibleStep = useMemo(() => {
-    if (step === 5) return TOTAL_VISIBLE_STEPS
+    if (step === 5) return totalVisibleSteps
     if (sessionType === 'without' && step >= 3) return step - 1
     return step
-  }, [step, sessionType])
+  }, [step, sessionType, totalVisibleSteps])
 
   // Resolve which Calendly event we're targeting based on prior selections
   const eventConfig = useMemo(() => {
@@ -95,18 +143,19 @@ export default function BookingModal() {
     }
     return calendly.withEngineer.default
   }, [sessionType, selectedEngineer])
+  const bookingConfigured = !eventConfig.eventTypeUri.includes('PLACEHOLDER')
 
   const engineerObj = engineers.find((e) => e.id === selectedEngineer)
   const addonString = addons
-    .map((a) => (a === 'mixing' ? 'Mixing & Mastering' : 'Full Package'))
+    .map(() => 'Mixing & Mastering')
     .join(' + ')
 
   const contextLine = useMemo(() => {
     if (sessionType === 'with' && engineerObj) {
-      return `Booking with ${engineerObj.name}${addons.length ? ` · ${addonString}` : ''}.`
+      return `Booking with ${engineerObj.name}${addons.length ? `, ${addonString}` : ''}.`
     }
     if (sessionType === 'without') {
-      return `Studio time, no engineer${addons.length ? ` · ${addonString}` : ''}.`
+      return `Studio time, no engineer${addons.length ? `, ${addonString}` : ''}.`
     }
     return undefined
   }, [sessionType, engineerObj, addons, addonString])
@@ -116,34 +165,41 @@ export default function BookingModal() {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div
+        aria-hidden="true"
         className="absolute inset-0 bg-[rgba(0,0,0,0.9)] backdrop-blur-sm transition-opacity duration-300"
         onClick={handleClose}
       />
 
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-dialog-title"
+        tabIndex={-1}
         className={`relative w-full ${
           step === 4 ? 'max-w-[820px]' : 'max-w-[640px]'
-        } max-h-[92vh] flex flex-col bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
+        } max-h-[92vh] flex flex-col bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(245,240,232,0.08)] shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(241,241,238,0.08)] shrink-0">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] whitespace-nowrap">
-              {step === 5 ? 'Confirmed' : `Step ${visibleStep} of ${TOTAL_VISIBLE_STEPS}`}
+            <h2 id="booking-dialog-title" className="sr-only">Book a studio session</h2>
+            <span aria-live="polite" className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#b7bcc2] whitespace-nowrap">
+              {step === 5 ? 'Confirmed' : `Step ${visibleStep} of ${totalVisibleSteps}`}
             </span>
             {step !== 5 && (
               <div className="flex items-center gap-1">
-                {Array.from({ length: TOTAL_VISIBLE_STEPS }).map((_, i) => {
+                {Array.from({ length: totalVisibleSteps }).map((_, i) => {
                   const stepIndex = i + 1
                   const isPast = stepIndex < visibleStep
                   const isCurrent = stepIndex === visibleStep
                   return (
                     <div
                       key={i}
-                      className={`w-3 sm:w-4 h-1 rounded-full transition-colors duration-300 ${
+                      className={`w-3 sm:w-4 h-1 rounded-sm transition-colors duration-300 ${
                         isPast || isCurrent
                           ? 'bg-[#E8A33D]'
-                          : 'bg-[rgba(245,240,232,0.15)]'
+                          : 'bg-[rgba(241,241,238,0.15)]'
                       }`}
                     />
                   )
@@ -152,8 +208,10 @@ export default function BookingModal() {
             )}
           </div>
           <button
+            ref={closeButtonRef}
+            type="button"
             onClick={handleClose}
-            className="text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 p-1"
+            className="text-[#b7bcc2] hover:text-[#f1f1ee] transition-colors duration-300 p-1"
             aria-label="Close booking"
           >
             <X size={20} />
@@ -164,8 +222,8 @@ export default function BookingModal() {
         <div ref={contentRef} className="flex-1 overflow-y-auto">
           {step === 1 && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your session type</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Pick what fits how you work.</p>
+              <h3 className="font-display text-2xl text-[#f1f1ee] mb-1">Choose your session type</h3>
+              <p className="font-body text-[0.9rem] text-[#b7bcc2] mb-6">Pick what fits how you work.</p>
               <div className="space-y-3">
                 <SelectCard
                   active={sessionType === 'with'}
@@ -189,8 +247,8 @@ export default function BookingModal() {
 
           {step === 2 && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Enhance your session</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Optional. Skip if you're just tracking.</p>
+              <h3 className="font-display text-2xl text-[#f1f1ee] mb-1">Enhance your session</h3>
+              <p className="font-body text-[0.9rem] text-[#b7bcc2] mb-6">Optional. Skip if you're just tracking.</p>
               <div className="space-y-3">
                 <SelectCard
                   active={addons.includes('mixing')}
@@ -201,45 +259,38 @@ export default function BookingModal() {
                   meta="+$150"
                   toggle
                 />
-                <SelectCard
-                  active={addons.includes('full')}
-                  onClick={() => toggleAddon('full')}
-                  icon={<Package size={20} />}
-                  title="Full Package"
-                  body="Mixing + mastering + 3 promo clips for social."
-                  meta="+$300"
-                  toggle
-                />
               </div>
             </div>
           )}
 
           {step === 3 && sessionType === 'with' && (
             <div className="px-6 py-6 animate-in fade-in slide-in-from-right-2 duration-200">
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-1">Choose your engineer</h3>
-              <p className="font-body text-[0.9rem] text-[#A38F7B] mb-6">Pick the one whose style fits yours.</p>
+              <h3 className="font-display text-2xl text-[#f1f1ee] mb-1">Choose your engineer</h3>
+              <p className="font-body text-[0.9rem] text-[#b7bcc2] mb-6">Pick the one whose style fits yours.</p>
               <div className="space-y-2">
                 {engineers.map((eng) => (
                   <button
                     key={eng.id}
+                    type="button"
+                    aria-pressed={selectedEngineer === eng.id}
                     onClick={() => setSelectedEngineer(eng.id)}
-                    className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex items-center gap-4 ${
+                    className={`w-full text-left p-4 rounded-sm border transition-all duration-300 flex items-center gap-4 ${
                       selectedEngineer === eng.id
                         ? 'border-[#E8A33D] bg-[rgba(232,163,61,0.1)]'
-                        : 'border-[rgba(245,240,232,0.08)] bg-[#0A0A0A] hover:border-[rgba(245,240,232,0.2)]'
+                        : 'border-[rgba(241,241,238,0.08)] bg-[#0b0c0d] hover:border-[rgba(241,241,238,0.2)]'
                     }`}
                   >
-                    <img src={eng.image} alt={eng.name} className="w-10 h-10 rounded-full object-cover" />
+                    <img src={eng.image} alt={eng.name} className="w-10 h-10 rounded-sm object-cover" />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-body text-[0.95rem] font-medium text-[#F5F0E8]">{eng.name}</h4>
+                      <h4 className="font-body text-[0.95rem] font-medium text-[#f1f1ee]">{eng.name}</h4>
                       <p className="font-body text-[0.75rem] text-[#E8A33D] uppercase tracking-[1px]">{eng.specialty}</p>
                     </div>
                     {selectedEngineer === eng.id ? (
-                      <div className="w-5 h-5 rounded-full bg-[#E8A33D] flex items-center justify-center">
-                        <Check size={12} className="text-[#0A0A0A]" />
+                      <div className="w-5 h-5 rounded-sm bg-[#E8A33D] flex items-center justify-center">
+                        <Check size={12} className="text-[#0b0c0d]" />
                       </div>
                     ) : (
-                      <ChevronRight size={16} className="text-[#A38F7B]" />
+                      <ChevronRight size={16} className="text-[#b7bcc2]" />
                     )}
                   </button>
                 ))}
@@ -250,7 +301,7 @@ export default function BookingModal() {
           {step === 4 && (
             <div className="animate-in fade-in slide-in-from-right-2 duration-200">
               <div className="px-6 pt-6 pb-2">
-                <h3 className="font-display text-2xl text-[#F5F0E8]">Pick a time</h3>
+                <h3 className="font-display text-2xl text-[#f1f1ee]">Pick a time</h3>
               </div>
               <CalendlyPicker
                 eventTypeUri={eventConfig.eventTypeUri}
@@ -262,16 +313,16 @@ export default function BookingModal() {
 
           {step === 5 && (
             <div className="px-6 py-12 flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="w-16 h-16 rounded-full bg-[rgba(74,124,89,0.2)] flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-sm bg-[rgba(74,124,89,0.2)] flex items-center justify-center mb-6">
                 <Check size={32} className="text-[#4A7C59]" />
               </div>
-              <h3 className="font-display text-2xl text-[#F5F0E8] mb-3">You're booked.</h3>
-              <p className="font-body text-[0.95rem] text-[#A38F7B] max-w-[420px] mb-2">
+              <h3 className="font-display text-2xl text-[#f1f1ee] mb-3">You're booked.</h3>
+              <p className="font-body text-[0.95rem] text-[#b7bcc2] max-w-[420px] mb-2">
                 Check your email for the calendar invite and confirmation.
               </p>
               <button
                 onClick={handleClose}
-                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 mt-4"
+                className="bg-[#E8A33D] text-[#0b0c0d] font-body text-[0.9rem] font-medium px-8 py-3 rounded-sm hover:bg-[#D4873C] transition-all duration-300 mt-4"
               >
                 Done
               </button>
@@ -281,25 +332,27 @@ export default function BookingModal() {
 
         {/* Footer */}
         {step <= 3 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-[rgba(245,240,232,0.08)] shrink-0">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-[rgba(241,241,238,0.08)] shrink-0">
             <button
+              type="button"
               onClick={goBack}
               disabled={step === 1}
               className={`font-body text-[0.9rem] transition-colors duration-300 ${
                 step === 1
-                  ? 'text-[rgba(163,143,123,0.4)] cursor-not-allowed'
-                  : 'text-[#A38F7B] hover:text-[#F5F0E8]'
+                  ? 'text-[rgba(183,188,194,0.4)] cursor-not-allowed'
+                  : 'text-[#b7bcc2] hover:text-[#f1f1ee]'
               }`}
             >
               Back
             </button>
             <button
+              type="button"
               onClick={goNext}
               disabled={!canAdvance}
-              className={`font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-full transition-all duration-300 ${
+              className={`font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-sm transition-all duration-300 ${
                 !canAdvance
                   ? 'bg-[rgba(232,163,61,0.3)] text-[rgba(10,10,10,0.5)] cursor-not-allowed'
-                  : 'bg-[#E8A33D] text-[#0A0A0A] hover:bg-[#D4873C] hover:scale-[1.02]'
+                  : 'bg-[#E8A33D] text-[#0b0c0d] hover:bg-[#D4873C] hover:scale-[1.02]'
               }`}
             >
               {step === 3 ? 'Continue to scheduling' : step === 2 && sessionType === 'without' ? 'Continue to scheduling' : 'Next'}
@@ -307,22 +360,25 @@ export default function BookingModal() {
           </div>
         )}
         {step === 4 && (
-          <div className="flex items-center justify-between px-6 py-3 border-t border-[rgba(245,240,232,0.08)] shrink-0">
+          <div className="flex items-center justify-between px-6 py-3 border-t border-[rgba(241,241,238,0.08)] shrink-0">
             <button
+              type="button"
               onClick={goBack}
-              className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+              className="font-body text-[0.9rem] text-[#b7bcc2] hover:text-[#f1f1ee] transition-colors duration-300"
             >
               Back
             </button>
-            <a
-              href={eventConfig.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
-            >
-              Open Calendly directly
-              <ExternalLink size={13} />
-            </a>
+            {bookingConfigured && (
+              <a
+                href={eventConfig.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-body text-[0.85rem] text-[#b7bcc2] hover:text-[#E8A33D] transition-colors duration-300"
+              >
+                Open calendar
+                <ExternalLink aria-hidden="true" size={13} />
+              </a>
+            )}
           </div>
         )}
       </div>
@@ -349,34 +405,36 @@ function SelectCard({
 }) {
   return (
     <button
+      type="button"
+      aria-pressed={active}
       onClick={onClick}
-      className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-start gap-4 ${
+      className={`w-full text-left p-5 rounded-sm border transition-all duration-300 flex items-start gap-4 ${
         active
           ? 'border-[#E8A33D] bg-[rgba(232,163,61,0.1)]'
-          : 'border-[rgba(245,240,232,0.08)] bg-[#0A0A0A] hover:border-[rgba(245,240,232,0.2)]'
+          : 'border-[rgba(241,241,238,0.08)] bg-[#0b0c0d] hover:border-[rgba(241,241,238,0.2)]'
       }`}
     >
       <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300 ${
-          active ? 'bg-[#E8A33D] text-[#0A0A0A]' : 'bg-[#1A1A1A] text-[#A38F7B]'
+        className={`w-10 h-10 rounded-sm flex items-center justify-center shrink-0 transition-colors duration-300 ${
+          active ? 'bg-[#E8A33D] text-[#0b0c0d]' : 'bg-[#1c2024] text-[#b7bcc2]'
         }`}
       >
         {icon}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <h4 className="font-body text-[1rem] font-medium text-[#F5F0E8]">{title}</h4>
+          <h4 className="font-body text-[1rem] font-medium text-[#f1f1ee]">{title}</h4>
           <span className="font-body text-[0.85rem] text-[#E8A33D] font-medium">{meta}</span>
         </div>
-        <p className="font-body text-[0.85rem] text-[#A38F7B] mt-1">{body}</p>
+        <p className="font-body text-[0.85rem] text-[#b7bcc2] mt-1">{body}</p>
       </div>
       {toggle && (
         <div
           className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 mt-1 transition-colors duration-300 ${
-            active ? 'bg-[#E8A33D] border-[#E8A33D]' : 'border-[rgba(245,240,232,0.3)]'
+            active ? 'bg-[#E8A33D] border-[#E8A33D]' : 'border-[rgba(241,241,238,0.3)]'
           }`}
         >
-          {active && <Check size={12} className="text-[#0A0A0A]" />}
+          {active && <Check size={12} className="text-[#0b0c0d]" />}
         </div>
       )}
     </button>

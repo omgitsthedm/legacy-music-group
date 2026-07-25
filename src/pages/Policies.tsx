@@ -11,7 +11,7 @@ const sections = [
     body: [
       'Session bookings, times, and dates are subject to availability and approval from a member of the Legacy team.',
       'Legacy reserves the right to refuse or reschedule confirmed bookings at our discretion. We will notify you as soon as possible if this happens.',
-      'Bookings can be confirmed via legacymusicgroup.com, by phone at (214) 377-9729, or by email at info@legacymusicgroup.com.',
+      'Bookings are confirmed directly by a member of the Legacy team by phone or email.',
     ],
   },
   {
@@ -20,13 +20,13 @@ const sections = [
       'A non-refundable, non-transferable 50% deposit is required to secure all bookings. The remaining balance is due on the day of your session.',
       'For sessions exceeding 8 hours, installment payments may be required as time is used.',
       'Legacy retains all copies of recordings, masters, or session files until full payment clears.',
-      'Refusal to pay may lead to prosecution. We do not enjoy this part — please don\'t put us in that position.',
+      'Refusal to pay may lead to prosecution. We do not enjoy this part - please don\'t put us in that position.',
     ],
   },
   {
     title: 'Cancellations & Rescheduling',
     body: [
-      '24 hours notice is required for the cancellation of a session — including weekends and holidays.',
+      '24 hours notice is required for the cancellation of a session - including weekends and holidays.',
       'Cancellations with less than 24 hours notice incur a $55 reschedule fee.',
       'No-shows forfeit all payments made.',
       'Weather-related cancellations are rescheduled at no penalty.',
@@ -45,7 +45,7 @@ const sections = [
     body: [
       'Maximum 7 guests per session. Additional guests require 24-hour advance notice and may incur a $35 cleanup fee per extra person.',
       'Cigarette smoking is not permitted anywhere inside the studio complex.',
-      'Food and beverages are welcome — but not on the equipment. Spillage damages will be billed under the damages policy.',
+      'Food and beverages are welcome - but not on the equipment. Spillage damages will be billed under the damages policy.',
       'Legacy is not responsible for any personal items lost or damaged on the premises.',
     ],
   },
@@ -60,16 +60,16 @@ const sections = [
   {
     title: 'Parking',
     body: [
-      'Metered street parking is available outside the studio. Meters are active 6pm–midnight, 7 days a week, at $0.25 per 30 minutes.',
+      'Metered street parking is available outside the studio. Meters are active 6pm-midnight, 7 days a week, at $0.25 per 30 minutes.',
       'Legacy is not responsible for any parking tickets or towing violations.',
-      'Plan for parking time when arriving — we don\'t extend session windows for parking.',
+      'Plan for parking time when arriving - we don\'t extend session windows for parking.',
     ],
   },
   {
     title: 'Fee Schedule',
     body: [
-      '$55 — late-cancellation / reschedule fee',
-      '$35 — additional guest / cleanup fee per extra person',
+      '$55 - late-cancellation / reschedule fee',
+      '$35 - additional guest / cleanup fee per extra person',
       'Damage fees are quoted per incident based on equipment value and repair cost.',
     ],
   },
@@ -101,11 +101,11 @@ export default function Policies() {
             </span>
             <h1
               data-speakable
-              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
+              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3"
             >
               Booking Policies
             </h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7]">
+            <p className="font-body text-[1rem] text-[#b7bcc2] mt-4 leading-[1.7]">
               The rules of the room. Designed to keep things smooth for artists,
               engineers, and the studio. By booking a session at Legacy you're agreeing
               to these terms on behalf of yourself, your artist, or your band.
@@ -118,10 +118,10 @@ export default function Policies() {
         <div className="mx-auto max-w-[800px] space-y-10">
           {sections.map((section, i) => (
             <ScrollReveal key={section.title} delay={i * 50}>
-              <article className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-8">
+              <article className="bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-sm p-6 sm:p-8">
                 <h2
                   data-speakable
-                  className="font-body text-[1.25rem] font-medium text-[#F5F0E8] mb-4"
+                  className="font-body text-[1.25rem] font-medium text-[#f1f1ee] mb-4"
                 >
                   {section.title}
                 </h2>
@@ -129,7 +129,7 @@ export default function Policies() {
                   {section.body.map((para, j) => (
                     <p
                       key={j}
-                      className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.7]"
+                      className="font-body text-[0.95rem] text-[#b7bcc2] leading-[1.7]"
                     >
                       {para}
                     </p>
@@ -140,7 +140,7 @@ export default function Policies() {
           ))}
 
           <ScrollReveal>
-            <p className="font-body text-[0.85rem] text-[#A38F7B] text-center pt-4 border-t border-[rgba(245,240,232,0.08)]">
+            <p className="font-body text-[0.85rem] text-[#b7bcc2] text-center pt-4 border-t border-[rgba(241,241,238,0.08)]">
               Questions about these policies? Email{' '}
               <a href={`mailto:${contact.email}`} className="text-[#E8A33D] hover:underline">
                 {contact.email}

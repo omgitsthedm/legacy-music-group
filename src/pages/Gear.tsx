@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { ChevronRight } from 'lucide-react'
 import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
@@ -34,7 +34,7 @@ export default function Gear() {
   const { openBooking } = useContext(BookingContext)
 
   useSeo({
-    title: 'Studio Gear — Console, Microphones, Outboard',
+    title: 'Studio Gear - Console, Microphones, Outboard',
     description:
       'The full gear list at Legacy Music Group: SSL console, Pro Tools, Neumann U87, Sony C-800G, Shure SM7B, Neve, API, LA-2A, 1176, Distressor, Genelec monitors, and more.',
     path: '/gear',
@@ -92,11 +92,11 @@ export default function Gear() {
             </span>
             <h1
               data-speakable
-              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
+              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#f1f1ee] mt-3"
             >
               Studio Gear
             </h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[640px]">
+            <p className="font-body text-[1rem] text-[#b7bcc2] mt-4 leading-[1.7] max-w-[640px]">
               Real consoles, broadcast-grade microphones, classic outboard, and modern DAWs. The chain that makes the difference between a session that sounds like a session and one that sounds like a record.
             </p>
           </ScrollReveal>
@@ -118,9 +118,9 @@ export default function Gear() {
                   {items.map((item) => (
                     <div
                       key={item.name}
-                      className="bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl p-5 hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300"
+                      className="bg-[#14171a] border border-[rgba(241,241,238,0.08)] rounded-sm p-5 hover:border-[rgba(232,163,61,0.3)] transition-colors duration-300"
                     >
-                      <h3 className="font-body text-[1rem] font-medium text-[#F5F0E8]">
+                      <h3 className="font-body text-[1rem] font-medium text-[#f1f1ee]">
                         {item.name}
                       </h3>
                       {item.brand && (
@@ -129,7 +129,7 @@ export default function Gear() {
                         </p>
                       )}
                       {item.description && (
-                        <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2 leading-[1.6]">
+                        <p className="font-body text-[0.85rem] text-[#b7bcc2] mt-2 leading-[1.6]">
                           {item.description}
                         </p>
                       )}
@@ -141,28 +141,28 @@ export default function Gear() {
           ))}
 
           <ScrollReveal>
-            <div className="bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-xl p-6 sm:p-8 mt-12">
-              <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                <strong className="text-[#F5F0E8]">A note on the list:</strong> this is a working
+            <div className="bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-sm p-6 sm:p-8 mt-12">
+              <p className="font-body text-[0.85rem] text-[#b7bcc2] leading-[1.6]">
+                <strong className="text-[#f1f1ee]">A note on the list:</strong> this is a working
                 inventory. We rotate gear in and out as projects demand. If you need something
                 specific that isn’t listed (a particular ribbon, a vintage compressor, a specific
-                amp), tell us when you book — we can usually source it for the session.
+                amp), tell us when you book - we can usually source it for the session.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal>
-            <div className="border-t border-[rgba(245,240,232,0.08)] pt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="border-t border-[rgba(241,241,238,0.08)] pt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
               <Link
                 to="/studio"
-                className="inline-flex items-center gap-2 font-body text-[0.95rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 group"
+                className="inline-flex items-center gap-2 font-body text-[0.95rem] text-[#b7bcc2] hover:text-[#f1f1ee] transition-colors duration-300 group"
               >
                 <ChevronRight size={14} className="rotate-180" />
                 Back to The Studio
               </Link>
               <button
                 onClick={openBooking}
-                className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+                className="bg-[#E8A33D] text-[#0b0c0d] font-body text-[0.95rem] font-medium px-8 py-3 rounded-sm hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
               >
                 Book a Session
               </button>

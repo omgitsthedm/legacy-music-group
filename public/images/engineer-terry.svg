@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864 1184" role="img" aria-labelledby="title">
+  <title id="title">Terry identity slate</title>
+  <rect width="864" height="1184" fill="#14171a"/>
+  <path d="M0 130h864M0 330h864M0 530h864M0 730h864M0 930h864" stroke="#f1f1ee" stroke-opacity=".08"/>
+  <path d="M116 94v612M258 94v752M400 94v652M542 94v802M684 94v572" stroke="#f1f1ee" stroke-opacity=".14" stroke-width="4"/>
+  <rect x="96" y="474" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="238" y="280" width="40" height="126" fill="#E8A33D"/>
+  <rect x="380" y="390" width="40" height="126" fill="#E8A33D"/>
+  <rect x="522" y="194" width="40" height="126" fill="#f1f1ee"/>
+  <rect x="664" y="514" width="40" height="126" fill="#E8A33D"/>
+  <text x="72" y="1016" fill="#f1f1ee" font-family="Arial Narrow, Arial, sans-serif" font-size="210" font-weight="700" letter-spacing="-8">T</text>
+  <text x="76" y="1092" fill="#E8A33D" font-family="monospace" font-size="24" letter-spacing="5">MAINTENANCE ENGINEER</text>
+</svg>

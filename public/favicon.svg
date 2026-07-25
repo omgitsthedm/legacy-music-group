@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#0A0A0A"/>
-  <text x="32" y="44" font-family="Georgia, 'DM Serif Display', serif" font-size="42" font-weight="400" text-anchor="middle" fill="#E8A33D">L</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Legacy Music Group">
+  <rect width="64" height="64" fill="#0b0c0d"/>
+  <path d="M12 10h9v35h31v9H12z" fill="#E8A33D"/>
+  <path d="M29 10h5v26h-5zM41 10h5v18h-5z" fill="#f1f1ee"/>
 </svg>

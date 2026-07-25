@@ -1,10 +1,24 @@
 {
   "name": "Legacy Music Group",
   "short_name": "Legacy",
-  "description": "Deep Ellum recording studio and artist development brand. Book your session in under a minute.",
+  "description": "Engineer-led recording, mixing and artist development in Deep Ellum, Dallas.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0A0A0A",
-  "theme_color": "#0A0A0A",
-  "icons": []
+  "background_color": "#0b0c0d",
+  "theme_color": "#0b0c0d",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }

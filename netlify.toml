@@ -6,14 +6,7 @@
 [functions]
   node_bundler = "esbuild"
 
-# SPA fallback — also handled by public/_redirects, but here for clarity
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
-
 [dev]
   command = "npm run dev"
-  targetPort = 5173
+  targetPort = 3000
   framework = "#custom"

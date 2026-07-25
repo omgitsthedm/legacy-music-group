@@ -1,20 +1,32 @@
-import { Link } from 'react-router-dom'
-import { ChevronRight, Clock } from 'lucide-react'
-import ScrollReveal from '../components/ScrollReveal'
+import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router'
 import JsonLd from '../components/JsonLd'
+import ScrollReveal from '../components/ScrollReveal'
+import { buildBreadcrumbSchema } from '../lib/schemas'
 import { useSeo } from '../lib/seo'
-import { blogPosts } from '../lib/data'
-import { buildBreadcrumbSchema, buildItemListSchema } from '../lib/schemas'
+
+const coverage = [
+  {
+    outlet: 'D Magazine',
+    title: 'The 25 Most Influential Dallas Recording Artists of the Last 25 Years',
+    date: 'July 2026',
+    href: 'https://www.dmagazine.com/publications/d-magazine/2026/july/the-25-most-influential-dallas-recording-artists-of-the-last-25-years/',
+  },
+  {
+    outlet: 'Dallas Observer',
+    title: "Deep Ellum's Matthew Medlock Is Undeterred",
+    date: 'May 2016',
+    href: 'https://www.dallasobserver.com/music/deep-ellums-matthew-medlock-is-undeterred-by-shooting-at-his-recording-studio-8278683/',
+  },
+]
 
 export default function Blog() {
   useSeo({
-    title: 'Journal — Recording, Mixing, and the Dallas Music Scene',
+    title: 'Newsroom and Studio Notes',
     description:
-      'Practical writing about recording in Dallas, mixing & mastering, artist development, and the Deep Ellum studio scene from the Legacy Music Group team.',
+      'Verified coverage of Legacy Music Group plus a growing archive of owner-reviewed studio notes.',
     path: '/blog',
   })
-
-  const sorted = [...blogPosts].sort((a, b) => b.datePublished.localeCompare(a.datePublished))
 
   return (
     <div className="pt-20">
@@ -22,77 +34,71 @@ export default function Blog() {
         id="blog-breadcrumb"
         data={buildBreadcrumbSchema([
           { name: 'Home', path: '/' },
-          { name: 'Journal', path: '/blog' },
+          { name: 'Newsroom', path: '/blog' },
         ])}
       />
-      <JsonLd
-        id="blog-list"
-        data={buildItemListSchema(
-          'Legacy Music Group Journal',
-          sorted.map((p) => ({ name: p.title, url: `/blog/${p.slug}` })),
-        )}
-      />
 
-      <section className="pt-[clamp(4rem,8vw,6rem)] pb-12 px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="mx-auto max-w-[1000px]">
-          <ScrollReveal>
-            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-              Journal
-            </span>
-            <h1
-              data-speakable
-              className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
-            >
-              The Legacy Journal
-            </h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[640px] leading-[1.7]">
-              Recording, mixing, mastering, and the Dallas music scene — from the
-              engineers, producers, and team at Legacy.
-            </p>
-          </ScrollReveal>
-        </div>
+      <section className="site-shell section-space border-b border-white/15">
+        <ScrollReveal>
+          <p className="control-label text-[#E8A33D]">Newsroom / field notes</p>
+          <h1 className="mt-5 max-w-[10ch] font-display text-[clamp(4.5rem,11vw,10rem)] font-semibold uppercase leading-[0.82] tracking-[-0.045em] text-[#f1f1ee]">
+            Signal over noise.
+          </h1>
+          <p className="mt-7 max-w-[58ch] font-body text-base leading-7 text-[#b7bcc2]">
+            Verified coverage lives here now. The studio-note archive is being rebuilt
+            around pieces written or reviewed by the people who work in the room.
+          </p>
+        </ScrollReveal>
       </section>
 
-      <section className="pb-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="mx-auto max-w-[1000px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {sorted.map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 60}>
-                <Link
-                  to={`/blog/${post.slug}`}
-                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300"
+      <section className="site-shell section-space">
+        <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
+          <ScrollReveal>
+            <p className="control-label">Press desk</p>
+            <h2 className="mt-4 font-display text-5xl uppercase leading-[0.9] text-[#f1f1ee]">
+              Read the source.
+            </h2>
+          </ScrollReveal>
+          <div className="border-t border-white/15">
+            {coverage.map((item, index) => (
+              <ScrollReveal key={item.href} delay={index * 80}>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group grid gap-4 border-b border-white/15 py-7 sm:grid-cols-[0.42fr_1fr_auto] sm:items-start"
                 >
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="font-body text-[0.7rem] uppercase tracking-[1.5px] text-[#E8A33D] font-medium">
-                        {post.category}
-                      </span>
-                      <span className="font-body text-[0.7rem] uppercase tracking-[1.5px] text-[#A38F7B] flex items-center gap-1">
-                        <Clock size={11} /> {post.readMins} min read
-                      </span>
-                    </div>
-                    <h2 className="font-display text-[1.5rem] leading-[1.2] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
-                      {post.title}
-                    </h2>
-                    <p className="font-body text-[0.95rem] text-[#A38F7B] mt-3 leading-[1.6]">
-                      {post.excerpt}
+                  <div>
+                    <p className="font-control text-xs uppercase tracking-[0.12em] text-[#E8A33D]">
+                      {item.outlet}
                     </p>
-                    <span className="inline-flex items-center gap-1 mt-4 font-body text-[0.85rem] text-[#E8A33D] group-hover:gap-2 transition-all duration-300">
-                      Read article <ChevronRight size={14} />
-                    </span>
+                    <p className="mt-2 text-xs text-[#8f969d]">{item.date}</p>
                   </div>
-                </Link>
+                  <h3 className="font-display text-3xl uppercase leading-none text-[#f1f1ee] group-hover:text-[#E8A33D]">
+                    {item.title}
+                  </h3>
+                  <ArrowUpRight aria-hidden="true" className="text-[#b7bcc2] group-hover:text-[#E8A33D]" />
+                </a>
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#E8A33D] text-[#0b0c0d]">
+        <div className="site-shell flex flex-col gap-8 py-16 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-control text-xs uppercase tracking-[0.14em]">Need a practical answer?</p>
+            <h2 className="mt-3 font-display text-[clamp(3.5rem,8vw,7rem)] font-semibold uppercase leading-[0.82]">
+              Ask the room.
+            </h2>
+          </div>
+          <Link
+            to="/contact"
+            className="inline-flex min-h-12 items-center justify-center border border-[#0b0c0d] px-6 font-control text-sm font-bold uppercase tracking-[0.1em] hover:bg-[#0b0c0d] hover:text-[#f1f1ee]"
+          >
+            Contact Legacy
+          </Link>
         </div>
       </section>
     </div>

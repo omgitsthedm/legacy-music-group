@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ChevronLeft, ChevronRight, Loader2, AlertCircle, Clock } from 'lucide-react'
-import { calendly } from '../lib/data'
+import { ChevronLeft, ChevronRight, Loader2, AlertCircle, Clock, Mail, Phone } from 'lucide-react'
+import { calendly, contact } from '../lib/data'
 
 interface Slot {
   start: string
@@ -42,6 +42,7 @@ export default function CalendlyPicker({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isMock, setIsMock] = useState(false)
+  const isConfigured = !eventTypeUri.includes('PLACEHOLDER')
 
   const today = useMemo(() => {
     const d = new Date()
@@ -60,6 +61,9 @@ export default function CalendlyPicker({
   // limits each query to a 7-day window).
   useEffect(() => {
     let cancelled = false
+    if (!isConfigured) return () => {
+      cancelled = true
+    }
 
     const monthStart = new Date(visibleMonth)
     const nextMonthStart = new Date(visibleMonth)
@@ -122,7 +126,7 @@ export default function CalendlyPicker({
     return () => {
       cancelled = true
     }
-  }, [eventTypeUri, visibleMonth, today])
+  }, [eventTypeUri, isConfigured, visibleMonth, today])
 
   // Group slots by YYYY-MM-DD (in viewer's local timezone)
   const slotsByDate = useMemo(() => {
@@ -149,49 +153,78 @@ export default function CalendlyPicker({
 
   const selectedSlots = effectiveSelectedDate ? slotsByDate.get(effectiveSelectedDate) ?? [] : []
 
+  if (!isConfigured || isMock) {
+    return (
+      <div className="px-6 pb-7">
+        {contextLine && (
+          <p className="mb-5 font-body text-sm text-[#b7bcc2]">{contextLine}</p>
+        )}
+        <div className="border border-white/10 bg-[#0b0c0d] p-6 sm:p-8">
+          <p className="font-control text-xs uppercase tracking-[0.18em] text-[#E8A33D]">
+            Scheduling desk
+          </p>
+          <h4 className="mt-3 font-display text-3xl uppercase leading-none text-[#f1f1ee]">
+            Let the studio lock in your time.
+          </h4>
+          <p className="mt-4 max-w-lg font-body text-sm leading-6 text-[#b7bcc2]">
+            Live calendar booking is being connected. Call or email Legacy with your
+            preferred date, session length and engineer, and the team will confirm
+            availability directly.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={`tel:${contact.phoneE164}`}
+              className="signal-button justify-center"
+            >
+              <Phone aria-hidden="true" size={16} />
+              Call {contact.phone}
+            </a>
+            <a
+              href={`mailto:${contact.email}?subject=Studio session request`}
+              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/15 px-5 font-control text-sm uppercase tracking-[0.12em] text-[#f1f1ee] transition-colors hover:border-[#E8A33D] hover:text-[#E8A33D]"
+            >
+              <Mail aria-hidden="true" size={16} />
+              Email the studio
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="px-6 pb-6">
       {contextLine && (
-        <p className="font-body text-[0.85rem] text-[#A38F7B] mb-4">{contextLine}</p>
-      )}
-
-      {isMock && (
-        <div className="bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-lg px-4 py-2.5 mb-4 flex items-start gap-2">
-          <AlertCircle size={14} className="text-[#E8A33D] shrink-0 mt-0.5" />
-          <p className="font-body text-[0.75rem] text-[#A38F7B] leading-[1.5]">
-            Showing placeholder availability — real Calendly account not yet connected.
-            Set <code className="text-[#E8A33D]">CALENDLY_PAT</code> on Netlify to go live.
-          </p>
-        </div>
+        <p className="font-body text-[0.85rem] text-[#b7bcc2] mb-4">{contextLine}</p>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,260px)] gap-5">
         {/* Calendar */}
-        <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-4">
+        <div className="bg-[#0b0c0d] border border-[rgba(241,241,238,0.08)] rounded-sm p-4">
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={() => setMonthOffset((o) => Math.max(0, o - 1))}
               disabled={monthOffset === 0}
               aria-label="Previous month"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
+              className={`w-8 h-8 rounded-sm flex items-center justify-center transition-colors duration-200 ${
                 monthOffset === 0
-                  ? 'text-[rgba(163,143,123,0.3)] cursor-not-allowed'
-                  : 'text-[#A38F7B] hover:text-[#F5F0E8] hover:bg-[rgba(245,240,232,0.05)]'
+                  ? 'text-[rgba(183,188,194,0.3)] cursor-not-allowed'
+                  : 'text-[#b7bcc2] hover:text-[#f1f1ee] hover:bg-[rgba(241,241,238,0.05)]'
               }`}
             >
               <ChevronLeft size={16} />
             </button>
-            <p className="font-body text-[1rem] font-medium text-[#F5F0E8]">
+            <p className="font-body text-[1rem] font-medium text-[#f1f1ee]">
               {visibleMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
             <button
               onClick={() => setMonthOffset((o) => Math.min(11, o + 1))}
               disabled={monthOffset === 11}
               aria-label="Next month"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
+              className={`w-8 h-8 rounded-sm flex items-center justify-center transition-colors duration-200 ${
                 monthOffset === 11
-                  ? 'text-[rgba(163,143,123,0.3)] cursor-not-allowed'
-                  : 'text-[#A38F7B] hover:text-[#F5F0E8] hover:bg-[rgba(245,240,232,0.05)]'
+                  ? 'text-[rgba(183,188,194,0.3)] cursor-not-allowed'
+                  : 'text-[#b7bcc2] hover:text-[#f1f1ee] hover:bg-[rgba(241,241,238,0.05)]'
               }`}
             >
               <ChevronRight size={16} />
@@ -203,7 +236,7 @@ export default function CalendlyPicker({
             {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
               <div
                 key={i}
-                className="font-body text-[0.65rem] uppercase tracking-[1px] text-[#A38F7B] text-center py-1"
+                className="font-body text-[0.65rem] uppercase tracking-[1px] text-[#b7bcc2] text-center py-1"
               >
                 {d}
               </div>
@@ -226,23 +259,23 @@ export default function CalendlyPicker({
                   disabled={isDisabled}
                   onClick={() => setSelectedDate(key)}
                   aria-label={cell.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                  className={`aspect-square rounded-lg flex flex-col items-center justify-center text-[0.85rem] font-body transition-all duration-200 relative ${
+                  className={`aspect-square rounded-sm flex flex-col items-center justify-center text-[0.85rem] font-body transition-all duration-200 relative ${
                     isSelected
-                      ? 'bg-[#E8A33D] text-[#0A0A0A] font-medium'
+                      ? 'bg-[#E8A33D] text-[#0b0c0d] font-medium'
                       : isDisabled
-                      ? 'text-[rgba(163,143,123,0.3)] cursor-not-allowed'
-                      : 'text-[#F5F0E8] hover:bg-[rgba(232,163,61,0.15)] hover:text-[#E8A33D]'
+                      ? 'text-[rgba(183,188,194,0.3)] cursor-not-allowed'
+                      : 'text-[#f1f1ee] hover:bg-[rgba(232,163,61,0.15)] hover:text-[#E8A33D]'
                   }`}
                 >
                   <span>{cell.getDate()}</span>
                   {has && !isSelected && (
-                    <span className="absolute bottom-1.5 w-1 h-1 rounded-full bg-[#E8A33D]" />
+                    <span className="absolute bottom-1.5 w-1 h-1 rounded-sm bg-[#E8A33D]" />
                   )}
                 </button>
               )
             })}
             {loading && (
-              <div className="absolute inset-0 bg-[rgba(10,10,10,0.6)] backdrop-blur-sm rounded-lg flex items-center justify-center">
+              <div className="absolute inset-0 bg-[rgba(10,10,10,0.6)] backdrop-blur-sm rounded-sm flex items-center justify-center">
                 <Loader2 size={20} className="text-[#E8A33D] animate-spin" />
               </div>
             )}
@@ -250,8 +283,8 @@ export default function CalendlyPicker({
         </div>
 
         {/* Slots */}
-        <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-3 text-[#A38F7B]">
+        <div className="bg-[#0b0c0d] border border-[rgba(241,241,238,0.08)] rounded-sm p-4">
+          <div className="flex items-center gap-2 mb-3 text-[#b7bcc2]">
             <Clock size={13} />
             <p className="font-body text-[0.7rem] uppercase tracking-[1.5px]">
               {effectiveSelectedDate
@@ -266,8 +299,8 @@ export default function CalendlyPicker({
 
           {error ? (
             <div className="text-center py-6">
-              <AlertCircle size={20} className="text-[#A38F7B] mx-auto mb-2" />
-              <p className="font-body text-[0.85rem] text-[#A38F7B] mb-3">
+              <AlertCircle size={20} className="text-[#b7bcc2] mx-auto mb-2" />
+              <p className="font-body text-[0.85rem] text-[#b7bcc2] mb-3">
                 Couldn't load availability.
               </p>
               <a
@@ -280,7 +313,7 @@ export default function CalendlyPicker({
               </a>
             </div>
           ) : selectedSlots.length === 0 && !loading ? (
-            <p className="font-body text-[0.85rem] text-[#A38F7B] text-center py-6">
+            <p className="font-body text-[0.85rem] text-[#b7bcc2] text-center py-6">
               No times available. Try another date.
             </p>
           ) : (
@@ -296,7 +329,7 @@ export default function CalendlyPicker({
                     href={s.schedulingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-left px-4 py-2.5 rounded-lg border border-[rgba(245,240,232,0.08)] text-[#F5F0E8] font-body text-[0.9rem] hover:border-[#E8A33D] hover:bg-[rgba(232,163,61,0.08)] hover:text-[#E8A33D] transition-all duration-200"
+                    className="block w-full text-left px-4 py-2.5 rounded-sm border border-[rgba(241,241,238,0.08)] text-[#f1f1ee] font-body text-[0.9rem] hover:border-[#E8A33D] hover:bg-[rgba(232,163,61,0.08)] hover:text-[#E8A33D] transition-all duration-200"
                   >
                     {time}
                   </a>
@@ -307,7 +340,7 @@ export default function CalendlyPicker({
         </div>
       </div>
 
-      <p className="font-body text-[0.75rem] text-[#A38F7B] mt-4 text-center">
+      <p className="font-body text-[0.75rem] text-[#b7bcc2] mt-4 text-center">
         Times shown in your local timezone. Picking a time opens Calendly to confirm contact details and lock the booking.
       </p>
     </div>
