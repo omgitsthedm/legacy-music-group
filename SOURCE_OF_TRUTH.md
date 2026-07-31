@@ -1,26 +1,25 @@
-# SOURCE_OF_TRUTH.md — {PROJECT NAME}
+# Legacy Music Group source of truth
 
-Last verified: {YYYY-MM-DD} by {who}.
+Verified 2026-07-31.
 
-**GitHub `main` is canonical and the site deploys from `main`.** Local clones are disposable.
+## Canonical source
 
-## Production linkage
-- Host: {Netlify/Vercel} · site name: {…} · site id: {…}
-- Build command: `{cmd}`
-- Publish dir: `{dir}`
-- **Deploy mechanism: push `main` → {host} auto-build → auto-publish.** (No manual deploys.)
-- Live URL: {https://…}
+- Local: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`
+- GitHub: `https://github.com/omgitsthedm/legacy-music-group`
+- Production branch: `master`
+- Preserved product work: draft PR #1 from `chore/plain-language-live-confirmation-20260711`; do not discard or merge it as housekeeping.
 
-## Source layout
-- Edit: `{app/src, etc.}`
-- Build output (gitignored, don't hand-edit): `{dist, etc.}`
+## Production
 
-## Secrets
-- `.env*` gitignored. Real values set in {host env / 1Password}. Commit only `.env.example`.
+- Netlify site: `legacy-music-group`
+- Site ID: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`
+- URL: `https://legacy-music-group.netlify.app`
+- Baseline production deploy: `6a64401a836413008772eb1e`
+- Publishing is a CLI upload to a GitHub-configured site. The repository workflow deploys pushes to `master`; a non-production branch does not intentionally publish.
 
-## Branches / archives
-- `main` = canonical. Old/superseded states preserved as `archive/*` (never hard-deleted).
-- Backups: {paths, if any}.
+## Operation
 
-## Notes / history
-- {anything the next person must know — incidents, gotchas, pending items}
+- Stack: Vite, React, TypeScript; output: `dist`.
+- Commands: `npm run dev`, `npm run lint`, `npm run build`.
+- `BRIEF.md` retains client and product doctrine for on-demand use.
+- Do not expose secrets or exercise real booking/lead flows. Reverify Netlify and live state before any release.
