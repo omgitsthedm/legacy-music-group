@@ -1,41 +1,25 @@
-# Legacy Music Group — Source of Truth
+# Legacy Music Group source of truth
 
-Last verified: 2026-07-11 by Codex against the local checkout, GitHub remote inventory, repository manifests, and bounded Netlify metadata.
+Verified 2026-07-31.
 
-## Canonical code
+## Canonical source
 
-- Visible workspace: `/Users/davidmarsh/Desktop/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`
-- Resolved Git root: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`
-- GitHub: https://github.com/omgitsthedm/legacy-music-group.git
-- Canonical branch: `master`
-- GitHub is canonical for code history. Production synchronization is a separate fact and must be verified below.
+- Local: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`
+- GitHub: `https://github.com/omgitsthedm/legacy-music-group`
+- Production branch: `master`
+- Current preserved work: draft PR #1 from `chore/plain-language-live-confirmation-20260711`; do not discard or merge it as housekeeping.
 
-## Technology and commands
+## Production
 
-- Stack: Vite / Node.js
-- Dev: `npm run dev`
-- Build: `npm run build`
-- Test: no standard test command detected
-- Lint: `npm run lint`
+- Netlify site: `legacy-music-group`
+- Site ID: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`
+- URL: `https://legacy-music-group.netlify.app`
+- Baseline production deploy: `6a64401a836413008772eb1e`
+- Publishing is a CLI upload to a GitHub-configured site. The repository workflow deploys pushes to `master`; a non-production branch does not intentionally publish.
 
-## Production linkage
+## Operation
 
-- Fresh Netlify inventory candidate: `legacy-music-group` · id `d04515bf-0eb2-45ae-b71b-2a08dc92391a` · https://legacy-music-group.netlify.app
-- Netlify provider: `github`.
-- This candidate came from an exact repository-name or local-link match. Re-confirm live content, DNS, forms, and ownership before treating it as the deployment authority.
-
-## Secrets and data
-
-- Keep credentials, `.env*`, client records, and production data out of Git and agent output.
-- Commit only documented examples with non-secret values.
-
-## Working rules
-
-- Use short-lived branches and preserve unrelated work.
-- Read `AGENTS.md`, `CLAUDE.md`, and `.ai/STATE.md` where present; current runtime evidence overrides stale notes.
-- Clear, scoped plain-language authorization is sufficient for live changes; evaluate meaning rather than matching fixed wording.
-- Validate proportionally before handoff. Never claim a deploy, form, payment, booking, database write, or production check succeeded without evidence.
-
-## Known uncertainty
-
-- Any production field marked unverified is intentionally unresolved, not a placeholder. Confirm it from the host account, DNS, and public content before release work.
+- Stack: Vite, React, TypeScript; output: `dist`.
+- Commands: `npm run dev`, `npm run lint`, `npm run build`.
+- `BRIEF.md` retains client and product doctrine for on-demand use.
+- Do not expose secrets or exercise real booking/lead flows. Reverify Netlify and live state before any release.
