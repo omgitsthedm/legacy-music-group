@@ -1,2 +1,3 @@
-# Netlify SPA fallback — every unknown route hits index.html so React Router can handle it
-/*    /index.html   200
+# Valid routes are emitted as static HTML during the build.
+# Unknown paths return a real 404 while React renders the branded not-found view.
+/*    /404.html   404
