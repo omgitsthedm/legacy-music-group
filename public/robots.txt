@@ -30,4 +30,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://legacymusicgroup.com/sitemap.xml
+Sitemap: https://legacy-music-group.netlify.app/sitemap.xml

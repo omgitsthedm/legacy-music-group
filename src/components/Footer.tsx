@@ -9,6 +9,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
+    <>
     <footer className="bg-[#111111] border-t border-[rgba(245,240,232,0.08)]">
       <div className="mx-auto max-w-[1400px] px-[clamp(1.5rem,5vw,4rem)] py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
@@ -190,18 +191,9 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* LiFi NYC attribution */}
-        <div className="mt-6 pt-6 border-t border-[rgba(245,240,232,0.04)] text-center">
-          <a
-            href="https://littlefightnyc.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-[0.75rem] tracking-[1px] text-[#E8A33D] hover:text-[#FF6B35] transition-colors duration-300"
-          >
-            Designed, Hosted and Cared For by LittleFightNYC.com
-          </a>
-        </div>
       </div>
     </footer>
+    <aside className="lf-care-bar" aria-label="Little Fight NYC design and care credit"><a className="lf-care-bar__link" href="https://littlefightnyc.com/" rel="author"><img className="lf-care-bar__mark" src="/little-fight-care/mark-orange.svg" width="72" height="48" alt="" aria-hidden="true" /><span className="lf-care-bar__copy">Designed, Built and Cared For By</span><span className="lf-care-bar__wordmark">LittleFightNYC.com</span></a></aside>
+    </>
   )
 }
