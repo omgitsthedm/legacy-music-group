@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import BookingModal from './components/BookingModal'
 import JsonLd from './components/JsonLd'
 import BookingHowToSchema from './components/HowToSchema'
+import AnalyticsConsent from './components/AnalyticsConsent'
 import Home from './pages/Home'
 import { BookingContext } from './lib/booking-context'
 import { organizationSchema, localBusinessSchema, websiteSchema } from './lib/schemas'
@@ -73,6 +74,7 @@ function App() {
       <JsonLd id="localbusiness" data={localBusinessSchema} />
       <JsonLd id="website" data={websiteSchema} />
       <BookingHowToSchema />
+      <AnalyticsConsent />
 
       <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]">
         <Navbar />

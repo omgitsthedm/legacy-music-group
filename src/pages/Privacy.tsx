@@ -31,7 +31,7 @@ export default function Privacy() {
               Privacy Policy
             </h1>
             <p className="font-body text-[0.85rem] text-[#A38F7B] mt-3">
-              Last updated: 2026-05-06 · Placeholder content pending legal review
+              Last updated: 2026-08-12
             </p>
           </ScrollReveal>
         </div>
@@ -73,8 +73,7 @@ export default function Privacy() {
                 masters created during your sessions.
               </li>
               <li>
-                <strong className="text-[#F5F0E8]">Site analytics:</strong> standard analytics
-                (page views, device type, referrer) collected via privacy-respecting tooling.
+                <strong className="text-[#F5F0E8]">Site analytics:</strong> if you choose Allow in the analytics preferences panel, Google Analytics 4 may collect standard usage data such as page views, device type, and referrer. We do not load analytics until you opt in.
               </li>
             </ul>
           </ScrollReveal>
@@ -130,8 +129,7 @@ export default function Privacy() {
           <ScrollReveal>
             <h2 className="font-body text-[1.25rem] font-medium text-[#F5F0E8]">6. Cookies</h2>
             <p className="mt-3">
-              We use a minimal set of cookies for analytics and remembering your preferences.
-              You can clear or block cookies via your browser settings.
+              We remember your analytics choice in your browser. Google Analytics 4 loads only after you choose Allow in the analytics preferences panel, which remains available at the bottom-left of every page. You can change your choice there or clear browser storage.
             </p>
           </ScrollReveal>
 
@@ -142,13 +140,6 @@ export default function Privacy() {
             <p className="mt-3">
               If we make material changes, we'll update the "last updated" date at the top of
               this page and, where appropriate, notify you by email.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal>
-            <p className="text-[0.85rem] pt-6 border-t border-[rgba(245,240,232,0.08)]">
-              <strong className="text-[#F5F0E8]">Placeholder notice:</strong> this policy is a
-              first-pass draft for design preview only. Final policy text pending legal review.
             </p>
           </ScrollReveal>
         </div>
