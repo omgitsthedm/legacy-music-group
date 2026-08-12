@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const MEASUREMENT_ID = 'G-SES6T662HC'
+const GTM_CONTAINER_ID = 'GTM-PP6RZB73'
 const CONSENT_KEY = 'legacy:analytics-consent:v1'
 
 declare global { interface Window { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void } }
@@ -11,14 +11,13 @@ function gtag(...args: unknown[]) {
 }
 
 function loadTag() {
-  if (document.querySelector(`script[data-legacy-ga="${MEASUREMENT_ID}"]`)) return
+  if (document.querySelector(`script[data-legacy-gtm="${GTM_CONTAINER_ID}"]`)) return
   const script = document.createElement('script')
   script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`
-  script.dataset.legacyGa = MEASUREMENT_ID
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`
+  script.dataset.legacyGtm = GTM_CONTAINER_ID
+  window.dataLayer?.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
   document.head.append(script)
-  gtag('js', new Date())
-  gtag('config', MEASUREMENT_ID, { anonymize_ip: true })
 }
 
 export default function AnalyticsConsent() {
