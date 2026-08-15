@@ -50,7 +50,7 @@ Avalon 737 · Purple Audio Compressor
 Focal Duo · Adams S10 · Presonus Sceptre S6 · Mackie Thump 12 PA
 Vocal booth with floating-ceiling acoustic treatment · Two producer workstations · Prime Acoustics treatment
 
-Full gear list: https://legacymusicgroup.com/gear
+Full gear list: https://legacy-music-group.netlify.app/gear
 
 ## Community
 
@@ -62,26 +62,26 @@ Primarily Dallas / Deep Ellum / Downtown Dallas. Serving the wider DFW metroplex
 
 ## Important pages
 
-- Home: https://legacymusicgroup.com/
-- Studio: https://legacymusicgroup.com/studio
-- Gear: https://legacymusicgroup.com/gear
-- Engineers: https://legacymusicgroup.com/engineers
-- Services: https://legacymusicgroup.com/services
-- Pricing: https://legacymusicgroup.com/pricing
-- Contact: https://legacymusicgroup.com/contact
-- FAQ: https://legacymusicgroup.com/faq
-- Reviews: https://legacymusicgroup.com/reviews
-- Events (Legacy Live): https://legacymusicgroup.com/events
-- Journal: https://legacymusicgroup.com/blog
-- Booking policies: https://legacymusicgroup.com/policies
+- Home: https://legacy-music-group.netlify.app/
+- Studio: https://legacy-music-group.netlify.app/studio
+- Gear: https://legacy-music-group.netlify.app/gear
+- Engineers: https://legacy-music-group.netlify.app/engineers
+- Services: https://legacy-music-group.netlify.app/services
+- Pricing: https://legacy-music-group.netlify.app/pricing
+- Contact: https://legacy-music-group.netlify.app/contact
+- FAQ: https://legacy-music-group.netlify.app/faq
+- Reviews: https://legacy-music-group.netlify.app/reviews
+- Events (Legacy Live): https://legacy-music-group.netlify.app/events
+- Journal: https://legacy-music-group.netlify.app/blog
+- Booking policies: https://legacy-music-group.netlify.app/policies
 
 ## Service-specific landing pages
 
-- Rap recording: https://legacymusicgroup.com/services/rap-recording
-- R&B: https://legacymusicgroup.com/services/r-and-b
-- Podcasts: https://legacymusicgroup.com/services/podcasts
-- Voiceover: https://legacymusicgroup.com/services/voiceover
-- Artist development: https://legacymusicgroup.com/services/artist-development
+- Rap recording: https://legacy-music-group.netlify.app/services/rap-recording
+- R&B: https://legacy-music-group.netlify.app/services/r-and-b
+- Podcasts: https://legacy-music-group.netlify.app/services/podcasts
+- Voiceover: https://legacy-music-group.netlify.app/services/voiceover
+- Artist development: https://legacy-music-group.netlify.app/services/artist-development
 
 ## Common questions Legacy answers
 
