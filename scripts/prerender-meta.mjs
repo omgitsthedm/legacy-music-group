@@ -79,12 +79,21 @@ const escapeHtml = (value) =>
 
 async function assertRootAbsoluteAssets(html, destination) {
   const assetUrls = [...html.matchAll(/(?:href|src)="([^"]*\/assets\/[^\"]+)"/g)].map((match) => match[1])
+  const relativeUrls = [...html.matchAll(/(?:href|src)="\.\/([^"]+)"/g)].map((match) => match[1])
+  const rootStaticUrls = ['/favicon.svg', '/site.webmanifest']
 
-  if (assetUrls.length === 0 || assetUrls.some((url) => !url.startsWith('/assets/'))) {
-    throw new Error(`Generated ${destination} must use root-absolute asset URLs.`)
+  if (
+    assetUrls.length === 0 ||
+    assetUrls.some((url) => !url.startsWith('/assets/')) ||
+    relativeUrls.length > 0 ||
+    rootStaticUrls.some((url) => !html.includes(`\"${url}\"`))
+  ) {
+    throw new Error(`Generated ${destination} must use root-absolute static URLs.`)
   }
 
-  await Promise.all(assetUrls.map((url) => access(path.join(dist, url.slice(1)))))
+  await Promise.all(
+    [...assetUrls, ...rootStaticUrls].map((url) => access(path.join(dist, url.slice(1)))),
+  )
 }
 
 async function setMeta(html, route, title, description, noindex = false) {
@@ -100,6 +109,8 @@ async function setMeta(html, route, title, description, noindex = false) {
     // Vite's `base: './'` is correct for the root document but breaks static
     // metadata documents served from deep routes such as `/events/`.
     .replaceAll('./assets/', '/assets/')
+    .replaceAll('./favicon.svg', '/favicon.svg')
+    .replaceAll('./site.webmanifest', '/site.webmanifest')
     .replace(/\s*<link rel="preload" as="image" href="\/images\/control-room-signal-gold\.webp" fetchpriority="high" \/>/, '')
     .replace(/<title>.*?<\/title>/, `<title>${safeTitle}</title>`)
     .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${safeDescription}$2`)
