@@ -2,7 +2,9 @@ import { useEffect } from 'react'
 
 const SITE = {
   name: 'Legacy Music Group',
-  url: 'https://legacymusicgroup.com',
+  // Netlify is the only verified production host; the custom domain is not
+  // attached to this site and currently serves the previous website.
+  url: 'https://legacy-music-group.netlify.app',
   defaultDescription:
     "Hit-quality recordings at affordable rates from Dallas' top-tier audio engineers. Recording, mixing, mastering, and artist development in Deep Ellum. Book in under a minute.",
   defaultOgImage: '/images/hero-studio-dark.jpg',

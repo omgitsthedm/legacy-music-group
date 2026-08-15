@@ -42,7 +42,7 @@ export default function Events() {
             startDate: e.startDate,
             endDate: e.endDate,
             description: e.description,
-            url: `https://legacymusicgroup.com/events#${e.slug}`,
+            url: `https://legacy-music-group.netlify.app/events#${e.slug}`,
             image: e.image,
             location: TX_TEA_ROOM_LOCATION,
             isFree: true,
