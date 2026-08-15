@@ -101,6 +101,33 @@
 }
 
 @layer utilities {
+  .skip-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 110;
+    transform: translateY(-200%);
+    padding: 0.7rem 1rem;
+    border: 1px solid #E8A33D;
+    border-radius: 9999px;
+    background: #0A0A0A;
+    color: #F5F0E8;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 160ms ease-out, background-color 160ms ease-out, color 160ms ease-out;
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    background: #E8A33D;
+    color: #0A0A0A;
+  }
+
   .font-display {
     font-family: 'DM Serif Display', Georgia, serif;
   }

@@ -50,7 +50,7 @@ function NotFound() {
       </p>
       <a
         href="/"
-        className="mt-6 inline-block bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300"
+        className="mt-6 inline-block bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
       >
         Back to Home
       </a>
@@ -74,33 +74,38 @@ function App() {
       <JsonLd id="localbusiness" data={localBusinessSchema} />
       <JsonLd id="website" data={websiteSchema} />
       <BookingHowToSchema />
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <AnalyticsConsent />
 
       <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]">
         <Navbar />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/engineers" element={<Engineers />} />
-            <Route path="/engineers/:id" element={<EngineerProfile />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<ServicePage />} />
-            <Route path="/studio" element={<Studio />} />
-            <Route path="/gear" element={<Gear />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/neighborhoods/:slug" element={<NeighborhoodPage />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/policies" element={<Policies />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <main id="main-content" tabIndex={-1}>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/engineers" element={<Engineers />} />
+              <Route path="/engineers/:id" element={<EngineerProfile />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:slug" element={<ServicePage />} />
+              <Route path="/studio" element={<Studio />} />
+              <Route path="/gear" element={<Gear />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/neighborhoods/:slug" element={<NeighborhoodPage />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/policies" element={<Policies />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </main>
         <Footer />
         <BookingModal />
       </div>
