@@ -9,7 +9,7 @@ Verified 2026-08-15.
 - Production branch: `master`
 - Deployed application change: `72a0770df34c917ba9b9c9b87280216d21dae9d8` (PR #4, session-video delivery and controls)
 - Current production build source: `47e2a4ca5b6bfd2ddd7e3df384ac145f7e12a1c9` (PR #5, release documentation and workflow hardening; no later application change)
-- Preserved product work: draft PR #1 from `chore/plain-language-live-confirmation-20260711`; do not discard or merge it as housekeeping.
+- Historical product work: draft PR #1 was closed without merge on 2026-08-12, and its remote branch is absent. This predates the current release work; do not describe it as an open or preserved draft.
 
 ## Production
 
