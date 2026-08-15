@@ -1,6 +1,6 @@
-import { useEffect, useRef, useContext } from 'react'
+import { useEffect, useRef, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Mic, Sliders, Star, Play, ChevronRight, Users, MapPin, Clock } from 'lucide-react'
+import { Mic, Sliders, Star, Play, Pause, ChevronRight, Users, MapPin, Clock } from 'lucide-react'
 import { BookingContext } from '../lib/booking-context'
 import ScrollReveal from '../components/ScrollReveal'
 import Quickbook from '../components/Quickbook'
@@ -28,6 +28,81 @@ const clips = [
   { src: '/videos/session-clip-3.mp4', title: 'Live Drums', artist: 'Deep Ellum Jam' },
   { src: '/videos/session-clip-4.mp4', title: 'Guitar Tracking', artist: 'Indie Artist Feature' },
 ]
+
+type SessionClip = (typeof clips)[number]
+
+function SessionClipCard({ clip }: { clip: SessionClip }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const play = () => {
+    const video = videoRef.current
+    if (!video) return
+    void video.play().catch(() => setIsPlaying(false))
+  }
+
+  const playOnHover = (pointerType: string) => {
+    if (pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    play()
+  }
+
+  const reset = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    video.currentTime = 0
+  }
+
+  const toggle = () => {
+    const video = videoRef.current
+    if (!video) return
+    if (video.paused) {
+      play()
+    } else {
+      video.pause()
+    }
+  }
+
+  return (
+    <div
+      className="group relative rounded-xl overflow-hidden bg-[#111111] aspect-square"
+      onPointerEnter={(event) => playOnHover(event.pointerType)}
+      onPointerLeave={(event) => { if (event.pointerType === 'mouse') reset() }}
+    >
+      <video
+        ref={videoRef}
+        src={clip.src}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+      <button
+        type="button"
+        onClick={toggle}
+        aria-pressed={isPlaying}
+        aria-label={`${isPlaying ? 'Pause' : 'Play'} ${clip.title} by ${clip.artist}`}
+        className="absolute inset-0 flex items-center justify-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#E8A33D]"
+      >
+        <span className="w-14 h-14 rounded-full bg-[rgba(10,10,10,0.7)] border border-[rgba(245,240,232,0.2)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {isPlaying ? (
+            <Pause size={20} className="text-[#F5F0E8]" fill="#F5F0E8" />
+          ) : (
+            <Play size={20} className="text-[#F5F0E8] ml-1" fill="#F5F0E8" />
+          )}
+        </span>
+      </button>
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent">
+        <p className="font-body text-[0.9rem] font-medium text-[#F5F0E8]">{clip.artist}</p>
+        <p className="font-body text-[0.8rem] text-[#A38F7B]">{clip.title}</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   const { openBooking } = useContext(BookingContext)
@@ -430,28 +505,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {clips.map((clip, i) => (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div className="group relative rounded-xl overflow-hidden bg-[#111111] aspect-square">
-                  <video
-                    src={clip.src}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                    onMouseEnter={(e) => e.currentTarget.play()}
-                    onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0 }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-[rgba(10,10,10,0.7)] border border-[rgba(245,240,232,0.2)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Play size={20} className="text-[#F5F0E8] ml-1" fill="#F5F0E8" />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent">
-                    <p className="font-body text-[0.9rem] font-medium text-[#F5F0E8]">{clip.artist}</p>
-                    <p className="font-body text-[0.8rem] text-[#A38F7B]">{clip.title}</p>
-                  </div>
-                </div>
+              <ScrollReveal key={clip.src} delay={i * 100}>
+                <SessionClipCard clip={clip} />
               </ScrollReveal>
             ))}
           </div>
