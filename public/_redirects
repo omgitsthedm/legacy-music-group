@@ -1,3 +1,9 @@
 # Valid routes are emitted as static HTML during the build.
+# Preserve former numeric engineer URLs while the canonical sitemap uses names.
+/engineers/1    /engineers/matthew  301
+/engineers/2    /engineers/ray      301
+/engineers/3    /engineers/wayne    301
+/engineers/4    /engineers/terry    301
+
 # Unknown paths return a real 404 while React renders the branded not-found view.
 /*    /404.html   404
