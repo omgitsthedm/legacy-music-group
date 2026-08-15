@@ -9,6 +9,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build && node scripts/prerender-meta.mjs",
     "lint": "eslint .",
+    "test:accessibility-shell": "node scripts/verify-accessibility-shell.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

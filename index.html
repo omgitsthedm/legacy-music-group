@@ -217,7 +217,8 @@
          React hydration replaces #root entirely. The substantive copy
          here ensures search engines and AI crawlers have material to
          index even before the SPA boots. -->
-    <main id="root" role="main">
+    <div id="root">
+      <main id="main-content">
       <!-- Visually hidden but present for crawlers; React's <Home> renders the real headline -->
       <h1 style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
         Legacy Music Group — Recording Studio in Deep Ellum, Dallas
@@ -324,7 +325,8 @@
           </footer>
         </div>
       </noscript>
-    </main>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
