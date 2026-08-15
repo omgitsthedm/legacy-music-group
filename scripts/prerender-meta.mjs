@@ -53,6 +53,14 @@ const routes = [
 const escapeHtml = (value) =>
   value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 
+function assertRootAbsoluteAssets(html, destination) {
+  const assetUrls = [...html.matchAll(/(?:href|src)="([^"]*\/assets\/[^\"]+)"/g)].map((match) => match[1])
+
+  if (assetUrls.length === 0 || assetUrls.some((url) => !url.startsWith('/assets/'))) {
+    throw new Error(`Generated ${destination} must use root-absolute asset URLs.`)
+  }
+}
+
 function setMeta(html, route, title, description, noindex = false) {
   const fullTitle = `${title} | Legacy Music Group`
   const url = `${site}/${route}`
@@ -62,7 +70,10 @@ function setMeta(html, route, title, description, noindex = false) {
     ? 'noindex, nofollow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
 
-  return html
+  const output = html
+    // Vite's `base: './'` is correct for the root document but breaks static
+    // metadata documents served from deep routes such as `/events/`.
+    .replaceAll('./assets/', '/assets/')
     .replace(/\s*<link rel="preload" as="image" href="\/images\/control-room-signal-gold\.webp" fetchpriority="high" \/>/, '')
     .replace(/<title>.*?<\/title>/, `<title>${safeTitle}</title>`)
     .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${safeDescription}$2`)
@@ -73,6 +84,9 @@ function setMeta(html, route, title, description, noindex = false) {
     .replace(/(<meta\s+property="og:url"\s+content=")[^"]*(")/, `$1${url}$2`)
     .replace(/(<meta\s+name="twitter:title"\s+content=")[^"]*(")/, `$1${safeTitle}$2`)
     .replace(/(<meta\s+name="twitter:description"\s+content=")[^"]*(")/, `$1${safeDescription}$2`)
+
+  assertRootAbsoluteAssets(output, `/${route}`)
+  return output
 }
 
 for (const [route, title, description] of routes) {
