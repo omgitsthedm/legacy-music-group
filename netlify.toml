@@ -6,26 +6,6 @@
 [functions]
   node_bundler = "esbuild"
 
-[[redirects]]
-  from = "/engineers/1"
-  to = "/engineers/matthew"
-  status = 301
-
-[[redirects]]
-  from = "/engineers/2"
-  to = "/engineers/ray"
-  status = 301
-
-[[redirects]]
-  from = "/engineers/3"
-  to = "/engineers/wayne"
-  status = 301
-
-[[redirects]]
-  from = "/engineers/4"
-  to = "/engineers/terry"
-  status = 301
-
 # SPA fallback — also handled by public/_redirects, but here for clarity
 [[redirects]]
   from = "/*"
