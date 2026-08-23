@@ -55,9 +55,9 @@ export default function Footer() {
 
           {/* Explore */}
           <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
+            <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Explore
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {[
                 { label: 'Studio', href: '/studio' },
@@ -79,9 +79,9 @@ export default function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
+            <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Services
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {services.slice(0, 5).map((s) => (
                 <li key={s.slug}>
@@ -98,9 +98,9 @@ export default function Footer() {
 
           {/* Resources */}
           <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
+            <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Resources
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {[
                 { label: 'Journal', href: '/blog' },
@@ -122,9 +122,9 @@ export default function Footer() {
 
           {/* Connect */}
           <div className="space-y-4">
-            <h4 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
+            <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Connect
-            </h4>
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-[#A38F7B]">
                 <MapPin size={14} className="mt-1 shrink-0" />

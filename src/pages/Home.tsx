@@ -397,7 +397,7 @@ export default function Home() {
           <p className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] text-center mb-6">
             As featured in
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-60">
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
             {pressMentions.map((p) => (
               <span
                 key={p.outlet}

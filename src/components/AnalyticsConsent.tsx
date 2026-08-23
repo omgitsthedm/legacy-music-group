@@ -49,6 +49,6 @@ export default function AnalyticsConsent() {
       <p className="mt-2 font-body text-sm leading-relaxed text-[#F5F0E8]">Help us improve the studio website with anonymous usage measurements. Analytics stays off unless you choose Allow.</p>
       <div className="mt-4 flex flex-wrap gap-3"><button type="button" onClick={() => choose(true)} className="rounded-full bg-[#E8A33D] px-4 py-2 font-body text-sm font-medium text-[#0A0A0A] hover:bg-[#D4873C]">Allow analytics</button><button type="button" onClick={() => choose(false)} className="rounded-full border border-[rgba(245,240,232,0.25)] px-4 py-2 font-body text-sm text-[#F5F0E8] hover:border-[#E8A33D]">Keep off</button></div>
     </section>}
-    <button type="button" onClick={() => setOpen(true)} className="fixed bottom-3 left-3 z-[99] rounded border border-[rgba(245,240,232,0.2)] bg-[#111111] px-2 py-1 font-body text-[10px] uppercase tracking-[1px] text-[#A38F7B] hover:text-[#E8A33D]" aria-label="Open analytics preferences">Analytics settings</button>
+    <button type="button" onClick={() => setOpen(true)} className="fixed bottom-3 left-3 z-[99] rounded border border-[rgba(245,240,232,0.2)] bg-[#111111] px-2 py-1 font-body text-[10px] uppercase tracking-[1px] text-[#A38F7B] hover:text-[#E8A33D]">Analytics settings</button>
   </>
 }
