@@ -3,13 +3,13 @@ import { MapPin, Phone, Mail, Instagram, Youtube } from 'lucide-react'
 import { useContext } from 'react'
 import { BookingContext } from '../lib/booking-context'
 import { contact, services, neighborhoods } from '../lib/data'
+import LifiCredit from './LifiCredit'
 
 export default function Footer() {
   const { openBooking } = useContext(BookingContext)
   const year = new Date().getFullYear()
 
   return (
-    <>
     <footer className="bg-[#111111] border-t border-[rgba(245,240,232,0.08)]">
       <div className="mx-auto max-w-[1400px] px-[clamp(1.5rem,5vw,4rem)] py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
@@ -58,7 +58,7 @@ export default function Footer() {
             <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Explore
             </h3>
-            <ul className="space-y-3">
+            <ul>
               {[
                 { label: 'Studio', href: '/studio' },
                 { label: 'Gear', href: '/gear' },
@@ -68,7 +68,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                    className="flex min-h-[36px] items-center font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -82,12 +82,12 @@ export default function Footer() {
             <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Services
             </h3>
-            <ul className="space-y-3">
+            <ul>
               {services.slice(0, 5).map((s) => (
                 <li key={s.slug}>
                   <Link
                     to={`/services/${s.slug}`}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                    className="flex min-h-[36px] items-center font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
                   >
                     {s.shortName}
                   </Link>
@@ -101,7 +101,7 @@ export default function Footer() {
             <h3 className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#F5F0E8] font-medium">
               Resources
             </h3>
-            <ul className="space-y-3">
+            <ul>
               {[
                 { label: 'Journal', href: '/blog' },
                 { label: 'Reviews', href: '/reviews' },
@@ -111,7 +111,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                    className="flex min-h-[36px] items-center font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -136,7 +136,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`tel:${contact.phoneE164}`}
-                  className="flex items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
+                  className="flex min-h-[36px] items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300"
                 >
                   <Phone size={14} />
                   <span className="font-body text-[0.9rem]">{contact.phone}</span>
@@ -145,7 +145,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="flex items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 break-all"
+                  className="flex min-h-[36px] items-center gap-2 text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 break-all"
                 >
                   <Mail size={14} />
                   <span className="font-body text-[0.9rem]">{contact.email}</span>
@@ -165,7 +165,7 @@ export default function Footer() {
               <Link
                 key={n.slug}
                 to={`/neighborhoods/${n.slug}`}
-                className="font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
+                className="inline-flex min-h-[36px] items-center font-body text-[0.85rem] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300"
               >
                 {n.name}
               </Link>
@@ -191,9 +191,14 @@ export default function Footer() {
           </div>
         </div>
 
+        <div className="mt-6 flex justify-center pb-[env(safe-area-inset-bottom,0px)] sm:justify-start">
+          <LifiCredit
+            size="11px"
+            className="text-[#A38F7B] transition-colors duration-300 hover:text-[#E8A33D]"
+          />
+        </div>
+
       </div>
     </footer>
-    <aside className="lf-care-bar" aria-label="Little Fight NYC design and care credit"><a className="lf-care-bar__link" href="https://littlefightnyc.com/" rel="author"><img className="lf-care-bar__mark" src="/little-fight-care/mark-orange.svg" width="72" height="48" alt="" aria-hidden="true" /><span className="lf-care-bar__copy">Designed, Built and Cared For By</span><span className="lf-care-bar__wordmark">LittleFightNYC.com</span></a></aside>
-    </>
   )
 }

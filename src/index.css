@@ -4,13 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face { font-family: 'Little Fight Care Mono'; src: url('/little-fight-care/jetbrains-mono-latin-500-normal.woff2') format('woff2'); font-display: swap; }
-@font-face { font-family: 'Little Fight Care Display'; src: url('/little-fight-care/oswald-latin-wght-normal.woff2') format('woff2'); font-display: swap; }
-.lf-care-bar { background: #050507; border-top: 1px solid #27272a; color: #a1a1aa; }
-.lf-care-bar__link { width: min(100% - 36px, 1180px); min-height: 82px; margin: 0 auto; padding: 14px 0; display: flex; align-items: center; justify-content: center; gap: 12px; color: inherit; text-decoration: none; }
-.lf-care-bar__mark { width: 44px; height: 32px; object-fit: contain; animation: lf-care-tug 8s ease-in-out infinite; }
-.lf-care-bar__copy { color: #a1a1aa; font: 500 10px/1.25 'Little Fight Care Mono', ui-monospace, monospace; letter-spacing: .04em; text-transform: uppercase; }.lf-care-bar__wordmark { color: #f97316; font: 400 24px/1 'Little Fight Care Display', Impact, sans-serif; letter-spacing: .025em; text-transform: uppercase; }.lf-care-bar__link:focus-visible { outline: 2px solid #f97316; outline-offset: -4px; }
-@keyframes lf-care-tug { 0%,82%,100% { transform: translateX(0); opacity:1; } 86% { transform:translateX(7px); opacity:.82; } 91% { transform:translateX(-3px); opacity:1; } 95% { transform:translateX(2px); } } @media (max-width:620px) { .lf-care-bar__link { width:min(100% - 28px,420px); min-height:100px; flex-wrap:wrap; gap:7px 10px; padding-block:18px; }.lf-care-bar__mark { width:40px; height:29px; }.lf-care-bar__copy { flex-basis:calc(100% - 54px); font-size:9px; }.lf-care-bar__wordmark { margin-left:50px; font-size:23px; } } @media (prefers-reduced-motion:reduce) { .lf-care-bar__mark { animation:none; } }
 
 @layer base {
   :root {
