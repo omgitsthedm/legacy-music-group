@@ -15,24 +15,37 @@ import CalendlyPicker from './CalendlyPicker'
 
 type Step = 1 | 2 | 3 | 4 | 5
 
-const TOTAL_VISIBLE_STEPS = 4
-
 export default function BookingModal() {
-  const { isOpen, setIsOpen } = useContext(BookingContext)
-  const [step, setStep] = useState<Step>(1)
-  const [sessionType, setSessionType] = useState<'with' | 'without' | null>(null)
+  const { isOpen, setIsOpen, initialSessionType } = useContext(BookingContext)
+  const [step, setStep] = useState<Step>(initialSessionType ? 2 : 1)
+  const [sessionType, setSessionType] = useState<'with' | 'without' | null>(initialSessionType)
   const [addons, setAddons] = useState<string[]>([])
   const [selectedEngineer, setSelectedEngineer] = useState<string | null>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const totalVisibleSteps = sessionType === 'without' ? 3 : 4
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
+    const dialog = dialogRef.current
+    if (!isOpen || !dialog) return
+    const previousOverflow = document.body.style.overflow
+    dialog.showModal()
+    document.body.style.overflow = 'hidden'
+    return () => {
+      dialog.close()
+      document.body.style.overflow = previousOverflow
     }
-    return () => { document.body.style.overflow = '' }
   }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const heading = contentRef.current?.querySelector('h3')
+    if (heading) {
+      heading.tabIndex = -1
+      heading.focus({ preventScroll: true })
+    }
+    if (contentRef.current) contentRef.current.scrollTop = 0
+  }, [isOpen, step])
 
   const reset = () => {
     setStep(1)
@@ -42,13 +55,14 @@ export default function BookingModal() {
   }
 
   const handleClose = () => {
+    dialogRef.current?.close()
     setIsOpen(false)
-    setTimeout(reset, 300)
+    reset()
   }
 
   const goNext = () => {
-    if (step === 1 && sessionType === 'without') {
-      setStep(2)
+    if (step === 2 && sessionType === 'without') {
+      setStep(4)
       return
     }
     setStep((step + 1) as Step)
@@ -82,10 +96,10 @@ export default function BookingModal() {
   }, [step, sessionType, selectedEngineer])
 
   const visibleStep = useMemo(() => {
-    if (step === 5) return TOTAL_VISIBLE_STEPS
+    if (step === 5) return totalVisibleSteps
     if (sessionType === 'without' && step >= 3) return step - 1
     return step
-  }, [step, sessionType])
+  }, [step, sessionType, totalVisibleSteps])
 
   // Resolve which Calendly event we're targeting based on prior selections
   const eventConfig = useMemo(() => {
@@ -114,7 +128,12 @@ export default function BookingModal() {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <dialog
+      ref={dialogRef}
+      aria-label="Book a studio session"
+      onCancel={(event) => { event.preventDefault(); handleClose() }}
+      className="fixed inset-0 z-[100] m-0 h-[100dvh] w-screen max-h-none max-w-none border-0 bg-transparent flex items-center justify-center p-4 text-inherit"
+    >
       <div
         className="absolute inset-0 bg-[rgba(0,0,0,0.9)] backdrop-blur-sm transition-opacity duration-300"
         onClick={handleClose}
@@ -129,11 +148,11 @@ export default function BookingModal() {
         <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(245,240,232,0.08)] shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <span className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] whitespace-nowrap">
-              {step === 5 ? 'Confirmed' : `Step ${visibleStep} of ${TOTAL_VISIBLE_STEPS}`}
+              {step === 5 ? 'Confirmed' : `Step ${visibleStep} of ${totalVisibleSteps}`}
             </span>
             {step !== 5 && (
               <div className="flex items-center gap-1">
-                {Array.from({ length: TOTAL_VISIBLE_STEPS }).map((_, i) => {
+                {Array.from({ length: totalVisibleSteps }).map((_, i) => {
                   const stepIndex = i + 1
                   const isPast = stepIndex < visibleStep
                   const isCurrent = stepIndex === visibleStep
@@ -153,7 +172,7 @@ export default function BookingModal() {
           </div>
           <button
             onClick={handleClose}
-            className="text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 p-1"
+            className="text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 min-h-11 min-w-11 flex items-center justify-center"
             aria-label="Close booking"
           >
             <X size={20} />
@@ -223,6 +242,7 @@ export default function BookingModal() {
                   <button
                     key={eng.id}
                     onClick={() => setSelectedEngineer(eng.id)}
+                    aria-pressed={selectedEngineer === eng.id}
                     className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex items-center gap-4 ${
                       selectedEngineer === eng.id
                         ? 'border-[#E8A33D] bg-[rgba(232,163,61,0.1)]'
@@ -326,7 +346,7 @@ export default function BookingModal() {
           </div>
         )}
       </div>
-    </div>
+    </dialog>
   )
 }
 
@@ -350,6 +370,7 @@ function SelectCard({
   return (
     <button
       onClick={onClick}
+      aria-pressed={active}
       className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-start gap-4 ${
         active
           ? 'border-[#E8A33D] bg-[rgba(232,163,61,0.1)]'
