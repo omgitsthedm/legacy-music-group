@@ -8,16 +8,18 @@ import ScrollReveal from './ScrollReveal'
  * Shows the user how easy booking is — two clear paths, one click to launch the modal.
  */
 export default function Quickbook() {
-  const { openBooking } = useContext(BookingContext)
+  const { openSessionBooking } = useContext(BookingContext)
 
   const paths = [
     {
+      sessionType: 'with' as const,
       icon: Headphones,
       title: 'Book a session with an engineer',
       body: 'Guided session, pro engineer at the board.',
       price: 'From $75/hr',
     },
     {
+      sessionType: 'without' as const,
       icon: User,
       title: 'Book studio time on your own',
       body: 'You run the room. For experienced artists.',
@@ -48,7 +50,7 @@ export default function Quickbook() {
               {paths.map((path) => (
                 <button
                   key={path.title}
-                  onClick={openBooking}
+                  onClick={() => openSessionBooking(path.sessionType)}
                   className="group text-left bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-4 sm:p-5 hover:border-[rgba(232,163,61,0.4)] hover:bg-[#111111] transition-all duration-300 flex items-start gap-4"
                 >
                   <div className="w-10 h-10 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center shrink-0 group-hover:bg-[#E8A33D] transition-colors duration-300">

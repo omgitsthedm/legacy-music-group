@@ -7,7 +7,7 @@ import JsonLd from './components/JsonLd'
 import BookingHowToSchema from './components/HowToSchema'
 import AnalyticsConsent from './components/AnalyticsConsent'
 import Home from './pages/Home'
-import { BookingContext } from './lib/booking-context'
+import { BookingContext, type SessionType } from './lib/booking-context'
 import { organizationSchema, localBusinessSchema, websiteSchema } from './lib/schemas'
 
 // Code-split secondary routes for faster initial paint.
@@ -60,16 +60,24 @@ function NotFound() {
 
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false)
+  const [initialSessionType, setInitialSessionType] = useState<SessionType | null>(null)
   const location = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
 
-  const openBooking = () => setIsBookingOpen(true)
+  const openBooking = () => {
+    setInitialSessionType(null)
+    setIsBookingOpen(true)
+  }
+  const openSessionBooking = (sessionType: SessionType) => {
+    setInitialSessionType(sessionType)
+    setIsBookingOpen(true)
+  }
 
   return (
-    <BookingContext.Provider value={{ isOpen: isBookingOpen, setIsOpen: setIsBookingOpen, openBooking }}>
+    <BookingContext.Provider value={{ isOpen: isBookingOpen, setIsOpen: setIsBookingOpen, openBooking, initialSessionType, openSessionBooking }}>
       <JsonLd id="organization" data={organizationSchema} />
       <JsonLd id="localbusiness" data={localBusinessSchema} />
       <JsonLd id="website" data={websiteSchema} />
@@ -107,7 +115,7 @@ function App() {
           </Suspense>
         </main>
         <Footer />
-        <BookingModal />
+        {isBookingOpen && <BookingModal />}
       </div>
     </BookingContext.Provider>
   )
