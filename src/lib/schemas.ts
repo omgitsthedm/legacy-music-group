@@ -92,51 +92,7 @@ export const localBusinessSchema = {
     { '@type': 'City', name: 'Frisco' },
     { '@type': 'City', name: 'Richardson' },
   ],
-  // Real hours sourced from Google Business Profile 2026-05-07.
-  // Open every day 10:00 to 01:00 (1am the next day).
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ],
-      opens: '10:00',
-      closes: '01:00',
-    },
-  ],
-  foundingDate: BUSINESS.founded,
-  potentialAction: {
-    '@type': 'ReserveAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${SITE.url}/`,
-      inLanguage: 'en-US',
-      actionPlatform: [
-        'http://schema.org/DesktopWebPlatform',
-        'http://schema.org/MobileWebPlatform',
-      ],
-    },
-    result: {
-      '@type': 'Reservation',
-      name: 'Studio Session',
-    },
-  },
-  // Real aggregate rating snapshot from Google Business Profile 2026-05-07.
-  // Will be replaced by live GBP API integration on launch (Netlify Function
-  // pattern, similar to Calendly availability proxy).
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.4',
-    reviewCount: '128',
-    bestRating: '5',
-    worstRating: '1',
-  },
+
 }
 
 export const websiteSchema = {
@@ -422,43 +378,6 @@ export const buildEventSchema = (e: EventSchemaInput) => ({
         },
       }
     : {}),
-})
-
-// --- Review + AggregateRating --------------------------------------------
-
-export interface ReviewSchemaInput {
-  author: string
-  reviewBody: string
-  ratingValue: number
-  datePublished?: string
-}
-
-export const buildReviewSchema = (r: ReviewSchemaInput) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Review',
-  author: { '@type': 'Person', name: r.author },
-  reviewBody: r.reviewBody,
-  reviewRating: {
-    '@type': 'Rating',
-    ratingValue: r.ratingValue,
-    bestRating: 5,
-    worstRating: 1,
-  },
-  itemReviewed: { '@id': LOCAL_REF },
-  ...(r.datePublished ? { datePublished: r.datePublished } : {}),
-})
-
-export const buildAggregateRatingSchema = (input: {
-  ratingValue: number
-  reviewCount: number
-}) => ({
-  '@context': 'https://schema.org',
-  '@type': 'AggregateRating',
-  itemReviewed: { '@id': LOCAL_REF },
-  ratingValue: input.ratingValue,
-  reviewCount: input.reviewCount,
-  bestRating: 5,
-  worstRating: 1,
 })
 
 // --- ItemList (for collection pages: blog, services, engineers) ---------

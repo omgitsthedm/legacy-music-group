@@ -147,7 +147,7 @@ export default function NeighborhoodPage() {
               Easy from {place.name}.
             </h2>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-3 mb-7 max-w-[520px] mx-auto">
-              {place.driveTime} away — book your session in under a minute.
+              {place.driveTime} away — use the studio’s current booking page to confirm session details.
             </p>
             <button
               onClick={openBooking}

@@ -5,8 +5,7 @@ const SITE = {
   // Netlify is the only verified production host; the custom domain is not
   // attached to this site and currently serves the previous website.
   url: 'https://legacy-music-group.netlify.app',
-  defaultDescription:
-    "Hit-quality recordings at affordable rates from Dallas' top-tier audio engineers. Recording, mixing, mastering, and artist development in Deep Ellum. Book in under a minute.",
+  defaultDescription: 'Studio information and direct contact for Legacy Music Group in Dallas.',
   defaultOgImage: '/images/hero-studio-dark.jpg',
   twitterHandle: '@LegacyMusicGrp',
   locale: 'en_US',
@@ -18,7 +17,6 @@ export interface SeoOptions {
   path?: string
   ogImage?: string
   ogType?: 'website' | 'article' | 'profile'
-  noindex?: boolean
 }
 
 const setOrCreateMeta = (
@@ -52,7 +50,6 @@ export function applySeo({
   path = '',
   ogImage = SITE.defaultOgImage,
   ogType = 'website',
-  noindex = false,
 }: SeoOptions) {
   const fullTitle =
     title === SITE.name ? title : `${title} | ${SITE.name}`
@@ -66,9 +63,7 @@ export function applySeo({
     'meta[name="robots"]',
     'name',
     'robots',
-    noindex
-      ? 'noindex, nofollow'
-      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    'noindex, nofollow',
   )
 
   // Open Graph
@@ -104,7 +99,6 @@ export function useSeo(options: SeoOptions) {
     options.path,
     options.ogImage,
     options.ogType,
-    options.noindex,
   ])
 }
 

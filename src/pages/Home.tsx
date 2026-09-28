@@ -1,14 +1,13 @@
-import { useEffect, useRef, useContext, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Mic, Sliders, Star, Play, Pause, ChevronRight, Users, MapPin, Clock } from 'lucide-react'
-import { BookingContext } from '../lib/booking-context'
+import { Mic, Sliders, Star, ChevronRight } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import Quickbook from '../components/Quickbook'
-import NewsletterSignup from '../components/NewsletterSignup'
 import { useSeo } from '../lib/seo'
-import { engineers, reviews, blogPosts, pressMentions, contact } from '../lib/data'
+import { reviews } from '../lib/data'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { BOOKING_HANDOFF_URL } from '../lib/handoff'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -21,99 +20,15 @@ const studioImages = [
   { src: '/images/about-studio-wide.jpg', caption: 'Studio Hallway' },
 ]
 
-// PLACEHOLDER: clip metadata is fictional. See PLACEHOLDERS.md §Media.
-const clips = [
-  { src: '/videos/session-clip-1.mp4', title: 'Midnight Sessions', artist: 'Ari Lennox Vibe' },
-  { src: '/videos/session-clip-2.mp4', title: 'Behind the Board', artist: 'Producer POV' },
-  { src: '/videos/session-clip-3.mp4', title: 'Live Drums', artist: 'Deep Ellum Jam' },
-  { src: '/videos/session-clip-4.mp4', title: 'Guitar Tracking', artist: 'Indie Artist Feature' },
-]
-
-type SessionClip = (typeof clips)[number]
-
-function SessionClipCard({ clip }: { clip: SessionClip }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-
-  const play = () => {
-    const video = videoRef.current
-    if (!video) return
-    void video.play().catch(() => setIsPlaying(false))
-  }
-
-  const playOnHover = (pointerType: string) => {
-    if (pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    play()
-  }
-
-  const reset = () => {
-    const video = videoRef.current
-    if (!video) return
-    video.pause()
-    video.currentTime = 0
-  }
-
-  const toggle = () => {
-    const video = videoRef.current
-    if (!video) return
-    if (video.paused) {
-      play()
-    } else {
-      video.pause()
-    }
-  }
-
-  return (
-    <div
-      className="group relative rounded-xl overflow-hidden bg-[#111111] aspect-square"
-      onPointerEnter={(event) => playOnHover(event.pointerType)}
-      onPointerLeave={(event) => { if (event.pointerType === 'mouse') reset() }}
-    >
-      <video
-        ref={videoRef}
-        src={clip.src}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-      />
-      <button
-        type="button"
-        onClick={toggle}
-        aria-pressed={isPlaying}
-        aria-label={`${isPlaying ? 'Pause' : 'Play'} ${clip.title} by ${clip.artist}`}
-        className="absolute inset-0 flex items-center justify-center rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#E8A33D]"
-      >
-        <span className="w-14 h-14 rounded-full bg-[rgba(10,10,10,0.7)] border border-[rgba(245,240,232,0.2)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          {isPlaying ? (
-            <Pause size={20} className="text-[#F5F0E8]" fill="#F5F0E8" />
-          ) : (
-            <Play size={20} className="text-[#F5F0E8] ml-1" fill="#F5F0E8" />
-          )}
-        </span>
-      </button>
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent">
-        <p className="font-body text-[0.9rem] font-medium text-[#F5F0E8]">{clip.artist}</p>
-        <p className="font-body text-[0.8rem] text-[#A38F7B]">{clip.title}</p>
-      </div>
-    </div>
-  )
-}
-
 export default function Home() {
-  const { openBooking } = useContext(BookingContext)
   const heroRef = useRef<HTMLDivElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
   const galleryInnerRef = useRef<HTMLDivElement>(null)
 
   useSeo({
-    title: 'Recording Studio in Deep Ellum, Dallas — 4.4★ on Google',
+    title: 'Recording Studio in Deep Ellum, Dallas',
     description:
-      "Legacy Music Group is Dallas' #1 full-service recording studio in Deep Ellum. Hit-quality recordings, top-tier audio engineers, affordable rates. Recording from $75/hr. Book in under a minute.",
+      'Legacy Music Group is a Dallas recording studio and production company in Deep Ellum. Call, email, or use the studio’s current booking page.',
     path: '/',
   })
 
@@ -183,15 +98,15 @@ export default function Home() {
             Record Your Legacy
           </h1>
           <p className="hero-subheadline font-body text-[1.1rem] text-[rgba(245,240,232,0.8)] max-w-[540px] mx-auto mt-6 opacity-0">
-            Hit-quality recordings from top-tier audio engineers in Deep Ellum, Dallas. Recording, mixing, mastering, and artist development at affordable rates.
+            Recording studio and production services in Deep Ellum, Dallas.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 opacity-0">
-            <button
-              onClick={openBooking}
-              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            <a
+              href={BOOKING_HANDOFF_URL}
+              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
             >
-              Book a Session
-            </button>
+              Book on Legacy
+            </a>
             <Link
               to="/studio"
               className="border border-[rgba(245,240,232,0.3)] text-[#F5F0E8] font-body text-[0.95rem] font-medium px-8 py-3.5 rounded-full hover:bg-[rgba(245,240,232,0.1)] transition-all duration-300"
@@ -222,16 +137,16 @@ export default function Home() {
                   Dallas' studio for serious artists.
                 </h2>
                 <p data-speakable className="font-body text-[1.05rem] text-[#A38F7B] leading-[1.8] max-w-[540px]">
-                  Legacy Music Group is a full-service recording studio and production company in Deep Ellum. Owned and operated by music business maven Matthew Medlock, we offer hit-quality recordings at affordable rates. Top-tier audio engineers will have your sound just right.
+                  Legacy Music Group is a Dallas recording studio and production company in Deep Ellum.
                 </p>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[540px]">
-                  Recording, mixing, mastering, custom production, and artist development — all under one roof. Built for artists, producers, and engineers who want quality professional work without the gatekeeping or corporate feel of bigger studios.
+                  Use the studio’s current booking page, phone number, or email to confirm the right option for your project.
                 </p>
                 <Link
                   to="/studio"
                   className="inline-flex items-center gap-2 font-body text-[1rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300 group"
                 >
-                  Read Our Story
+                  Explore the studio
                   <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -302,17 +217,17 @@ export default function Home() {
               {
                 icon: Mic,
                 title: 'Recording',
-                body: 'Vocals, voiceovers, podcasts, full bands. From $75/hr with engineer.',
+                body: 'Recording is currently published from $75 per hour. Confirm the right session with the studio.',
               },
               {
                 icon: Sliders,
                 title: 'Mixing & Mastering',
-                body: 'Industry-standard mixing from $150. Mastering from $30. Two rounds of revisions included.',
+                body: 'Mixing is currently published from $150. Confirm deliverables directly with the studio.',
               },
               {
                 icon: Star,
-                title: 'Artist Development',
-                body: 'Strategy, branding, and music business consulting from $99 — beyond the recording booth.',
+                title: 'Custom Production',
+                body: 'Custom production is currently published at $500 per beat. Confirm details with the studio.',
               },
             ].map((service, i) => (
               <ScrollReveal key={service.title} delay={i * 100}>
@@ -329,82 +244,11 @@ export default function Home() {
                   <p className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.6] mb-6">
                     {service.body}
                   </p>
-                  <span className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#E8A33D] group-hover:gap-2 transition-all duration-300">
-                    Learn More <ChevronRight size={14} />
+                  <span className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#E8A33D]">
+                    Studio information <ChevronRight size={14} />
                   </span>
                 </Link>
               </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Engineer Preview */}
-      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
-        <div className="mx-auto max-w-[1400px]">
-          <ScrollReveal className="mb-12">
-            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-              The Team
-            </span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3 text-balance">
-              Top-tier engineers. Major-label credits.
-            </h2>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {engineers.map((eng, i) => (
-              <ScrollReveal key={eng.id} delay={i * 100}>
-                <Link
-                  to={`/engineers/${eng.id}`}
-                  className="group block rounded-xl overflow-hidden bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
-                >
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img
-                      src={eng.image}
-                      alt={`${eng.name} — ${eng.specialty} engineer at Legacy Music Group`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
-                      {eng.name}
-                    </h3>
-                    <p className="font-body text-[0.85rem] text-[#A38F7B] mt-1">
-                      {eng.specialty}
-                    </p>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link
-              to="/engineers"
-              className="inline-flex items-center gap-2 font-body text-[0.9rem] text-[#F5F0E8] hover:text-[#E8A33D] transition-colors duration-300 group"
-            >
-              View All Engineers
-              <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Press Strip */}
-      <section className="py-10 px-[clamp(1.5rem,5vw,4rem)] border-y border-[rgba(245,240,232,0.05)]">
-        <div className="mx-auto max-w-[1200px]">
-          <p className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#A38F7B] text-center mb-6">
-            As featured in
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {pressMentions.map((p) => (
-              <span
-                key={p.outlet}
-                className="font-display text-[1.1rem] text-[#A38F7B] tracking-[1px]"
-              >
-                {p.outlet}
-              </span>
             ))}
           </div>
         </div>
@@ -420,28 +264,12 @@ export default function Home() {
                   What artists say
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-                  Real reviews from real sessions.
+                  Selected feedback from Legacy&apos;s current site.
                 </h2>
               </div>
-              <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(232,163,61,0.25)] rounded-full px-4 py-2">
-                <div className="flex items-center gap-0.5">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <Star
-                      key={n}
-                      size={12}
-                      fill={n <= Math.round(contact.rating.value) ? '#E8A33D' : 'transparent'}
-                      className={
-                        n <= Math.round(contact.rating.value)
-                          ? 'text-[#E8A33D]'
-                          : 'text-[rgba(232,163,61,0.4)]'
-                      }
-                    />
-                  ))}
-                </div>
-                <span className="font-body text-[0.85rem] text-[#F5F0E8]">
-                  <strong>{contact.rating.value.toFixed(1)}</strong> · {contact.rating.count} Google reviews
-                </span>
-              </div>
+              <p className="font-body text-[0.85rem] text-[#A38F7B] max-w-[240px]">
+                Selected feedback currently published by Legacy Music Group.
+              </p>
             </div>
           </ScrollReveal>
 
@@ -484,150 +312,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Legacy Live / Social Proof */}
-      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="mx-auto max-w-[1400px]">
-          <ScrollReveal className="text-center mb-12">
-            <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-              Legacy Live
-            </span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-              See what happens inside — and at our weekly open mic.
-            </h2>
-            <p className="font-body text-[0.95rem] text-[#A38F7B] mt-4 max-w-[560px] mx-auto leading-[1.7]">
-              Our free Monday-night open mic at TX Tea Room is one of the most active
-              songwriter rooms in Deep Ellum.{' '}
-              <Link to="/events" className="text-[#E8A33D] hover:underline">
-                See the next dates →
-              </Link>
-            </p>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {clips.map((clip, i) => (
-              <ScrollReveal key={clip.src} delay={i * 100}>
-                <SessionClipCard clip={clip} />
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Community Signal — BRIEF §14 + §11 */}
-      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
-        <div className="mx-auto max-w-[1100px]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            <ScrollReveal>
-              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
-                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
-                  <Mic size={20} className="text-[#E8A33D]" />
-                </div>
-                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A studio</h3>
-                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
-                  Acoustically tuned rooms, pro engineers, and gear that does the heavy lifting.
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={100}>
-              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
-                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
-                  <Star size={20} className="text-[#E8A33D]" />
-                </div>
-                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A development brand</h3>
-                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
-                  Strategy, branding, creative direction. We help artists turn songs into careers.
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={200}>
-              <div className="bg-[#0A0A0A] border border-[rgba(245,240,232,0.08)] rounded-xl p-6 sm:p-7 h-full">
-                <div className="w-11 h-11 rounded-full bg-[rgba(232,163,61,0.15)] flex items-center justify-center mb-5">
-                  <Users size={20} className="text-[#E8A33D]" />
-                </div>
-                <h3 className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">A creative community</h3>
-                <p className="font-body text-[0.95rem] text-[#A38F7B] mt-2 leading-[1.6]">
-                  Connecting Dallas artists with each other, with venues, and with the wider Deep Ellum scene.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-
-          <ScrollReveal>
-            <div className="mt-10 flex items-center justify-center gap-2 text-[#A38F7B]">
-              <MapPin size={14} />
-              <span className="font-body text-[0.85rem] uppercase tracking-[2px]">
-                Rooted in Deep Ellum, Dallas
-              </span>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* From the Journal */}
-      <section className="py-[clamp(6rem,12vw,10rem)] px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="mx-auto max-w-[1100px]">
-          <ScrollReveal className="mb-12 flex items-end justify-between flex-wrap gap-4">
-            <div>
-              <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-                Journal
-              </span>
-              <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8] mt-3">
-                Read up before you record.
-              </h2>
-            </div>
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-1 font-body text-[0.9rem] text-[#A38F7B] hover:text-[#F5F0E8] transition-colors duration-300 group"
-            >
-              All articles
-              <ChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {blogPosts.slice(0, 3).map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 80}>
-                <Link
-                  to={`/blog/${post.slug}`}
-                  className="group block bg-[#111111] border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-[rgba(232,163,61,0.3)] transition-all duration-300 h-full"
-                >
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-body text-[0.65rem] uppercase tracking-[1.5px] text-[#E8A33D] font-medium">
-                        {post.category}
-                      </span>
-                      <span className="font-body text-[0.65rem] uppercase tracking-[1.5px] text-[#A38F7B] flex items-center gap-1">
-                        <Clock size={10} /> {post.readMins}min
-                      </span>
-                    </div>
-                    <h3 className="font-display text-[1.2rem] leading-[1.25] text-[#F5F0E8] group-hover:text-[#E8A33D] transition-colors duration-300">
-                      {post.title}
-                    </h3>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter / Artist List */}
-      <section className="py-[clamp(4rem,8vw,6rem)] px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="mx-auto max-w-[700px]">
-          <ScrollReveal>
-            <NewsletterSignup label="Join the Artist List" />
-          </ScrollReveal>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="py-[clamp(6rem,10vw,8rem)] px-[clamp(1.5rem,5vw,4rem)]">
         <div className="mx-auto max-w-[700px] text-center">
@@ -636,14 +320,14 @@ export default function Home() {
               Ready to make a record that lasts?
             </h2>
             <p className="font-body text-[1.1rem] text-[#A38F7B] mt-4 mb-8">
-              Book your session in under a minute. We'll have your sound just right.
+              Continue to Legacy&apos;s current booking page to review its live session options.
             </p>
-            <button
-              onClick={openBooking}
-              className="btn-press bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-10 py-4 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            <a
+              href={BOOKING_HANDOFF_URL}
+              className="bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-10 py-4 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
             >
-              Book Now
-            </button>
+              Open booking page
+            </a>
           </ScrollReveal>
         </div>
       </section>

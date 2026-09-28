@@ -6,43 +6,6 @@
 import type { FaqEntry } from './schemas'
 
 // =========================================================================
-// CALENDLY CONFIGURATION
-// =========================================================================
-
-export interface CalendlyEventConfig {
-  bookingUrl: string
-  eventTypeUri: string
-}
-
-export const calendly = {
-  withEngineer: {
-    default: {
-      bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-engineer',
-      eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-DEFAULT',
-    } satisfies CalendlyEventConfig,
-    byEngineerId: {
-      matthew: {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/consultation-matthew',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-MATTHEW',
-      },
-      ray: {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-ray',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-RAY',
-      },
-      wayne: {
-        bookingUrl: 'https://calendly.com/legacymusicgroup/recording-with-wayne',
-        eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-WAYNE',
-      },
-    } as Record<string, CalendlyEventConfig>,
-  },
-  withoutEngineer: {
-    bookingUrl: 'https://calendly.com/legacymusicgroup/studio-time',
-    eventTypeUri: 'https://api.calendly.com/event_types/PLACEHOLDER-UUID-STUDIO-TIME',
-  } satisfies CalendlyEventConfig,
-  availabilityEndpoint: '/.netlify/functions/calendly-availability',
-}
-
-// =========================================================================
 // CONTACT INFO (REAL — sourced from legacymusicgroup.com 2026-05-07)
 // =========================================================================
 
@@ -52,19 +15,9 @@ export const contact = {
   email: 'info@legacymusicgroup.com',
   addressLine1: '2815 Main St, Suite A',
   addressLine2: 'Dallas, TX 75226',
-  // Real hours sourced from Google Business Profile 2026-05-07
-  hours: 'Open daily · 10am–1am',
-  responseTime: 'We reply within 24hrs',
-  parkingNote: 'Metered street parking 6pm–midnight at $0.25 / 30 min.',
   // Owner-written tagline pulled from Google Business Profile
   ownerTagline:
     'Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right.',
-  // Real Google Business Profile rating snapshot — 2026-05-07.
-  // Will be replaced by live GBP API integration on launch.
-  rating: {
-    value: 4.4,
-    count: 128,
-  },
   // All social URLs confirmed real 2026-05-07.
   social: {
     instagram: 'https://www.instagram.com/legacymusicgroup/',
@@ -897,33 +850,27 @@ export interface Review {
   body: string
   rating: number
   source: 'Google' | 'Yelp' | 'Direct'
-  date: string
 }
 
-// Real reviews scraped from legacymusicgroup.com homepage 2026-05-07.
-// Source: 3 Google reviews already on the live site. AggregateRating wires
-// to Google Business Profile API on launch for the full count.
+// Selected excerpts verified on Legacy's current website. Dates and aggregate totals are intentionally omitted.
 export const reviews: Review[] = [
   {
     author: 'Brandon P.',
     body: 'Recorded a few songs here, they have excellent quality and the engineers can really help take the song to the next level.',
     rating: 5,
     source: 'Google',
-    date: '2025-08-01', // PLACEHOLDER date — real Google review date pending GBP API wire
   },
   {
     author: 'Farhan P.',
     body: 'Their unbelievable customer service, alongside the beautiful studio and excellent equipment, made my experience top-notch.',
     rating: 5,
     source: 'Google',
-    date: '2025-09-01', // PLACEHOLDER date
   },
   {
     author: 'Richard C.',
     body: "The atmosphere gave off a musical vibe that's makes everything flow. The recording process was relaxed and productive.",
     rating: 5,
     source: 'Google',
-    date: '2025-10-01', // PLACEHOLDER date
   },
 ]
 
@@ -1110,7 +1057,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I book a session in Deep Ellum?',
-        answer: 'Most studios in the neighborhood take bookings through Calendly, custom forms, or direct phone. Legacy specifically takes bookings through our online calendar — under a minute from session-type to confirmed.',
+        answer: 'Contact Legacy Music Group directly or use the studio’s current booking page to confirm the right session for your project.',
       },
     ],
     related: [
@@ -1411,7 +1358,7 @@ export const faqs: FaqItem[] = [
     category: 'Booking',
     question: 'How do I book a session?',
     answer:
-      "Hit Book Now anywhere on the site. Pick your session type, choose an engineer if you want one, then schedule via Calendly — confirmation email and calendar invite arrive instantly. The whole thing takes under a minute.",
+      "Use Legacy Music Group’s current booking page, call the studio, or email the team to confirm your session details.",
   },
   {
     category: 'Booking',
@@ -1483,7 +1430,7 @@ export const faqs: FaqItem[] = [
     category: 'Payment',
     question: 'How do I pay?',
     answer:
-      'Card payment is collected through our Calendly booking flow at the time of scheduling. A deposit holds your slot; balance is due before the session. (Real payment processing is configured in Calendly — see PLACEHOLDERS.md if not yet enabled.)',
+      'Payment and scheduling details are confirmed directly with Legacy Music Group through its current booking or contact channels.',
   },
 ]
 

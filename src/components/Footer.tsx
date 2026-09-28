@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail, Instagram, Youtube } from 'lucide-react'
-import { useContext } from 'react'
-import { BookingContext } from '../lib/booking-context'
 import { contact, services, neighborhoods } from '../lib/data'
 import LifiCredit from './LifiCredit'
+import { BOOKING_HANDOFF_URL } from '../lib/handoff'
 
 export default function Footer() {
-  const { openBooking } = useContext(BookingContext)
   const year = new Date().getFullYear()
 
   return (
@@ -25,12 +23,12 @@ export default function Footer() {
               Deep Ellum recording studio and artist development brand. Built to help
               independent artists make professional music in Dallas.
             </p>
-            <button
-              onClick={openBooking}
-              className="inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            <a
+              href={BOOKING_HANDOFF_URL}
+              className="inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
             >
-              Book a Session
-            </button>
+              Book on Legacy
+            </a>
             <div className="flex items-center gap-3 pt-2">
               <a
                 href={contact.social.instagram}

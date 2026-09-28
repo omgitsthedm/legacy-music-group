@@ -1,17 +1,96 @@
 import { useEffect, useState } from 'react'
+import {
+  analyticsConfigPayload,
+  consentTransition,
+  isAnalyticsEligible,
+  readOrMarkQaSession,
+  readStoredConsent,
+  shouldAppendGtm,
+  writeStoredConsent,
+  type AnalyticsConsent as Consent,
+} from '../lib/analytics-gate'
 
 const GTM_CONTAINER_ID = 'GTM-PP6RZB73'
-const CONSENT_KEY = 'legacy:analytics-consent:v1'
+// The repository confirms this container only. A GA measurement ID has not been verified.
+const MEASUREMENT_ID: string | null = null
 
-declare global { interface Window { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void } }
-
-function gtag(...args: unknown[]) {
-  window.dataLayer = window.dataLayer || []
-  window.dataLayer.push(args)
+declare global {
+  interface Window {
+    dataLayer?: unknown[]
+    gtag?: (...args: unknown[]) => void
+    [key: `ga-disable-${string}`]: boolean | undefined
+  }
 }
 
-function loadTag() {
-  if (document.querySelector(`script[data-legacy-gtm="${GTM_CONTAINER_ID}"]`)) return
+/** Google’s documented arguments-object transport; this is not an array-of-arguments wrapper. */
+function gtag(...args: unknown[]) {
+  void args
+  window.dataLayer = window.dataLayer || []
+  // eslint-disable-next-line prefer-rest-params -- Google requires the native arguments object here.
+  window.dataLayer.push(arguments)
+}
+
+function browserStorage(): Storage | null {
+  try { return window.localStorage } catch { return null }
+}
+
+function browserSessionStorage(): Storage | null {
+  try { return window.sessionStorage } catch { return null }
+}
+
+function currentChoice() {
+  return readStoredConsent(browserStorage())
+}
+
+function robotsDirective() {
+  return document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? null
+}
+
+function eligibility(consent: Consent, storageAvailable: boolean) {
+  const sessionQa = readOrMarkQaSession(browserSessionStorage(), window.location.href)
+  return isAnalyticsEligible({
+    href: window.location.href,
+    robots: robotsDirective(),
+    webdriver: navigator.webdriver,
+    storageAvailable: storageAvailable && sessionQa.available,
+    sessionQa: sessionQa.active,
+    consent,
+  })
+}
+
+function tagSelector() {
+  return `script[data-legacy-gtm="${GTM_CONTAINER_ID}"]`
+}
+
+function denyAnalytics() {
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  })
+  gtag('consent', 'update', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  })
+}
+
+function grantAnalytics() {
+  gtag('consent', 'update', {
+    analytics_storage: 'granted',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  })
+}
+
+function loadTag(eligible: boolean) {
+  if (!shouldAppendGtm({ eligible, scriptAlreadyPresent: Boolean(document.querySelector(tagSelector())) })) return
+
+  // The supplied page values intentionally omit query, fragment, and referrer before a tag can load.
+  gtag('set', analyticsConfigPayload(window.location.href))
   const script = document.createElement('script')
   script.async = true
   script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`
@@ -21,34 +100,78 @@ function loadTag() {
 }
 
 export default function AnalyticsConsent() {
-  const [open, setOpen] = useState(() => {
-    if (navigator.webdriver) return false
-    try { return localStorage.getItem(CONSENT_KEY) === null } catch { return true }
-  })
+  const [initial] = useState(() => currentChoice())
+  const [open, setOpen] = useState(() => !initial.available || initial.value === null)
+  const [notice, setNotice] = useState('')
 
   useEffect(() => {
-    if (navigator.webdriver) return
     window.dataLayer = window.dataLayer || []
     window.gtag = gtag
-    gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', wait_for_update: 500 })
-    let choice: string | null = null
-    try { choice = localStorage.getItem(CONSENT_KEY) } catch { /* storage is optional */ }
-    if (choice === 'granted') { gtag('consent', 'update', { analytics_storage: 'granted' }); loadTag() }
+    denyAnalytics()
+
+    const stored = currentChoice()
+    if (stored.value === 'granted') {
+      const eligible = eligibility(stored.value, stored.available)
+      if (eligible) {
+        grantAnalytics()
+        loadTag(eligible)
+      }
+    }
   }, [])
 
-  function choose(granted: boolean) {
-    try { localStorage.setItem(CONSENT_KEY, granted ? 'granted' : 'denied') } catch { /* storage is optional */ }
-    gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' })
-    if (granted) loadTag()
+  function choose(next: Exclude<Consent, null>) {
+    const storage = browserStorage()
+    const previous = readStoredConsent(storage)
+    if (!writeStoredConsent(storage, next)) {
+      denyAnalytics()
+      setOpen(true)
+      setNotice('Optional usage measurement remains off because this browser cannot save your choice.')
+      return
+    }
+
+    const eligible = eligibility(next, true)
+    const transition = consentTransition({ previous: previous.value, next, eligible, measurementId: MEASUREMENT_ID })
+
+    if (next === 'granted') {
+      if (eligible) {
+        grantAnalytics()
+        loadTag(eligible)
+      } else {
+        denyAnalytics()
+      }
+      setOpen(false)
+      setNotice(eligible ? '' : 'Optional usage measurement is unavailable on this preview.')
+      return
+    }
+
+    denyAnalytics()
+    const loadedTag = document.querySelector(tagSelector())
+    loadedTag?.remove()
+    window.dataLayer = []
     setOpen(false)
+    setNotice('Optional usage measurement is off.')
+
+    if (transition === 'disable' && MEASUREMENT_ID) {
+      window[`ga-disable-${MEASUREMENT_ID}`] = true
+    }
+    // A known destination is required for an in-place disable. Preserve the exact URL on a clean runtime reload.
+    if (transition === 'reload' && loadedTag) window.location.reload()
   }
 
-  return <>
-    {open && <section role="dialog" aria-label="Analytics preferences" className="fixed bottom-4 right-4 z-[100] max-w-[min(420px,calc(100vw-2rem))] rounded-xl border border-[rgba(232,163,61,0.38)] bg-[#111111] p-5 shadow-2xl">
-      <p className="font-body text-xs uppercase tracking-[2px] text-[#E8A33D]">Analytics preferences</p>
-      <p className="mt-2 font-body text-sm leading-relaxed text-[#F5F0E8]">Help us improve the studio website with anonymous usage measurements. Analytics stays off unless you choose Allow.</p>
-      <div className="mt-4 flex flex-wrap gap-3"><button type="button" onClick={() => choose(true)} className="rounded-full bg-[#E8A33D] px-4 py-2 font-body text-sm font-medium text-[#0A0A0A] hover:bg-[#D4873C]">Allow analytics</button><button type="button" onClick={() => choose(false)} className="rounded-full border border-[rgba(245,240,232,0.25)] px-4 py-2 font-body text-sm text-[#F5F0E8] hover:border-[#E8A33D]">Keep off</button></div>
-    </section>}
-    <button type="button" onClick={() => setOpen(true)} className="fixed bottom-3 left-3 z-[99] rounded border border-[rgba(245,240,232,0.2)] bg-[#111111] px-2 py-1 font-body text-[10px] uppercase tracking-[1px] text-[#A38F7B] hover:text-[#E8A33D]">Analytics settings</button>
-  </>
+  return (
+    <>
+      {open && (
+        <section role="dialog" aria-label="Analytics preferences" className="fixed bottom-4 right-4 z-[100] max-w-[min(420px,calc(100vw-2rem))] rounded-xl border border-[rgba(232,163,61,0.38)] bg-[#111111] p-5 shadow-2xl">
+          <p className="font-body text-xs uppercase tracking-[2px] text-[#E8A33D]">Analytics preferences</p>
+          <p className="mt-2 font-body text-sm leading-relaxed text-[#F5F0E8]">Optional usage measurement stays off unless you choose Allow. Contact and booking details are not sent by this site.</p>
+          {notice && <p role="status" className="mt-2 font-body text-xs leading-relaxed text-[#A38F7B]">{notice}</p>}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <button type="button" onClick={() => choose('granted')} className="rounded-full bg-[#E8A33D] px-4 py-2 font-body text-sm font-medium text-[#0A0A0A] hover:bg-[#D4873C] transition-colors duration-300">Allow analytics</button>
+            <button type="button" onClick={() => choose('denied')} className="rounded-full border border-[rgba(245,240,232,0.25)] px-4 py-2 font-body text-sm text-[#F5F0E8] hover:border-[#E8A33D] transition-colors duration-300">Keep off</button>
+          </div>
+        </section>
+      )}
+      <button type="button" onClick={() => setOpen(true)} className="fixed bottom-3 left-3 z-[99] rounded border border-[rgba(245,240,232,0.2)] bg-[#111111] px-2 py-1 font-body text-[10px] uppercase tracking-[1px] text-[#A38F7B] hover:text-[#E8A33D] transition-colors duration-300">Analytics settings</button>
+    </>
+  )
 }

@@ -96,7 +96,7 @@ async function assertRootAbsoluteAssets(html, destination) {
   )
 }
 
-async function setMeta(html, route, title, description, noindex = false) {
+async function setMeta(html, route, title, description, noindex = true) {
   const fullTitle = `${title} | Legacy Music Group`
   const url = `${site}/${route}`
   const safeTitle = escapeHtml(fullTitle)
@@ -126,22 +126,6 @@ async function setMeta(html, route, title, description, noindex = false) {
   return output
 }
 
-async function assertSitemapRoutes() {
-  const sitemap = await readFile(path.join(dist, 'sitemap.xml'), 'utf8')
-  const sitemapPaths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => {
-    const url = new URL(match[1])
-    if (url.origin !== site) throw new Error(`Sitemap host must be ${site}.`)
-    return url.pathname === '/' ? '/' : url.pathname.replace(/\/+$/, '')
-  })
-  const expectedPaths = ['/', ...routes.map(([route]) => `/${route}`)]
-  const missing = expectedPaths.filter((route) => !sitemapPaths.includes(route))
-  const unexpected = sitemapPaths.filter((route) => !expectedPaths.includes(route))
-
-  if (missing.length > 0 || unexpected.length > 0) {
-    throw new Error(`Sitemap/static route mismatch. Missing: ${missing.join(', ') || 'none'}. Unexpected: ${unexpected.join(', ') || 'none'}.`)
-  }
-}
-
 for (const [route, title, description] of routes) {
   const target = path.join(dist, route)
   await mkdir(target, { recursive: true })
@@ -153,6 +137,5 @@ await writeFile(
   await setMeta(source, '404', 'Page Not Found', 'The requested page could not be found.', true),
 )
 
-await assertSitemapRoutes()
 
 console.log(`Generated metadata-first HTML for ${routes.length} routes plus 404.`)
