@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
-import { BookingContext } from '../lib/booking-context'
+import { BOOKING_HANDOFF_URL } from '../lib/handoff'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
-  const { openBooking } = useContext(BookingContext)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,12 +61,12 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={openBooking}
-              className="hidden sm:inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
+            <a
+              href={BOOKING_HANDOFF_URL}
+              className="hidden sm:inline-flex items-center justify-center bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.85rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
             >
-              Book Now
-            </button>
+              Book on Legacy
+            </a>
             <button
               className="lg:hidden text-[#F5F0E8] p-2"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -120,15 +119,13 @@ export default function Navbar() {
               Reviews
             </Link>
           </div>
-          <button
-            onClick={() => {
-              setMenuOpen(false)
-              openBooking()
-            }}
-            className="mt-3 bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300"
+          <a
+            href={BOOKING_HANDOFF_URL}
+            onClick={() => setMenuOpen(false)}
+            className="mt-3 bg-[#E8A33D] text-[#0A0A0A] font-body text-[1rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
           >
-            Book Now
-          </button>
+            Book on Legacy
+          </a>
         </div>
       </div>
     </>

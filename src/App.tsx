@@ -1,17 +1,11 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import BookingModal from './components/BookingModal'
-import JsonLd from './components/JsonLd'
-import BookingHowToSchema from './components/HowToSchema'
 import AnalyticsConsent from './components/AnalyticsConsent'
 import Home from './pages/Home'
 import { BookingContext, type SessionType } from './lib/booking-context'
-import { organizationSchema, localBusinessSchema, websiteSchema } from './lib/schemas'
 
-// Code-split secondary routes for faster initial paint.
-// Home stays eagerly imported because it's the most-hit route.
 const Engineers = lazy(() => import('./pages/Engineers'))
 const EngineerProfile = lazy(() => import('./pages/EngineerProfile'))
 const Services = lazy(() => import('./pages/Services'))
@@ -31,62 +25,23 @@ const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 
 function PageLoader() {
-  return (
-    <div className="pt-40 pb-20 min-h-[60vh] flex items-center justify-center">
-      <div className="w-6 h-6 rounded-full border-2 border-[rgba(232,163,61,0.2)] border-t-[#E8A33D] animate-spin" />
-    </div>
-  )
+  return <div className="pt-40 pb-20 min-h-[60vh] flex items-center justify-center"><div className="w-6 h-6 rounded-full border-2 border-[rgba(232,163,61,0.2)] border-t-[#E8A33D] animate-spin" /></div>
 }
 
 function NotFound() {
-  return (
-    <div className="pt-40 pb-20 text-center px-4 min-h-[60vh] flex flex-col items-center justify-center">
-      <p className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-3">
-        404
-      </p>
-      <h1 className="font-display text-3xl text-[#F5F0E8]">Page not found</h1>
-      <p className="font-body text-[0.95rem] text-[#A38F7B] mt-3">
-        The page you're looking for doesn't exist.
-      </p>
-      <a
-        href="/"
-        className="mt-6 inline-block bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300"
-      >
-        Back to Home
-      </a>
-    </div>
-  )
+  return <div className="pt-40 pb-20 text-center px-4 min-h-[60vh] flex flex-col items-center justify-center"><p className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-3">404</p><h1 className="font-display text-3xl text-[#F5F0E8]">Page not found</h1><a href="/" className="mt-6 inline-block bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.9rem] font-medium px-6 py-2.5 rounded-full hover:bg-[#D4873C] transition-colors duration-300">Back to Home</a></div>
 }
 
 function App() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false)
-  const [initialSessionType, setInitialSessionType] = useState<SessionType | null>(null)
   const location = useLocation()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
-
-  const openBooking = () => {
-    setInitialSessionType(null)
-    setIsBookingOpen(true)
-  }
-  const openSessionBooking = (sessionType: SessionType) => {
-    setInitialSessionType(sessionType)
-    setIsBookingOpen(true)
-  }
+  useEffect(() => { window.scrollTo(0, 0) }, [location.pathname])
+  const openBooking = () => window.location.assign('https://legacymusicgroup.com/service-plus/')
+  const openSessionBooking = (_sessionType: SessionType) => { void _sessionType; openBooking() }
 
   return (
-    <BookingContext.Provider value={{ isOpen: isBookingOpen, setIsOpen: setIsBookingOpen, openBooking, initialSessionType, openSessionBooking }}>
-      <JsonLd id="organization" data={organizationSchema} />
-      <JsonLd id="localbusiness" data={localBusinessSchema} />
-      <JsonLd id="website" data={websiteSchema} />
-      <BookingHowToSchema />
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
+    <BookingContext.Provider value={{ openBooking, openSessionBooking }}>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <AnalyticsConsent />
-
       <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]">
         <Navbar />
         <main id="main-content" tabIndex={-1}>
@@ -115,7 +70,6 @@ function App() {
           </Suspense>
         </main>
         <Footer />
-        {isBookingOpen && <BookingModal />}
       </div>
     </BookingContext.Provider>
   )
