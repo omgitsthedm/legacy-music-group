@@ -37,7 +37,7 @@ Verified 2026-08-15.
 ## 2026-09-27 acquisition recovery status — review candidate
 
 - Receiving owner: David Marsh / Little Fight NYC.
-- This source batch has not been released. Its intended release target remains Netlify site legacy-music-group (d04515bf-0eb2-45ae-b71b-2a08dc92391a).
+- This source batch was published. Its intended release target remains Netlify site legacy-music-group (d04515bf-0eb2-45ae-b71b-2a08dc92391a).
 - The Netlify host is deliberately noindex, nofollow while legacymusicgroup.com continues to serve Legacy’s current WordPress site. No DNS, primary-domain, or redirect change is part of this batch.
 - The prior in-app Calendly calendar, fake availability, local-only callback/contact/newsletter confirmations, booking HowTo markup, rating markup, and dated review count have been removed from the candidate. Visitor actions hand off to the current Legacy WordPress booking path (/service-plus/), current contact path (/contacts/), or retained phone/email details.
 - This is a noindex preview repair: the current Netlify host cannot load GTM at any consent state. Future transport is wired only for the exact custom hosts, indexable approved public paths, a saved explicit grant, and non-QA/non-automation sessions; no GA measurement destination has been validated.
