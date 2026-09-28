@@ -1,6 +1,9 @@
 # Legacy Music Group source of truth
 
-Verified 2026-08-15.
+Current release verified 2026-09-28 UTC: source `c8a97e25c0d77ed785d98844a5b4b2cb2ec35d4b`, exact Netlify site `d04515bf-0eb2-45ae-b71b-2a08dc92391a`, published deploy `6aba04a678dff6a47a043408` at `2026-09-28T06:09:48.944Z`. The current host remains `https://legacy-music-group.netlify.app`, with noindex/nofollow, an empty sitemap, real external booking/contact handoffs, and analytics disabled on the preview. The full September recovery and production evidence below supersedes the historical August release record. Current root parity is 2,283 bytes and SHA-256 `b3be79b8fefd1576b2877dde6a593316899c1c2989322f65395bbaabadcb3204` on primary and immutable origins.
+
+## Historical release baseline — verified 2026-08-15
+
 
 ## Canonical source
 
@@ -34,7 +37,7 @@ Verified 2026-08-15.
 - `BRIEF.md` retains client and product doctrine for on-demand use.
 - Do not expose secrets or exercise real booking/lead flows. Reverify Netlify and live state before any release.
 
-## 2026-09-27 acquisition recovery status — review candidate
+## 2026-09-27 acquisition recovery status — released noindex preview
 
 - Receiving owner: David Marsh / Little Fight NYC.
 - This source batch was published. Its intended release target remains Netlify site legacy-music-group (d04515bf-0eb2-45ae-b71b-2a08dc92391a).
