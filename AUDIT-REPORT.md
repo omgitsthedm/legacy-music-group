@@ -169,7 +169,7 @@ After an approved upload: verify `release.json`, all critical routes and contact
 
 Exact queued change: choose the approved public LFNYC destination and redirect map; update the build host allowlist and canonical origin, remove `noindex, nofollow, noarchive` from HTML and `_headers`, generate a sitemap containing only canonical public routes with accurate modification dates, add its URL to robots.txt, then verify and submit through the authorized Google/Bing properties. Choose crawler training permissions independently from search access. IndexNow requires an approved host key and URL set. No made-up DNS record or search-property credential is supplied.
 
-Remaining required input: the owner's intended public domain and migration scope. The actual site has no custom-domain alias. No DNS, domain, account, Search Console, Bing Webmaster Tools, business-profile or crawler-policy change was made during the mission.
+Remaining required input: the owner's intended public domain and migration scope. The actual site has no custom-domain alias. No DNS, domain, account, Search Console, Bing Webmaster Tools, business-profile or production crawler-policy change was made during the mission.
 
 ## 3. Marketing publication
 
