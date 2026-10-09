@@ -44,3 +44,8 @@ pnpm-debug.log*
 tmp/
 yarn-debug.log*
 yarn-error.log*
+
+.astro/
+.artifacts/
+test-results/
+playwright-report/

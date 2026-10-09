@@ -1,10 +1,13 @@
 {
-  "name": "Legacy Music Group",
-  "short_name": "Legacy",
-  "description": "Deep Ellum recording studio and artist development brand. Book your session in under a minute.",
+  "name": "Little Fight NYC",
+  "short_name": "LFNYC",
+  "description": "Websites, tech support and software you own for small businesses.",
   "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0A0A0A",
-  "theme_color": "#0A0A0A",
-  "icons": []
+  "display": "browser",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "icons": [
+    { "src": "/brand/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
 }

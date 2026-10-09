@@ -1,9 +1,19 @@
-# Valid routes are emitted as static HTML during the build.
-# Preserve former numeric engineer URLs while the canonical sitemap uses names.
-/engineers/1    /engineers/matthew  301
-/engineers/2    /engineers/ray      301
-/engineers/3    /engineers/wayne    301
-/engineers/4    /engineers/terry    301
-
-# Unknown paths return a real 404 while React renders the branded not-found view.
-/*    /404.html   404
+# Studio routes are not silently recast as LFNYC services.
+# Temporary review-only handoffs; no permanent migration is approved.
+/studio /studio-information/ 302
+/gear /studio-information/ 302
+/engineers /studio-information/ 302
+/engineers/* /studio-information/ 302
+/pricing /studio-information/ 302
+/reviews /studio-information/ 302
+/events /studio-information/ 302
+/policies /studio-information/ 302
+/blog /studio-information/ 302
+/blog/* /studio-information/ 302
+/neighborhoods/* /studio-information/ 302
+/services/rap-recording /studio-information/ 302
+/services/r-and-b /studio-information/ 302
+/services/podcasts /studio-information/ 302
+/services/voiceover /studio-information/ 302
+/services/artist-development /studio-information/ 302
+/* /404.html 404
