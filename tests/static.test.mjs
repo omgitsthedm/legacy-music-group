@@ -55,3 +55,18 @@ test('preview headers prevent indexation and active third-party scripts', async 
   assert.match(headers, /script-src 'self'/);
   assert.doesNotMatch(headers, /unsafe-eval|unsafe-inline|googletagmanager/);
 });
+
+test('release mode consistently controls review notices and factual guide', async () => {
+  const production = process.env.RELEASE_MODE === 'production';
+  const home = await readFile('dist/index.html', 'utf8');
+  const terms = await readFile('dist/terms/index.html', 'utf8');
+  const guide = await readFile('dist/llms.txt', 'utf8');
+  assert.equal(home.includes('Review preview · not the live site'), !production);
+  assert.equal(terms.includes('This is a review website'), !production);
+  assert.equal(guide.includes('review candidate'), !production);
+  if (production) {
+    assert.match(terms, /About this website/);
+    assert.match(guide, /same Little Fight NYC business/);
+    assert.doesNotMatch(guide, /this preview|public launch/);
+  }
+});

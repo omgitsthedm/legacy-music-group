@@ -1,9 +1,9 @@
 {
-  "name": "lfnyc-legacy-preview",
+  "name": "little-fight-nyc-legacy-property",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Little Fight NYC static website — isolated review candidate",
+  "description": "Little Fight NYC static service website on the Legacy Netlify property",
   "engines": { "node": ">=22.12.0" },
   "scripts": {
     "dev": "astro dev --host 127.0.0.1 --port 52761",

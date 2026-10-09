@@ -28,3 +28,10 @@
 - Netlify CLI rejected --context with --no-build before uploading; remove --context and retain the explicit site, draft alias and no-build flags.
 - A hosted lazy image exposed its dimensions before download completion; strengthen the browser check to await complete plus naturalWidth, then rerun against the same unchanged artifact.
 - Exported graphics wait for font/image decoding and settled Chrome paint; regenerate and visually verify all branded headers before handoff.
+
+- The October 9 instruction “ok update it all and push it live” approves the reviewed rebuild’s master merge and one production release on the exact Legacy Netlify property; preserve the separate studio and canonical LFNYC domains.
+- Keep this duplicate Netlify property noindex and its sitemap empty as reviewed; a public-domain/search migration is separate from the approved hosting release.
+- Derive the release marker’s branch from Git, remove obsolete preview language in the production factual guide, and test production notices before publishing.
+- Run quality checks on master as well as audit branches; keep deployment manual so source pushes cannot silently publish another artifact.
+- Two guessed test filenames did not exist; use the actual tests/static.test.mjs inventory, then extend its production-mode checks.
+- Netlify still lists master as a linked branch; add the documented build-ignore command so ordinary Git pushes cannot create competing hosted releases. Explicit verified CLI uploads remain the release path.

@@ -1,6 +1,8 @@
 [build]
   command = "npm run verify"
   publish = "dist"
+  # Git pushes run CI, not hosting releases. Upload only a verified local artifact.
+  ignore = "exit 0"
 
 [build.environment]
   NODE_VERSION = "24.21.0"

@@ -1,7 +1,7 @@
-name: Candidate quality
+name: Site quality
 on:
   push:
-    branches: ['audit/**']
+    branches: [master, 'audit/**']
     paths-ignore: ['**/*.md', 'archive/**']
   pull_request:
     branches: [master]

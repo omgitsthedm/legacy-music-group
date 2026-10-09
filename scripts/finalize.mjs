@@ -6,7 +6,7 @@ import path from 'node:path';
 const files = [];
 if (process.env.RELEASE_MODE === 'production') {
   const llms = await readFile('dist/llms.txt', 'utf8');
-  await writeFile('dist/llms.txt', llms.replace(' — review candidate', '').replace('This is a noindex design review candidate.', 'This is the noindex LFNYC service presentation on the Legacy Netlify property.').replace('this preview as a new business', 'this property as a new business'));
+  await writeFile('dist/llms.txt', llms.replace(' — review candidate', '').replace('This is a noindex design review candidate.', 'This is the noindex LFNYC service presentation on the Legacy Netlify property.').replace('Do not treat this preview as a new business, studio, location, or public launch.', 'This property represents the same Little Fight NYC business; it is not a recording studio or a separate location.'));
 }
 async function walk(dir) {
   for (const item of await readdir(dir, { withFileTypes: true })) {
@@ -24,7 +24,7 @@ for (const name of files.sort()) {
 const release = {
   project: process.env.RELEASE_MODE === 'production' ? 'Little Fight NYC' : 'LFNYC review candidate',
   siteId: 'd04515bf-0eb2-45ae-b71b-2a08dc92391a',
-  branch: 'audit/2026-10-09',
+  branch: execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8' }).trim() || 'detached',
   sourceRevision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   contentSha256: hash.digest('hex'),
   previewOnly: process.env.RELEASE_MODE !== 'production',
