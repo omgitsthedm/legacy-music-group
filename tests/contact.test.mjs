@@ -2,15 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildEmailDraft } from '../src/lib/contact.ts';
 
-const brief = { name: 'Alex Shop', email: 'alex@example.com', service: 'websites', message: 'Help with our shop website & booking.' };
+const brief = { name: 'Alex Artist', email: 'alex@example.com', service: 'recording', message: 'Help with our recording & booking.' };
 test('contact brief produces a correctly encoded email without delivery', () => {
   const draft = buildEmailDraft(brief);
   const url = new URL(draft.href);
   assert.equal(url.protocol, 'mailto:');
-  assert.equal(url.pathname, 'hello@littlefightnyc.com');
+  assert.equal(url.pathname, 'info@legacymusicgroup.com');
   assert.equal(url.searchParams.get('body'), draft.body);
-  assert.match(draft.body, /website & booking/);
-  assert.match(draft.subject, /A website/);
+  assert.match(draft.body, /recording & booking/);
+  assert.match(draft.subject, /A recording session/);
 });
 test('contact validation rejects missing fields, invalid addresses and oversized messages', () => {
   for (const fields of [{ name: ' ' }, { email: 'broken' }, { email: 'a@example.com\nBcc:x@example.com' }, { message: ' ' }, { message: 'x'.repeat(1201) }]) {

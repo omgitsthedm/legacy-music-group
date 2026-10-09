@@ -38,3 +38,10 @@
 - Owner correction: real client and prospective-client projects retain their own identity; LFNYC branding applies only to abstract projects. Legacy Music Group remains Legacy Music Group, regardless of this property's lack of a custom-domain alias.
 - PR #16 merged immediately before the correction, but no LFNYC production upload occurred; correct the source before executing the still-authorized live release.
 - Use verified official Legacy studio photography and contact information; keep Bookly on legacymusicgroup.com/service-plus/ and omit unverified service guarantees, staff tenures, ratings and policies.
+- Keep Little Fight NYC only as a small agency footer credit; the studio name, logo, color, services, structured entities and contact recipient are Legacy’s.
+- Official WordPress image requests returned 403 outside Chrome; recovered the same public image response bodies in installed Chrome and retained source URLs and hashes.
+- WordPress background activity prevented network-idle completion; use DOM readiness and decoded media instead of waiting for unrelated tracking requests.
+- The current booking selector differs from old engineer biographies; link to the live selector instead of claiming an outdated roster, career credits or availability.
+- Official booking instructions and recording terms disagree on full payment versus deposit; publish neither figure here and link to the studio’s terms with a direct contact fallback.
+- Sharp no longer exposes the old internal lib path; use its public package import for lossless logo sizing and favicon export.
+- Local QA caught an engineer wildcard redirect looping on its own destination and 200 percent magnification overflow; replace it with explicit historical profile redirects and use container-width reflow.

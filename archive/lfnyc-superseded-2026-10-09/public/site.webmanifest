@@ -1,0 +1,13 @@
+{
+  "name": "Little Fight NYC",
+  "short_name": "LFNYC",
+  "description": "Websites, tech support and software you own for small businesses.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "icons": [
+    { "src": "/brand/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

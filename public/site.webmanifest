@@ -1,13 +1,21 @@
 {
-  "name": "Little Fight NYC",
-  "short_name": "LFNYC",
-  "description": "Websites, tech support and software you own for small businesses.",
+  "name": "Legacy Music Group",
+  "short_name": "Legacy",
+  "description": "Recording and production in Deep Ellum, Dallas.",
   "start_url": "/",
-  "display": "browser",
-  "background_color": "#050507",
-  "theme_color": "#050507",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
   "icons": [
-    { "src": "/brand/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/brand/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

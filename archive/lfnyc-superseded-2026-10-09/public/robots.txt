@@ -1,0 +1,6 @@
+# Review candidate. Not a public search destination.
+User-agent: *
+Allow: /
+
+# Crawl access allows noindex headers to be seen. It is not privacy protection.
+# Indexing remains disabled by HTML meta and X-Robots-Tag on every response.

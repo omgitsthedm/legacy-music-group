@@ -1,6 +1,5 @@
-# Claude compatibility
+# Legacy Music Group
 
-Follow `AGENTS.md`. This is the LFNYC static service site. Production source is `master`; the reviewed rebuild branch is `audit/2026-10-09`.
-Read `SOURCE_OF_TRUTH.md` for exact repository/host identity and `DECISIONS.md` for this rebuild's decisions. `archive/legacy-2026-10-09/` contains the former studio application and obsolete operational notes. Do not restore its assumptions or run its deployment commands.
+Follow AGENTS.md. This is the Legacy Music Group studio website, not an LFNYC business site. The owner explicitly corrected the rebrand: real and prospective clients retain their own identities.
 
-Commands: `npm run verify`, `npm run test:browser`, `npm audit`. The October 9 owner instruction authorizes this rebuild’s merge and production release to the exact Legacy Netlify property. Follow AGENTS.md for that scope; no external send, domain change, marketing publication or spend.
+Use `npm run verify`, `npm run test:browser` and `npm audit`. Production authority covers this corrected rebuild on the exact existing Legacy Netlify property. Preserve the separate official domain and booking system. Keep historical archives out of the published artifact.
