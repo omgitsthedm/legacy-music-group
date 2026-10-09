@@ -1,19 +1,16 @@
 [build]
-  command = "npm run build"
+  command = "npm run verify"
   publish = "dist"
-  functions = "netlify/functions"
 
-[functions]
-  node_bundler = "esbuild"
-
-# SPA fallback — also handled by public/_redirects, but here for clarity
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
+[build.environment]
+  NODE_VERSION = "24.21.0"
+  ASTRO_TELEMETRY_DISABLED = "1"
+  NPM_CONFIG_FUND = "false"
 
 [dev]
   command = "npm run dev"
-  targetPort = 5173
+  targetPort = 4387
+  port = 4389
   framework = "#custom"
+
+# No SPA fallback: every public route is an actual HTML document.

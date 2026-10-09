@@ -13,3 +13,5 @@
 - A shell safety hook rejected a dependency command despite its workdir; retry with an explicit cd to the exact isolated project directory.
 - Sharp's internal lib path changed; use its public package export for graphics and contact sheets.
 - Art-reference records have optional principle fields; use their retained observation field when no principle exists.
+- Pin TypeScript 6.0.3 because the current Astro checker and typescript-eslint explicitly exclude TypeScript 7; latest compatible beats an unsupported latest major.
+- Fresh installation replaced the old dependency directory after npm rejected mixed ESLint 9/10 peers; no force or legacy-peer-deps bypass.

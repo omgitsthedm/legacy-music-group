@@ -1,33 +1,6 @@
-# Legacy Music Group — production crawl policy.
-
+# Review candidate. Not a public search destination.
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /.netlify/
 
-# AI crawlers — explicit allow so we're citable in AI answers.
-User-agent: GPTBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-Sitemap: https://legacy-music-group.netlify.app/sitemap.xml
+# Crawl access allows noindex headers to be seen. It is not privacy protection.
+# Indexing remains disabled by HTML meta and X-Robots-Tag on every response.
