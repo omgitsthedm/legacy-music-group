@@ -28,3 +28,9 @@ Email `hello@littlefightnyc.com` is in the brand source; phone `(646) 360-0318` 
 ## Evidence and scope
 
 `../evidence/` contains baseline/after audits, browser results, full-read inventories and deployment evidence. `../screenshots/` and the marketing folders contain the requested review package. Provider private settings are permission-restricted outside this public repository. `AUDIT-REPORT.md` records the final preview ID, source/hash chain and measured results.
+
+## Verified preview release
+
+Draft `6ac8a1e332aee7dc3ba22f9c` is ready and unpublished to production. Application source: `3dcdd70f4ad324ca8b87f9e528dea34c72ff4ecf`. Publish-tree SHA-256: `93c4c96162299bf8b0f2101860391cf14c956be2fe19ecaa85868286775d7cb2`. All 77 served files and the immutable release marker match the local artifact. Production remains `6ac795afb6dbbe1ac131f88c`.
+
+Test-only commit `1aaa8d08bfedbf9231e5bf5b3b61f22bccaeeccd` strengthens hosted lazy-image verification; CI run `37904410273` passed. It does not change the published draft. Final report/decision commits are documentation only and must not trigger another deploy.

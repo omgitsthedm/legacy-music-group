@@ -25,3 +25,6 @@
 - The public PageSpeed API returned HTTP 429 with zero shared quota; use installed Lighthouse for comparable lab measurements and do not invent field INP or traffic outcomes.
 - Recovered Anthropic crawler documentation from its current official privacy domain and Bing guidelines through rendered Chrome; search and training access are separate controls.
 - Prepare an explicit production build guard for future approval, but keep every build and deploy in this mission in preview mode; indexing stays a separate decision.
+- Netlify CLI rejected --context with --no-build before uploading; remove --context and retain the explicit site, draft alias and no-build flags.
+- A hosted lazy image exposed its dimensions before download completion; strengthen the browser check to await complete plus naturalWidth, then rerun against the same unchanged artifact.
+- Exported graphics wait for font/image decoding and settled Chrome paint; regenerate and visually verify all branded headers before handoff.

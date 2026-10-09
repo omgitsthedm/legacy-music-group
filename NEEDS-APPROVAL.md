@@ -9,6 +9,8 @@ Consequence: replace the studio presentation on `legacy-music-group.netlify.app`
 After explicit approval of this preview and its replacement scope, run this sequence from the isolated checkout. First compare the branch with the reviewed report; stop if its code changed. The `--match-head-commit` guard prevents merging a different branch head after that check.
 
 ```sh
+bash <<'LFNYC_APPROVED_RELEASE'
+set -euo pipefail
 cd '/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild'
 git fetch origin audit/2026-10-09 master
 LFNYC_REVIEWED_HEAD=$(git rev-parse origin/audit/2026-10-09)
@@ -17,9 +19,12 @@ gh pr checks audit/2026-10-09 --repo omgitsthedm/legacy-music-group --watch
 gh pr merge audit/2026-10-09 --repo omgitsthedm/legacy-music-group --squash --match-head-commit "$LFNYC_REVIEWED_HEAD" --subject 'Release reviewed LFNYC rebuild [skip netlify]'
 git fetch origin master
 git switch --detach origin/master
-PATH='/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/tools/runtime/node-v24.21.0-darwin-arm64/bin:'"$PATH" RELEASE_MODE=production LFNYC_APPROVED_SITE_ID=d04515bf-0eb2-45ae-b71b-2a08dc92391a SITE_ORIGIN=https://legacy-music-group.netlify.app ASTRO_TELEMETRY_DISABLED=1 npm run verify
+export PATH='/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/tools/runtime/node-v24.21.0-darwin-arm64/bin:'"$PATH"
+npm ci --cache=../.npm-cache
+RELEASE_MODE=production LFNYC_APPROVED_SITE_ID=d04515bf-0eb2-45ae-b71b-2a08dc92391a SITE_ORIGIN=https://legacy-music-group.netlify.app ASTRO_TELEMETRY_DISABLED=1 npm run verify
 npm run test:browser
 netlify deploy --prod --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --message='Approved LFNYC replacement of Legacy Netlify presentation' --json
+LFNYC_APPROVED_RELEASE
 ```
 
 This is a future gated sequence, not an instruction to publish now. It requires fresh provider identity, branch, clean-worktree and reviewed-artifact checks immediately before execution. Stop on any failed command. The production build uses its real host for canonical/OG URLs and removes the review footer; verify that generated artifact locally before the final upload. No `--admin`, force push, branch deletion, rollback or credential change is included.
