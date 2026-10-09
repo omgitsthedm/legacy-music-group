@@ -1,8 +1,0 @@
----
-import Layout from '../layouts/Layout.astro';
-import Cta from '../components/Cta.astro';
-import { Image } from 'astro:assets';
-import { serviceImages } from '../data/images';
-const rooms=[{name:'A Room',items:['Avalon 737','Universal Audio Apollo','C24 controller','Focal monitoring','Purple Audio compressor']},{name:'B Room',items:['Focusrite Scarlett interface','Akai Max 49 MIDI controller','AKG C414 microphone','Vocal booth','Producer workstations']}];
----
-<Layout title="Studio rooms and recording equipment" description="Explore equipment published for Legacy Music Group’s A Room and B Room. Confirm the room, signal chain and equipment needed for your session directly with the studio."><div class="shell"><header class="page-heading"><p class="eyebrow">The tools behind the take</p><h1>Know your<br /><em>setup.</em></h1><p>Legacy’s published equipment list gives you a starting point. Confirm the room and any essential gear before reserving a session.</p></header><Image class="studio-photo" src={serviceImages.room} widths={[480,768,1024]} sizes="92vw" format="webp" alt="Control desk and monitors at Legacy Music Group" loading="eager" /><div class="service-body section-bottom">{rooms.map(room=><section><h2>{room.name}</h2><ul class="check-list">{room.items.map(item=><li>{item}</li>)}</ul></section>)}</div><p class="source-note section-bottom">Selected equipment from <a href="https://legacymusicgroup.com/equipment/">Legacy’s equipment page</a>, checked October 9, 2026. A listed item is not a guarantee of availability for a particular session.</p></div><Cta /></Layout>

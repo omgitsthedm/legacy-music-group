@@ -5,12 +5,13 @@ import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 
-const root = path.resolve(fileURLToPath(new URL('../dist/', import.meta.url)));
-const port = Number(process.env.PORT || 52762);
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.txt': 'text/plain', '.xml': 'application/xml', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json' };
+const root = path.resolve(process.env.QA_DIST || fileURLToPath(new URL('../dist/', import.meta.url)));
+const port = Number(process.env.PORT || 52765);
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.txt': 'text/plain', '.xml': 'application/xml', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.woff2': 'font/woff2', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.mp4': 'video/mp4', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json' };
 const rules = (await readFile(path.join(root, '_redirects'), 'utf8')).split('\n').filter(l => l && !l.startsWith('#')).map(l => l.split(/\s+/));
 const headerGroups = [];
 for (const line of (await readFile(path.join(root, '_headers'), 'utf8')).split('\n')) {
+  if (!line.trim() || line.trim().startsWith('#')) continue;
   if (line.startsWith('/')) headerGroups.push({ route: line.trim(), values: {} });
   else if (line.trim()) { const split = line.indexOf(':'); headerGroups.at(-1).values[line.slice(0, split).trim()] = line.slice(split + 1).trim(); }
 }
@@ -28,6 +29,17 @@ const server = http.createServer(async (req, res) => {
     catch { file = path.join(root, '404.html'); status = 404; }
     res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream');
     let body = await readFile(file);
+    if (/\.(mp4|jpg|jpeg|png)$/.test(file)) res.setHeader('Accept-Ranges', 'bytes');
+    const range = /^bytes=(\d+)-(\d*)$/.exec(req.headers.range || '');
+    if (range) {
+      const start = Number(range[1]);
+      const end = Math.min(range[2] ? Number(range[2]) : body.length - 1, body.length - 1);
+      if (start > end) { res.writeHead(416, { 'Content-Range': `bytes */${body.length}` }); res.end(); return; }
+      res.setHeader('Content-Range', `bytes ${start}-${end}/${body.length}`);
+      body = body.subarray(start, end + 1);
+      res.setHeader('Content-Length', body.length);
+      res.writeHead(206); res.end(req.method === 'HEAD' ? undefined : body); return;
+    }
     if (/\.(html|css|js|json|xml|txt|svg)$/.test(file) && /gzip/.test(req.headers['accept-encoding'] || '')) {
       body = gzipSync(body); res.setHeader('Content-Encoding', 'gzip'); res.setHeader('Vary', 'Accept-Encoding');
     }

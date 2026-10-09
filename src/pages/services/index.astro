@@ -1,9 +1,0 @@
----
-import Layout from '../../layouts/Layout.astro';
-import Arrow from '../../components/Arrow.astro';
-import Cta from '../../components/Cta.astro';
-import { services } from '../../data/site';
----
-<Layout title="Recording, mixing and production services" description="Explore recording, mixing, mastering, custom production and artist consultation at Legacy Music Group in Deep Ellum. Find the right next step for your music.">
-<div class="shell"><header class="page-heading"><p class="eyebrow">The work behind the music</p><h1>Make your<br /><em>next move.</em></h1><p>From a first vocal take to a finished mix, start with the work your project needs.</p></header><div class="service-list section-bottom">{services.map(s=><a class="service-row" href={`/services/${s.slug}/`}><span class="service-number">{s.number}</span><div><h2>{s.short}</h2><p>{s.lead}</p></div><span class="service-arrow"><Arrow /></span></a>)}</div></div><Cta />
-</Layout>

@@ -1,27 +1,18 @@
-# Legacy Music Group source truth — October 9, 2026
+# Legacy Music Group — original design restored
 
-- Working checkout: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`.
-- Canonical checkout, preserved: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`.
-- GitHub: `https://github.com/omgitsthedm/legacy-music-group`; audit branch `audit/2026-10-09`; production branch `master`.
-- Exact Netlify ID: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; host `https://legacy-music-group.netlify.app`; no custom-domain alias.
-- Identity: Legacy Music Group, recording studio and production company in Deep Ellum, Dallas. The owner explicitly corrected the original LFNYC rebrand; real and prospective clients retain their own identity. Only abstract projects use LFNYC branding.
-- PR #16 merged the LFNYC direction immediately before the correction, but no LFNYC production upload occurred. Original studio production `6ac795afb6dbbe1ac131f88c` remained live during correction. That source merge is historical, not the final client identity.
-- The corrected site has eighteen HTML documents, local Inter/DM Serif Display, Legacy’s actual logo and published studio photographs, responsive images and an unsent email-draft helper. No functions, database, third-party scripts or form submissions.
-- Official studio site: `https://legacymusicgroup.com`; booking: `/service-plus/`; terms: `/terms-and-conditions/`. The October 9 browser visit rendered Bookly’s service and engineer selectors. No booking or payment was submitted.
-- Email `info@legacymusicgroup.com`, phone `(214) 377-9729`, address `2815 Main St, Suite A, Dallas, TX 75226` agree on the official homepage and contact page.
-- The official homepage lists recording at $75/hour, two-hour minimum; mixing from $150; custom production $500 per beat. The rebuilt site labels these published starting rates and directs price/scope confirmation to the studio.
-- Historical engineer bios differ from the live booking selector. Old rosters, tenure claims, career credits and placeholder headshots were not carried forward.
-- Booking instructions and recording terms disagree on payment percentage. This site links the studio’s terms and contact options without inventing a resolution or duplicating either figure.
-- Separate domain, DNS and WordPress booking remain untouched. This duplicate Netlify property remains noindex with an empty sitemap.
-- Fresh public evidence: `../evidence/legacy-official-current.json` and `../evidence/legacy-assets/provenance.json`. Archives, credentials, evidence, tools and marketing never enter dist.
+The owner rejected the October 9 redesign and ordered the preceding version restored. Netlify production was restored to `6ac795afb6dbbe1ac131f88c` at 09:35:46 UTC on October 9, 2026. The restored homepage, JavaScript and CSS match the canonical checkout's prior dist byte for byte.
 
-## Verified release
+- Site ID: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`.
+- Host: `https://legacy-music-group.netlify.app`; no custom-domain aliases.
+- GitHub: `omgitsthedm/legacy-music-group`; production branch `master`; repair branch `fix/preserve-design-2026-10-09`.
+- Repair checkout: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/preserve-design`.
+- Canonical checkout: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`; its 15 preexisting status entries are preserved.
+- Original source was recovered from the pre-rebuild Git tree plus the already-published runtime changes in the canonical working tree. A fresh build reproduced the old JavaScript and CSS exactly before any maintenance edits.
+- Original CSS SHA-256: `36ed0c2d8cfa2399f18cddeefd34dd17e82d4002401dc9fda70744beedc67347`.
+- Original baseline is 35 routes and a 404. Layout, content, assets, typography, colors and GSAP motion are unchanged by the repair.
+- Nonvisual repairs: mobile menu focus/Escape/Tab behavior, close-on-home navigation, removal of a nonexistent SearchAction and wrong logo metadata, removal of the development inspector and unused functions package, compatible dependency patches, deterministic checks and manual exact-site release controls.
+- Full audit: 13 findings before, 6 build-only Tailwind-chain findings after compatible fixes; zero production-dependency findings. No forced styling/compiler migration.
+- This duplicate host remains noindex. Booking uses `https://legacymusicgroup.com/service-plus/`; contact uses `/contacts/` plus the existing studio phone/email. WordPress, DNS, billing and marketing publication remain unchanged.
+- Evidence: `../evidence/original-design-restored.json`, `restored-original-parity.json`, `recovered-source-provenance.json`, `recovered-build-parity.json`, and the `preserve-design-*` validation files.
 
-- Live source: `d58e09eff71904941b42c5a429ff08170a4046de`; corrected PR #17 merged after passing CI.
-- Current production deploy: `6ac8b098350fdec4e6b7db41`, published October 9 at 09:15:07 UTC.
-- Publish-tree SHA-256 excluding release.json: `97a31014a4aab36121685af3448813e979b4e444a473bb330ad5a2d6e7a993b5`.
-- Primary and immutable production each match all 49 public files. The complete artifact has 51 files including provider headers/redirects.
-- Fourteen production browser tests and ten unit/artifact tests passed; 34 axe scans returned zero violations; dependency audit returned zero vulnerabilities.
-- The existing review alias now serves the same Legacy artifact as unpromoted deploy `6ac8b2255315a423c592a924`; its historical URL label is retained to correct already-shared links.
-- Full evidence: `../evidence/production-artifact-parity.json`, `../evidence/review-mirror-artifact-parity.json`, `../evidence/netlify-final-provider.json`, `../evidence/browser-production-results.json`.
-- Final measurements, package and external-policy follow-up: AUDIT-REPORT.md. Later documentation-only commits do not change the deployed source above.
+The earlier Astro/LFNYC rebuild and marketing package are rejected history. They are not the current site's design, metrics or release evidence. Final maintenance release identity is recorded after verification.

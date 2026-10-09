@@ -3,6 +3,9 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 
+if (process.env.RELEASE_MODE === 'production' && process.env.APPROVED_SITE_ID !== 'd04515bf-0eb2-45ae-b71b-2a08dc92391a') {
+  throw new Error('Production requires the exact approved Legacy site ID');
+}
 const files = [];
 async function walk(dir) {
   for (const item of await readdir(dir, { withFileTypes: true })) {
@@ -19,6 +22,7 @@ for (const name of files.sort()) {
 }
 const release = {
   project: 'Legacy Music Group',
+  designBaseline: '6ac795afb6dbbe1ac131f88c',
   siteId: 'd04515bf-0eb2-45ae-b71b-2a08dc92391a',
   branch: execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8' }).trim() || 'detached',
   sourceRevision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),

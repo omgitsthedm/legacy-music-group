@@ -1,28 +1,9 @@
-/booking /book/ 302
-/book-now /book/ 302
-/service-plus /book/ 302
-/studio-information /studio/ 301
-/about /studio/ 301
-/engineers/matthew /engineers/ 302
-/engineers/ray /engineers/ 302
-/engineers/wayne /engineers/ 302
-/engineers/terry /engineers/ 302
-/engineers/1 /engineers/ 302
-/engineers/2 /engineers/ 302
-/engineers/3 /engineers/ 302
-/engineers/4 /engineers/ 302
-/services/rap-recording /services/recording/ 301
-/services/r-and-b /services/recording/ 301
-/services/voiceover /services/recording/ 301
-/services/podcasts /services/recording/ 301
-/services/mixing /services/mixing-mastering/ 301
-/services/custom-production /services/production/ 301
-/services/websites /services/ 302
-/services/it-support /services/ 302
-/services/consulting /services/artist-development/ 302
-/services/business-systems /services/ 302
-/work /studio/ 302
-/events https://legacymusicgroup.com/contacts/ 302
-/blog https://legacymusicgroup.com/blog/ 302
-/blog/* https://legacymusicgroup.com/blog/ 302
-/* /404.html 404
+# Valid routes are emitted as static HTML during the build.
+# Preserve former numeric engineer URLs while the canonical sitemap uses names.
+/engineers/1    /engineers/matthew  301
+/engineers/2    /engineers/ray      301
+/engineers/3    /engineers/wayne    301
+/engineers/4    /engineers/terry    301
+
+# Unknown paths return a real 404 while React renders the branded not-found view.
+/*    /404.html   404
