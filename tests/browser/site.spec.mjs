@@ -21,7 +21,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await page.evaluate(() => document.fonts.ready);
       for (const img of await page.locator('img[loading="lazy"]').all()) {
         await img.scrollIntoViewIfNeeded();
-        await expect.poll(() => img.evaluate(el => el.naturalWidth)).toBeGreaterThan(0);
+        await expect.poll(() => img.evaluate(el => el.complete && el.naturalWidth > 0)).toBe(true);
       }
       await page.evaluate(() => window.scrollTo(0, 0));
       const layout = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth, missing: [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => i.src), smallest: Math.min(...[...document.querySelectorAll('p,a,label,summary,button,input,textarea,select')].filter(e => e.getClientRects().length).map(e => parseFloat(getComputedStyle(e).fontSize))) }));
