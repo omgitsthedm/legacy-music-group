@@ -9,8 +9,8 @@
 
 [dev]
   command = "npm run dev"
-  targetPort = 4387
-  port = 4389
+  targetPort = 52761
+  port = 52763
   framework = "#custom"
 
 # No SPA fallback: every public route is an actual HTML document.

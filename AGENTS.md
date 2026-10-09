@@ -1,13 +1,14 @@
-# Legacy Music Group agent rules
+# LFNYC review candidate rules
 
-- Canonical checkout: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`
-- GitHub: `omgitsthedm/legacy-music-group`; production branch: `master`.
-- Netlify: `legacy-music-group` (`d04515bf-0eb2-45ae-b71b-2a08dc92391a`), published from `dist`.
-- A push to `master` runs the production deploy workflow. Do not merge, push to `master`, or deploy without clear production authorization.
-- Preserve any open pull request or non-default branch until its work is merged or explicitly retired.
-- Do not read or expose `.env*`, credentials, booking data, Calendly data, or production submissions.
-- Do not submit real booking, lead, or contact actions during testing.
-
-Commands: `npm run dev`, `npm run lint`, `npm run build`.
-
-Read `SOURCE_OF_TRUTH.md` for current routing and deployment facts. Read `BRIEF.md` only when product, brand, or content decisions require it; it is not startup context. Preserve unrelated work and validate proportionally before handoff.
+- This branch is `audit/2026-10-09` in the isolated output checkout, not the dirty canonical studio checkout.
+- Working root: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`.
+- GitHub: `omgitsthedm/legacy-music-group`; default branch: `master`.
+- Exact Netlify site: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; `dist/` only. Always pass `--site` explicitly.
+- Preview work and branch pushes are authorized. Master merges, production deploys, domain/DNS changes, paid services and outbound messages are not authorized.
+- Brand authority: the supplied `/Users/davidmarsh/Desktop/LiFi NYC/Business/Brand Kit`; local implementation uses its logo, fonts and tokens. Do not alter the tugboat or invent client outcomes.
+- Inspect Git status before editing. Preserve unrelated work, historical source and other running projects. No global installs/configuration or default/shared dev ports.
+- Use ports 52761/52762/52763. Use installed Google Chrome with `channel: chrome`; do not download another browser.
+- Every page renders meaningful HTML without JavaScript. Preview noindex, strict CSP, no tracking and no false send confirmation are required.
+- After substantive changes run `npm run verify`, `npm run test:browser` and `npm audit`. Do not submit real email, contact, payment or booking actions.
+- Never publish the archive, audit evidence, credential settings, dependency trees or marketing drafts. No secrets are needed in browser code.
+- Keep README, SOURCE_OF_TRUTH, DECISIONS and AUDIT-REPORT aligned with observed evidence. Archive material is historical, not active instruction.

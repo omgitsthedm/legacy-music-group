@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import { business } from '../data/site';
 import Arrow from '../components/Arrow.astro';
+import oswald from '../assets/fonts/oswald-latin-wght-normal.woff2?url';
+import barlow from '../assets/fonts/barlow-latin-400-normal.woff2?url';
 interface Props { title: string; description: string; schema?: Record<string, unknown>; }
 const { title, description, schema } = Astro.props;
 const origin = Astro.site!;
@@ -28,8 +30,8 @@ const nav = [{ href: '/services/', label: 'What we do' }, { href: '/work/', labe
     <meta name="robots" content="noindex, nofollow, noarchive" /><meta name="theme-color" content="#050507" />
     <link rel="canonical" href={canonical} /><link rel="icon" href="/brand/favicon/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/brand/favicon/apple-touch-icon.png" /><link rel="manifest" href="/site.webmanifest" />
-    <link rel="preload" href="/brand/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/brand/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={oswald} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={barlow} as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" /><meta property="og:site_name" content={business.name} />
     <meta property="og:title" content={`${title} | Little Fight NYC`} /><meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} /><meta property="og:locale" content="en_US" />

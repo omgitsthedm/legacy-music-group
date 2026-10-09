@@ -1,41 +1,30 @@
-name: Netlify Deploy
-
+name: Manual Netlify draft
 on:
-  push:
-    branches: [master]
-    paths-ignore:
-      - '**/*.md'
   workflow_dispatch:
-
+permissions:
+  contents: read
+concurrency:
+  group: legacy-music-group-reviewed-draft
+  cancel-in-progress: false
 jobs:
-  deploy:
+  draft:
+    if: github.ref == 'refs/heads/audit/2026-10-09'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
     steps:
-      - uses: actions/checkout@v7.0.1
-
-      - name: Setup Node
-        uses: actions/setup-node@v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy to Netlify (with Functions)
-        run: |
-          npx --yes netlify-cli@latest deploy \
-            --prod \
-            --dir=dist \
-            --functions=netlify/functions \
-            --site=$NETLIFY_SITE_ID \
-            --auth=$NETLIFY_AUTH_TOKEN \
-            --message="${COMMIT_MSG}"
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=moderate
+      - run: npm run verify
+      - run: npm run test:browser
+      - name: Upload this verified draft only
+        run: npx --yes netlify-cli@26.1.0 deploy --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --alias=lfnyc-audit-2026-10-09 --message="LFNYC reviewed draft $GITHUB_SHA"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
-        timeout-minutes: 10
+# No push trigger, no ambient site ID, no production flag, no paid AI review.

@@ -5,6 +5,8 @@ import Work from '../components/Work.astro';
 import Cta from '../components/Cta.astro';
 import FaqList from '../components/FaqList.astro';
 import { services, faqs } from '../data/site';
+import { Image } from 'astro:assets';
+import shop from '../assets/imagery/shop-systems-hero.webp';
 ---
 <Layout title="Small business websites & tech support" description="Custom websites, hands-on tech support and software you own. Little Fight NYC makes technology fit your small business. Consulting is always free.">
   <section class="hero shell">
@@ -15,7 +17,7 @@ import { services, faqs } from '../data/site';
       <div class="hero-actions"><a class="button primary" href="/services/websites/">Let’s build your website <Arrow /></a><a class="urgent-link" href="/services/it-support/">Something broken? Get help <span aria-hidden="true">↗</span></a></div>
       <p class="hero-footnote">New York roots. Independent business everywhere.</p>
     </div>
-    <figure class="hero-image"><img src="/brand/imagery/shop-systems-hero.webp" width="1280" height="853" fetchpriority="high" alt="Shelves, a work counter and everyday business tools inside an independent shop" /><figcaption><span class="eyebrow">For the places that</span><strong>make a neighborhood.</strong><span class="photo-coordinate" aria-hidden="true">NYC ↗</span></figcaption></figure>
+    <figure class="hero-image"><Image src={shop} widths={[480,800,1200]} sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 44vw, 612px" format="webp" quality={80} loading="eager" fetchpriority="high" alt="Shelves, a work counter and everyday business tools inside an independent shop" /><figcaption><span class="eyebrow">For the places that</span><strong>make a neighborhood.</strong><span class="photo-coordinate" aria-hidden="true">NYC ↗</span></figcaption></figure>
   </section>
   <div class="promise-strip"><div class="shell"><p>Your business. Your code. Your call.</p><p>Free consulting <span aria-hidden="true">/</span> Work you own <span aria-hidden="true">/</span> People you can reach</p></div></div>
   <section class="section shell" id="work"><div class="section-head"><div><p class="eyebrow muted">A few familiar fights</p><h2>Real businesses.<br />Their own kind of website.</h2></div><a class="text-link" href="/work/">Explore our work <Arrow /></a></div><Work /></section>

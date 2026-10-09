@@ -9,7 +9,7 @@ export function buildEmailDraft(input: ContactBrief) {
   if (!name || name.length > 100 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 || !message || message.length > 1200) {
     throw new Error('Add your name, a valid email and a short description (up to 1,200 characters).');
   }
-  const topic = topics[input.service] ?? topics.unsure;
+  const topic = Object.hasOwn(topics, input.service) ? topics[input.service] : topics.unsure;
   const subject = `Little Fight NYC — ${topic}`;
   const body = `Hi Little Fight,\n\n${message}\n\nI'm interested in: ${topic}\n\n${name}\n${email}`;
   const href = `mailto:hello@littlefightnyc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
