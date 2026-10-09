@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Cta from '../../components/Cta.astro';
+import Arrow from '../../components/Arrow.astro';
+import FaqList from '../../components/FaqList.astro';
+import { services, business } from '../../data/site';
+export function getStaticPaths() { return services.map(service => ({ params: { slug: service.slug }, props: { service } })); }
+const { service } = Astro.props;
+const schema = { '@type': 'Service', name: service.short, description: service.description, url: new URL(`/services/${service.slug}/`, Astro.site).href, provider: { '@id': `${business.officialUrl}/#organization` }, areaServed: service.slug === 'it-support' ? { '@type': 'City', name: 'New York City' } : { '@type': 'Country', name: 'United States' } };
+---
+<Layout title={`${service.short} for small businesses`} description={service.description} schema={schema}>
+  <section class="shell service-hero"><div><p class="eyebrow muted">{service.number} / {service.short}</p><h1>{service.title}</h1><p>{service.lead}</p><a class="button primary" href={`/contact/?service=${service.slug}`}>{service.action} <Arrow /></a></div><img src={`/brand/imagery/${service.image}`} width="1280" height="853" alt={service.alt} fetchpriority="high" /></section>
+  <section class="section shell service-body"><div><p class="eyebrow muted">The work</p><h2>{service.intro}</h2><p>{service.body}</p><div class="fit-note"><h3>A good fit</h3><p>{service.fit}</p></div></div><div><p class="eyebrow muted">What we work through</p><ul class="check-list">{service.includes.map(item=><li>{item}</li>)}</ul><p class="small muted">The final deliverables, timeline and price are set in your written scope.</p></div></section>
+  <section class="section shell home-faq"><div><p class="eyebrow muted">Your first step</p><h2>Start right here.</h2><p>{service.next}</p></div><FaqList items={[{question:service.question,answer:service.answer},{question:'What happens before anything goes live?',answer:'You review a working version first. Launch timing and any changes to your domain, hosting or business tools are agreed with you.'}]} /></section>
+  <Cta />
+</Layout>
