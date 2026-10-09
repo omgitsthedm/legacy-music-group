@@ -1,5 +1,7 @@
 # Legacy Music Group
 
-Follow AGENTS.md. This is the Legacy Music Group studio website, not an LFNYC business site. The owner explicitly corrected the rebrand: real and prospective clients retain their own identities.
+Follow AGENTS.md and SOURCE_OF_TRUTH.md. The owner rejected the October 9 redesign and requested the preceding website's design and character unchanged. Preserve React/Vite/Tailwind/GSAP, original pages, imagery, type, colors and motion. Apply narrow functional and maintenance fixes only.
 
-Use `npm run verify`, `npm run test:browser` and `npm audit`. Production authority covers this corrected rebuild on the exact existing Legacy Netlify property. Preserve the separate official domain and booking system. Keep historical archives out of the published artifact.
+Commands: `npm ci`, `npm run verify`, `npm run test:browser`, `npm audit --omit=dev`, `npm audit`. Installed Google Chrome only. Never bypass the original-design hash checks to make a tooling migration pass. The full audit's remaining Tailwind 3 build-only findings are documented in README; production dependencies are clean.
+
+Use exact Netlify site ID d04515bf-0eb2-45ae-b71b-2a08dc92391a for every deployment. Preserve the separate custom domain and WordPress booking system. No real submissions, billing, DNS or marketing publication.

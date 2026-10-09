@@ -1,18 +1,17 @@
 [build]
   command = "npm run verify"
   publish = "dist"
-  # Git pushes run CI, not hosting releases. Upload only a verified local artifact.
+  # Source pushes run checks. Only a verified artifact is uploaded manually.
   ignore = "exit 0"
 
 [build.environment]
   NODE_VERSION = "24.21.0"
-  ASTRO_TELEMETRY_DISABLED = "1"
   NPM_CONFIG_FUND = "false"
 
 [dev]
   command = "npm run dev"
-  targetPort = 52761
-  port = 52763
+  targetPort = 52764
+  port = 52767
   framework = "#custom"
 
-# No SPA fallback: every public route is an actual HTML document.
+# Generated deep-route documents and public/_redirects own routing and true 404s.

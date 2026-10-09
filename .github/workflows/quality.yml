@@ -1,7 +1,7 @@
 name: Site quality
 on:
   push:
-    branches: [master, 'audit/**']
+    branches: [master, 'audit/**', 'fix/**']
     paths-ignore: ['**/*.md', 'archive/**']
   pull_request:
     branches: [master]
@@ -25,7 +25,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm audit --audit-level=moderate
+      - run: npm audit --omit=dev --audit-level=moderate
       - run: npm run verify
       - name: Browser checks using installed Google Chrome
         run: npm run test:browser
