@@ -35,3 +35,6 @@
 - Run quality checks on master as well as audit branches; keep deployment manual so source pushes cannot silently publish another artifact.
 - Two guessed test filenames did not exist; use the actual tests/static.test.mjs inventory, then extend its production-mode checks.
 - Netlify still lists master as a linked branch; add the documented build-ignore command so ordinary Git pushes cannot create competing hosted releases. Explicit verified CLI uploads remain the release path.
+- Owner correction: real client and prospective-client projects retain their own identity; LFNYC branding applies only to abstract projects. Legacy Music Group remains Legacy Music Group, regardless of this property's lack of a custom-domain alias.
+- PR #16 merged immediately before the correction, but no LFNYC production upload occurred; correct the source before executing the still-authorized live release.
+- Use verified official Legacy studio photography and contact information; keep Bookly on legacymusicgroup.com/service-plus/ and omit unverified service guarantees, staff tenures, ratings and policies.
