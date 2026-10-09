@@ -1,44 +1,49 @@
-# Little Fight NYC — Legacy property review candidate
+# Legacy Music Group
 
-A full LFNYC service-site rebuild on `audit/2026-10-09`. This branch is a review candidate, not the published studio website.
-
-- Static Astro 7, TypeScript 6, local Oswald/Barlow/JetBrains Mono and supplied LFNYC brand assets.
-- Thirteen HTML documents; four service detail pages, verified work, FAQs, an email-draft helper, legal information and a useful 404.
-- No React runtime, database, server functions, analytics, consent popup or form collection.
-- Contact creates an unsent local draft. The visitor opens an email application and sends it there. Normal email, phone and text links work without the helper.
+A static studio website for Legacy Music Group in Deep Ellum, Dallas. The client keeps its own name, logo, studio photography, services and contact details. Little Fight NYC appears only as the agency footer credit.
 
 ## Run and verify
 
-Use Node `24.21.0` from `.nvmrc` (Node 22.12+ also supported by Astro). Install with `npm ci`.
+Use Node 24.21.0 from `.nvmrc`, then `npm ci`.
 
 ```sh
 npm run dev          # 127.0.0.1:52761
-npm run verify       # lint, Astro/TypeScript, build, unit + artifact tests
-npm run preview      # strict local artifact server: 127.0.0.1:52762
-npm run test:browser # installed Google Chrome; no bundled browser download
+npm run verify       # lint, types, build, ten unit/artifact tests
+npm run preview      # strict artifact server, port 52762
+npm run test:browser # installed Google Chrome
 npm audit
 ```
 
-Stop a running local preview before `test:browser`; Playwright owns its own strict-port server. For hosted checks set `QA_BASE_URL` to the exact approved draft. `QA_SCREENSHOTS` chooses the screenshot directory.
+Playwright owns its strict-port local server. Use `QA_BASE_URL` for hosted checks and `QA_SCREENSHOTS` for screenshots. Preserve other projects’ browser profiles and servers.
 
-## Source and deploy identity
+## Architecture
 
-GitHub: `omgitsthedm/legacy-music-group`; default branch: `master`. Exact Netlify site: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; publish directory: `dist/`.
+Astro 7.3.8 produces eighteen complete HTML documents. TypeScript 6.0.3 is pinned to the supported checker/linter range. Inter and DM Serif Display are hosted locally with their licenses. Actual photographs from Legacy’s published website use responsive, content-hashed variants.
 
-`npm run build` writes `release.json` with Git revision, site ID and a SHA-256 of every other publish file. `scripts/serve.mjs` is a local QA server only; Netlify serves the actual static production artifact.
+Business facts and service content live in `src/data/site.ts`; shared metadata and navigation in `src/layouts/Layout.astro`; styling in `src/styles/global.css`; the local email-draft helper in `src/lib/contact.ts`. Explicit redirects and real 404 behavior are in `public/_redirects`.
 
-This branch has no automatic production deploy. Quality checks run on audit branch changes and pull requests. Manual draft upload is gated to this branch and exact site. Historical paid AI workflows and studio source are preserved under `archive/legacy-2026-10-09/`, outside `dist/`.
+Booking and payment stay on `https://legacymusicgroup.com/service-plus/`. The app does not reserve sessions, send email, collect forms, track visitors, embed third-party scripts or operate a database. Contact prepares an unsent email to `info@legacymusicgroup.com`; ordinary phone and email links work independently.
 
-Draft command, after checks:
+## Exact host and release path
+
+GitHub: `omgitsthedm/legacy-music-group`, production branch `master`. Exact Netlify site: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`. Production: `https://legacy-music-group.netlify.app`. Publish `dist/` only.
+
+Git pushes run quality checks. Netlify Git builds are ignored in `netlify.toml`; hosting releases explicitly upload locally verified artifacts. The manual GitHub workflow creates drafts only. Documentation changes do not need another deploy.
+
+After scoped release authorization:
 
 ```sh
-netlify deploy --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --alias=lfnyc-audit-2026-10-09 --message="LFNYC reviewed candidate"
+RELEASE_MODE=production APPROVED_SITE_ID=d04515bf-0eb2-45ae-b71b-2a08dc92391a SITE_ORIGIN=https://legacy-music-group.netlify.app ASTRO_TELEMETRY_DISABLED=1 npm run verify
+npm run test:browser
+netlify deploy --prod --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --message='Approved Legacy Music Group modernization' --json
 ```
 
-The shareable preview is intentionally `noindex`; that does not make it private. The sitemap is empty. No search submission, DNS change or production publish is authorized. See `NEEDS-APPROVAL.md` for the prepared, unexecuted future release steps.
+Default builds use the Legacy audit origin and a review label. `release.json` records source revision, branch, site ID, mode and the publish-tree SHA-256 excluding itself. Verify both immutable and primary hosts after release.
 
-## Editing
+The duplicate Netlify property remains noindex with an empty sitemap. The separate `legacymusicgroup.com` domain and its WordPress booking system are unchanged. A domain/search migration requires its own defined scope.
 
-Content and verified contacts: `src/data/site.ts`. Shared head, entity JSON-LD, header and footer: `src/layouts/Layout.astro`. Styling: `src/styles/global.css` plus supplied `tokens.css`. Contact logic: `src/lib/contact.ts`. Keep scripts external to satisfy the strict CSP. Do not replace client proof with illustrative imagery.
+## Source custody
 
-Read `AUDIT-PLAN.md`, `AUDIT-REPORT.md`, `DECISIONS.md` and `SOURCE_OF_TRUTH.md` for this review. Historical documents inside `archive/` are evidence, not instructions for the candidate.
+Work in `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`. Preserve the dirty canonical client checkout. Historical React source and the superseded LFNYC direction are in `archive/`, never `dist/`. The owner corrected the original rebrand before any LFNYC production upload.
+
+See AUDIT-PLAN.md, AUDIT-REPORT.md, SOURCE_OF_TRUTH.md and DECISIONS.md for scope and evidence. The complete unpublished marketing package is one directory above this checkout.

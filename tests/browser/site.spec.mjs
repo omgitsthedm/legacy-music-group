@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { mkdir } from 'node:fs/promises';
 
-const routes = ['/', '/services/', '/services/websites/', '/services/it-support/', '/services/consulting/', '/services/business-systems/', '/work/', '/faq/', '/contact/', '/privacy/', '/terms/', '/studio-information/'];
+const routes = ['/', '/services/', '/services/recording/', '/services/mixing-mastering/', '/services/production/', '/services/artist-development/', '/studio/', '/pricing/', '/engineers/', '/gear/', '/reviews/', '/faq/', '/book/', '/contact/', '/privacy/', '/terms/', '/policies/'];
 const screenshots = process.env.QA_SCREENSHOTS || '../screenshots/after-local';
 
 for (const width of [320, 390, 768, 1024, 1440]) {
@@ -17,7 +17,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       const response = await page.goto(route, { waitUntil: 'networkidle' });
       expect(response.status()).toBe(200);
       await expect(page.locator('h1')).toHaveCount(1);
-      await expect(page).toHaveTitle(/Little Fight NYC$/);
+      await expect(page).toHaveTitle(/Legacy Music Group$/);
       await page.evaluate(() => document.fonts.ready);
       for (const img of await page.locator('img[loading="lazy"]').all()) {
         await img.scrollIntoViewIfNeeded();
@@ -53,13 +53,13 @@ test('mobile menu is keyboard usable and Escape restores focus', async ({ page }
 });
 
 test('contact validates input, prepares an unsent draft and resets stale results', async ({ page }) => {
-  await page.goto('/contact/?service=it-support');
-  await expect(page.getByLabel('What do you need?')).toHaveValue('it-support');
+  await page.goto('/contact/?service=recording');
+  await expect(page.getByLabel('What do you need?')).toHaveValue('recording');
   await page.getByRole('button', { name: 'Prepare my email' }).click();
   await expect(page.locator('#brief-result')).toBeHidden();
   await page.getByLabel('Your name').fill('Alex Example');
   await page.getByLabel('Your email').fill('alex@example.com');
-  await page.getByLabel('What would make your day easier?').fill('A test brief with <script>alert(1)</script> & a website question.');
+  await page.getByLabel('Tell us about your project').fill('A test brief with <script>alert(1)</script> & a website question.');
   const submissions = [];
   page.on('request', request => { if (request.method() !== 'GET') submissions.push(request.url()); });
   await page.getByRole('button', { name: 'Prepare my email' }).click();
@@ -67,17 +67,17 @@ test('contact validates input, prepares an unsent draft and resets stale results
   await expect(page.locator('#draft-text')).toBeFocused();
   await expect(page.locator('#draft-text')).toContainText('<script>alert(1)</script>');
   const href = await page.locator('#draft-link').getAttribute('href');
-  expect(new URL(href).pathname).toBe('hello@littlefightnyc.com');
-  expect(new URL(href).searchParams.get('subject')).toContain('A technology problem');
+  expect(new URL(href).pathname).toBe('info@legacymusicgroup.com');
+  expect(new URL(href).searchParams.get('subject')).toContain('A recording session');
   expect(submissions).toEqual([]);
-  await page.getByLabel('What would make your day easier?').fill('Updated brief');
+  await page.getByLabel('Tell us about your project').fill('Updated brief');
   await expect(page.locator('#brief-result')).toBeHidden();
 });
 
 test('clipboard denial has an accessible copy fallback', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => { throw new Error('Permission denied'); } } }));
   await page.goto('/contact/');
-  await page.getByLabel('Your name').fill('Alex Example'); await page.getByLabel('Your email').fill('alex@example.com'); await page.getByLabel('What would make your day easier?').fill('Help with a website.');
+  await page.getByLabel('Your name').fill('Alex Example'); await page.getByLabel('Your email').fill('alex@example.com'); await page.getByLabel('Tell us about your project').fill('Help with a website.');
   await page.getByRole('button', { name: 'Prepare my email' }).click();
   await page.getByRole('button', { name: 'Copy brief' }).click();
   await expect(page.locator('#copy-status')).toContainText('Select and copy');
@@ -94,19 +94,19 @@ test('FAQ disclosure works and is exposed to assistive technology', async ({ pag
 test('core content, navigation and contact work with JavaScript disabled', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, baseURL, viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
-  await page.goto('/'); await expect(page.locator('h1')).toContainText('Heavy pull');
-  await page.locator('.mobile-menu summary').click(); await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('link', { name: 'Let’s talk' }).click();
+  await page.goto('/'); await expect(page.locator('h1')).toContainText('Your legacy');
+  await page.locator('.mobile-menu summary').click(); await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('link', { name: 'Contact' }).click();
   await expect(page.getByRole('heading', { name: 'Email works, too.' })).toBeVisible();
-  await expect(page.locator('main a[href="mailto:hello@littlefightnyc.com"]').first()).toBeVisible();
+  await expect(page.locator('main a[href="mailto:info@legacymusicgroup.com"]').first()).toBeVisible();
   await context.close();
 });
 
 test('missing paths return real 404 and historical studio paths have honest handoff', async ({ request }) => {
-  const missing = await request.get('/this-page-does-not-exist/'); expect(missing.status()).toBe(404); expect(await missing.text()).toContain('Little Fight NYC');
-  const old = await request.get('/pricing', { maxRedirects: 0 }); expect(old.status()).toBe(302); expect(old.headers().location).toContain('/studio-information/');
+  const missing = await request.get('/this-page-does-not-exist/'); expect(missing.status()).toBe(404); expect(await missing.text()).toContain('Legacy Music Group');
+  const old = await request.get('/booking', { maxRedirects: 0 }); expect(old.status()).toBe(302); expect(old.headers().location).toContain('/book/');
 });
 
-test('preview identity, security headers and asset cache rules are present', async ({ request }) => {
+test('studio identity, security headers and asset cache rules are present', async ({ request }) => {
   const home = await request.get('/');
   expect(home.headers()['x-robots-tag']).toContain('noindex');
   expect(home.headers()['content-security-policy']).toContain("form-action 'none'");
@@ -118,12 +118,21 @@ test('preview identity, security headers and asset cache rules are present', asy
 
 test('200 percent magnification reflows content and preserves contact access', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const route of ['/', '/services/websites/', '/contact/']) {
+  for (const route of ['/', '/services/recording/', '/contact/']) {
     await page.goto(route);
     await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
     const size = await page.evaluate(() => ({ content: document.documentElement.scrollWidth, viewport: document.documentElement.clientWidth }));
     expect(size.content, route).toBeLessThanOrEqual(size.viewport);
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('footer a[href="mailto:hello@littlefightnyc.com"]')).toBeVisible();
+    await expect(page.locator('footer a[href="mailto:info@legacymusicgroup.com"]')).toBeVisible();
   }
+});
+
+test('booking uses the studio destination and contact never uses agency details', async ({ page }) => {
+  await page.goto('/book/');
+  await expect(page.locator('main .booking-handoff')).toHaveAttribute('href', 'https://legacymusicgroup.com/service-plus/');
+  await expect(page.locator('main')).toContainText('does not reserve a time');
+  await page.goto('/contact/');
+  await expect(page.locator('main')).not.toContainText('Little Fight');
+  await expect(page.locator('main a[href="mailto:info@legacymusicgroup.com"]').first()).toBeVisible();
 });

@@ -1,36 +1,18 @@
-# LFNYC candidate source of truth — 2026-10-09
+# Legacy Music Group source truth — October 9, 2026
 
-## Exact identity
+- Working checkout: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`.
+- Canonical checkout, preserved: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`.
+- GitHub: `https://github.com/omgitsthedm/legacy-music-group`; audit branch `audit/2026-10-09`; production branch `master`.
+- Exact Netlify ID: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; host `https://legacy-music-group.netlify.app`; no custom-domain alias.
+- Identity: Legacy Music Group, recording studio and production company in Deep Ellum, Dallas. The owner explicitly corrected the original LFNYC rebrand; real and prospective clients retain their own identity. Only abstract projects use LFNYC branding.
+- PR #16 merged the LFNYC direction immediately before the correction, but no LFNYC production upload occurred. Original studio production `6ac795afb6dbbe1ac131f88c` remained live during correction. That source merge is historical, not the final client identity.
+- The corrected site has eighteen HTML documents, local Inter/DM Serif Display, Legacy’s actual logo and published studio photographs, responsive images and an unsent email-draft helper. No functions, database, third-party scripts or form submissions.
+- Official studio site: `https://legacymusicgroup.com`; booking: `/service-plus/`; terms: `/terms-and-conditions/`. The October 9 browser visit rendered Bookly’s service and engineer selectors. No booking or payment was submitted.
+- Email `info@legacymusicgroup.com`, phone `(214) 377-9729`, address `2815 Main St, Suite A, Dallas, TX 75226` agree on the official homepage and contact page.
+- The official homepage lists recording at $75/hour, two-hour minimum; mixing from $150; custom production $500 per beat. The rebuilt site labels these published starting rates and directs price/scope confirmation to the studio.
+- Historical engineer bios differ from the live booking selector. Old rosters, tenure claims, career credits and placeholder headshots were not carried forward.
+- Booking instructions and recording terms disagree on payment percentage. This site links the studio’s terms and contact options without inventing a resolution or duplicating either figure.
+- Separate domain, DNS and WordPress booking remain untouched. This duplicate Netlify property remains noindex with an empty sitemap.
+- Fresh public evidence: `../evidence/legacy-official-current.json` and `../evidence/legacy-assets/provenance.json`. Archives, credentials, evidence, tools and marketing never enter dist.
 
-- Candidate checkout: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`.
-- Preserved canonical checkout: `/Users/davidmarsh/Code/LiFi NYC/Clients/Legacy Music Group/legacy-music-group`.
-- GitHub: `https://github.com/omgitsthedm/legacy-music-group`; base `b04c5e3e2a64e0ef0f7faf98ec451c5d45af61ef`; branch `audit/2026-10-09`; production branch `master`.
-- Netlify property: `legacy-music-group`, site ID `d04515bf-0eb2-45ae-b71b-2a08dc92391a`.
-- Published deploy observed at audit start: `6ac795afb6dbbe1ac131f88c`. Old September release claims in archived docs are stale.
-- Existing public host: `https://legacy-music-group.netlify.app`. No custom-domain aliases were returned by the provider.
-- Candidate alias: `https://lfnyc-audit-2026-10-09--legacy-music-group.netlify.app`.
-- The candidate does not modify `legacymusicgroup.com` or the canonical LFNYC site.
-
-## Branch behavior
-
-Static Astro 7.3.8, pinned Node 24.21.0, compatible TypeScript 6.0.3. Thirteen HTML documents. `dist/` is the complete publish tree. Release marker hashes the publish tree excluding itself and records its Git source revision. No functions, database or browser analytics.
-
-The old production push workflow is archived in this candidate. The new workflow has manual draft deployment only, with the exact site ID. The unchanged master branch still retains its existing workflow until a future approved merge. No paid AI workflow runs automatically on this branch.
-
-Preview builds use the explicit alias. A production-mode build is rejected unless `RELEASE_MODE=production`, the exact `LFNYC_APPROVED_SITE_ID`, and the existing production `SITE_ORIGIN` are supplied together. This preparation does not authorize its use. Noindex and the empty sitemap remain until a separately approved indexing plan exists.
-
-## Facts and assets
-
-Brand Kit read in full before design. Supplied exact tugboat, fonts, palette and four business images are retained. LFNYC owns the business identity; studio people, rates, Dallas claims and refund policies are not reassigned to LFNYC.
-
-Email `hello@littlefightnyc.com` is in the brand source; phone `(646) 360-0318` is verified on LFNYC's public case-study pages. Three real work examples are backed by those case studies and fresh captures of the named client sites. No traffic, revenue, ranking or conversion results are invented.
-
-## Evidence and scope
-
-`../evidence/` contains baseline/after audits, browser results, full-read inventories and deployment evidence. `../screenshots/` and the marketing folders contain the requested review package. Provider private settings are permission-restricted outside this public repository. `AUDIT-REPORT.md` records the final preview ID, source/hash chain and measured results.
-
-## Verified preview release
-
-Draft `6ac8a1e332aee7dc3ba22f9c` is ready and unpublished to production. Application source: `3dcdd70f4ad324ca8b87f9e528dea34c72ff4ecf`. Publish-tree SHA-256: `93c4c96162299bf8b0f2101860391cf14c956be2fe19ecaa85868286775d7cb2`. All 77 served files and the immutable release marker match the local artifact. Production remains `6ac795afb6dbbe1ac131f88c`.
-
-Test-only commit `1aaa8d08bfedbf9231e5bf5b3b61f22bccaeeccd` strengthens hosted lazy-image verification; CI run `37904410273` passed. It does not change the published draft. Final report/decision commits are documentation only and must not trigger another deploy.
+Final release identity and verification are recorded below after the approved upload.

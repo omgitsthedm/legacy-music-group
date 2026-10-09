@@ -1,71 +1,50 @@
 ---
 import '../styles/global.css';
-import { business } from '../data/site';
+import { business, services } from '../data/site';
 import Arrow from '../components/Arrow.astro';
-import oswald from '../assets/fonts/oswald-latin-wght-normal.woff2?url';
-import barlow from '../assets/fonts/barlow-latin-400-normal.woff2?url';
+import serif from '../assets/fonts/dm-serif-display.woff2?url';
+import inter from '../assets/fonts/inter-variable.woff2?url';
 interface Props { title: string; description: string; schema?: Record<string, unknown>; }
 const { title, description, schema } = Astro.props;
 const origin = Astro.site!;
-const isPreview = import.meta.env.RELEASE_MODE !== 'production';
 const canonical = new URL(Astro.url.pathname, origin).href;
-const org = `${business.officialUrl}/#organization`;
-const structured = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    { '@type': 'Organization', '@id': org, name: business.name, url: business.officialUrl, email: business.email, telephone: business.phone, logo: new URL('/brand/logo/mark-orange.svg', origin).href, description: 'Custom websites, technology support, free consulting and software you own for small businesses.', areaServed: [{ '@type': 'City', name: 'New York City' }, { '@type': 'Country', name: 'United States' }] },
-    { '@type': 'WebSite', '@id': `${origin}#website`, url: origin.href, name: business.name, publisher: { '@id': org }, inLanguage: 'en-US' },
-    { '@type': 'WebPage', '@id': `${canonical}#page`, url: canonical, name: title, description, isPartOf: { '@id': `${origin}#website` }, about: { '@id': org }, inLanguage: 'en-US' },
-    ...(Astro.url.pathname !== '/' ? [{ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: origin.href }, { '@type': 'ListItem', position: 2, name: title, item: canonical }] }] : []),
-    ...(schema ? [schema] : []),
-  ],
-};
-const nav = [{ href: '/services/', label: 'What we do' }, { href: '/work/', label: 'Our work' }, { href: '/faq/', label: 'Good questions' }];
+const org = `${business.officialUrl}/#studio`;
+const structured = { '@context':'https://schema.org', '@graph':[
+  { '@type':'LocalBusiness', '@id':org, name:business.name, url:business.officialUrl, email:business.email, telephone:business.phone, logo:new URL('/legacy-logo.png',origin).href, image:new URL('/og-image.png',origin).href, description:'Recording studio and music production in Deep Ellum, Dallas.', address:{'@type':'PostalAddress',streetAddress:business.address,addressLocality:'Dallas',addressRegion:'TX',postalCode:'75226',addressCountry:'US'}, areaServed:{'@type':'City',name:'Dallas'} },
+  { '@type':'WebSite','@id':`${origin}#website`,url:origin.href,name:business.name,publisher:{'@id':org},inLanguage:'en-US' },
+  { '@type':'WebPage','@id':`${canonical}#page`,url:canonical,name:title,description,isPartOf:{'@id':`${origin}#website`},about:{'@id':org},inLanguage:'en-US' },
+  ...(Astro.url.pathname!=='/'?[{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:origin.href},{'@type':'ListItem',position:2,name:title,item:canonical}]}]:[]),
+  ...(schema?[schema]:[]),
+]};
+const nav=[{href:'/studio/',label:'The studio'},{href:'/services/',label:'Services'},{href:'/pricing/',label:'Rates'},{href:'/contact/',label:'Contact'}];
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | Little Fight NYC</title><meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow, noarchive" /><meta name="theme-color" content="#050507" />
-    <link rel="canonical" href={canonical} /><link rel="icon" href="/brand/favicon/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/brand/favicon/apple-touch-icon.png" /><link rel="manifest" href="/site.webmanifest" />
-    <link rel="preload" href={oswald} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={barlow} as="font" type="font/woff2" crossorigin />
-    <meta property="og:type" content="website" /><meta property="og:site_name" content={business.name} />
-    <meta property="og:title" content={`${title} | Little Fight NYC`} /><meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} /><meta property="og:locale" content="en_US" />
-    <meta property="og:image" content={new URL('/og-image.png', origin).href} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Little Fight NYC. Small crew. Heavy pull. Websites, tech support and software you own." />
-    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={`${title} | Little Fight NYC`} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={new URL('/og-image.png', origin).href} />
-    <script type="application/ld+json" set:html={JSON.stringify(structured).replaceAll('<', '\u003c')} />
-  </head>
-  <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header"><div class="shell header-inner">
-      <a class="brand" href="/" aria-label="Little Fight NYC home"><img src="/brand/logo/mark-white.svg" width="52" height="36" alt="" /><span>LITTLE FIGHT <b>NYC</b></span></a>
-      <nav class="desktop-nav" aria-label="Main navigation">{nav.map(link => <a href={link.href} aria-current={Astro.url.pathname.startsWith(link.href) ? 'page' : undefined}>{link.label}</a>)}</nav>
-      <a class="button primary header-cta" href="/contact/">Let’s talk <Arrow /></a>
-      <details class="mobile-menu"><summary aria-label="Navigation menu"><span class="menu-label">Menu</span><span class="menu-lines" aria-hidden="true"></span></summary><nav aria-label="Mobile navigation">{nav.map(link => <a href={link.href} aria-current={Astro.url.pathname.startsWith(link.href) ? 'page' : undefined}>{link.label}<Arrow /></a>)}<a href="/contact/">Let’s talk <Arrow /></a><a href={`tel:${business.phone}`}>Call {business.displayPhone}</a></nav></details>
-    </div></header>
-    <main id="main-content" tabindex="-1"><slot /></main>
-    <footer class="site-footer"><div class="shell">
-      <div class="footer-top"><a class="brand" href="/" aria-label="Little Fight NYC home"><img src="/brand/logo/mark-white.svg" width="52" height="36" alt="" /><span>LITTLE FIGHT <b>NYC</b></span></a><p>Small crew. Heavy pull.</p></div>
-      <div class="footer-grid"><div><p class="footer-statement">In your corner.<br />In your neighborhood.</p><p>On-site support across all five NYC boroughs.<br />Websites for businesses nationwide.</p></div><nav aria-label="Services"><a href="/services/websites/">Websites</a><a href="/services/it-support/">Tech support</a><a href="/services/consulting/">Free consulting</a><a href="/services/business-systems/">Software you own</a></nav><div class="footer-contact"><a href={`mailto:${business.email}`}>{business.email}</a><a href={`tel:${business.phone}`}>{business.displayPhone}</a><a href="/contact/">Start a conversation <span aria-hidden="true">↗</span></a></div></div>
-      <div class="footer-bottom"><p>© {new Date().getFullYear()} Little Fight NYC</p><nav aria-label="Legal"><a href="/privacy/">Privacy</a><a href="/terms/">Website terms</a><a href="/faq/">FAQ</a></nav>{isPreview && <p class="review-label">Review preview · not the live site</p>}</div>
-      <a class="footer-credit" href={business.officialUrl}>Designed, Hosted and Cared For by LittleFightNYC.com</a>
-    </div></footer>
-    <script>
-      const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && menu?.open) {
-          menu.open = false;
-          menu.querySelector('summary')?.focus();
-        }
-      });
-      document.addEventListener('click', (event) => {
-        if (!(event.target instanceof HTMLElement) || !menu?.open) return;
-        if (!menu.contains(event.target) || event.target.closest('a')) menu.open = false;
-      });
-    </script>
-  </body>
-</html>
+<!doctype html><html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title} | Legacy Music Group</title><meta name="description" content={description} />
+<meta name="robots" content="noindex, nofollow, noarchive" /><meta name="theme-color" content="#0A0A0A" />
+<link rel="canonical" href={canonical} /><link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="apple-touch-icon" href="/apple-touch-icon.png" /><link rel="manifest" href="/site.webmanifest" />
+<link rel="preload" href={serif} as="font" type="font/woff2" crossorigin /><link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
+<meta property="og:type" content="website" /><meta property="og:site_name" content={business.name} /><meta property="og:title" content={`${title} | Legacy Music Group`} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:locale" content="en_US" /><meta property="og:image" content={new URL('/og-image.png',origin).href} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Legacy Music Group. Your sound. Your legacy. Recording in Deep Ellum, Dallas." />
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={`${title} | Legacy Music Group`} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={new URL('/og-image.png',origin).href} />
+<script type="application/ld+json" set:html={JSON.stringify(structured).replaceAll('<','\u003c')} />
+</head><body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header"><div class="shell header-inner">
+<a class="brand" href="/" aria-label="Legacy Music Group home"><img src="/legacy-logo.png" width="194" height="76" alt="Legacy Music Group" /></a>
+<nav class="desktop-nav" aria-label="Main navigation">{nav.map(link=><a href={link.href} aria-current={Astro.url.pathname.startsWith(link.href)?'page':undefined}>{link.label}</a>)}</nav>
+<a class="button primary header-cta" href="/book/">Book a session <Arrow /></a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></summary><nav aria-label="Mobile navigation">{nav.map(link=><a href={link.href}>{link.label}<Arrow /></a>)}<a href="/engineers/">Engineers <Arrow /></a><a href="/book/">Book a session <Arrow /></a><a href={`tel:${business.phone}`}>Call {business.displayPhone}</a></nav></details>
+</div></header>
+<main id="main-content" tabindex="-1"><slot /></main>
+<footer class="site-footer"><div class="shell">
+<div class="footer-top"><a class="brand" href="/" aria-label="Legacy Music Group home"><img src="/legacy-logo.png" width="194" height="76" alt="Legacy Music Group" /></a><p>Your sound. Your legacy.</p></div>
+<div class="footer-grid"><div><p class="footer-statement">Made in Deep Ellum.</p><p>{business.address}<br />{business.city}</p><a href={business.mapsUrl}>Get directions ↗</a></div><nav aria-label="Services">{services.map(s=><a href={`/services/${s.slug}/`}>{s.short}</a>)}<a href="/engineers/">Find your engineer</a></nav><div class="footer-contact"><a href={`mailto:${business.email}`}>{business.email}</a><a href={`tel:${business.phone}`}>{business.displayPhone}</a><a href="/book/">Book a session ↗</a><a href="/faq/">Booking questions</a></div></div>
+<div class="footer-bottom"><p>© {new Date().getFullYear()} Legacy Music Group</p><nav aria-label="Legal"><a href="/privacy/">Privacy</a><a href="/terms/">Website terms</a><a href="/policies/">Studio policies</a></nav>{import.meta.env.RELEASE_MODE!=='production'&&<p class="review-label">Design review</p>}</div>
+<a class="footer-credit" href="https://littlefightnyc.com/">Website by Little Fight NYC</a>
+</div></footer>
+<script>
+const menu=document.querySelector<HTMLDetailsElement>('.mobile-menu');
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus();}});
+document.addEventListener('click',event=>{if(!(event.target instanceof HTMLElement)||!menu?.open)return;if(!menu.contains(event.target)||event.target.closest('a'))menu.open=false;});
+</script>
+</body></html>

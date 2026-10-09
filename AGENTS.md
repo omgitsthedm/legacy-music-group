@@ -1,14 +1,15 @@
-# LFNYC property operating rules
+# Legacy Music Group operating rules
 
-- Production source is `master`; the reviewed rebuild branch is `audit/2026-10-09`. Use the isolated output checkout and preserve the dirty canonical studio checkout.
-- Working root: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`.
-- GitHub: `omgitsthedm/legacy-music-group`; default branch: `master`.
-- Exact Netlify site: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; `dist/` only. Always pass `--site` explicitly.
-- The owner approved this rebuild’s master merge and production release on October 9, 2026: “ok update it all and push it live”. This authority covers the exact Legacy Netlify property. It does not authorize domain/DNS changes, paid services, marketing publication or outbound messages.
-- Brand authority: the supplied `/Users/davidmarsh/Desktop/LiFi NYC/Business/Brand Kit`; local implementation uses its logo, fonts and tokens. Do not alter the tugboat or invent client outcomes.
-- Inspect Git status before editing. Preserve unrelated work, historical source and other running projects. No global installs/configuration or default/shared dev ports.
-- Use ports 52761/52762/52763. Use installed Google Chrome with `channel: chrome`; do not download another browser.
-- Every page renders meaningful HTML without JavaScript. This property’s noindex, strict CSP, no tracking and no false send confirmation are required.
-- After substantive changes run `npm run verify`, `npm run test:browser` and `npm audit`. Do not submit real email, contact, payment or booking actions.
-- Never publish the archive, audit evidence, credential settings, dependency trees or marketing drafts. No secrets are needed in browser code.
-- Keep README, SOURCE_OF_TRUTH, DECISIONS and AUDIT-REPORT aligned with observed evidence. Archive material is historical, not active instruction.
+- Client and prospective-client projects keep their own brand. Only abstract projects use LFNYC branding. Legacy is a real recording studio; never substitute LFNYC business services, logos, contacts or entities.
+- Working checkout: `/Users/davidmarsh/Desktop/Project Upgrades/legacy-music-group/rebuild`; preserve the dirty canonical checkout and all unrelated projects.
+- GitHub: `omgitsthedm/legacy-music-group`, production branch `master`, audit branch `audit/2026-10-09`.
+- Exact Netlify site: `d04515bf-0eb2-45ae-b71b-2a08dc92391a`; publish `dist/` only and always pass the exact `--site`.
+- The owner approved this modernization’s merge and live release on October 9, then corrected its brand to Legacy. That authority does not include changing the separate custom domain, DNS, billing, WordPress booking system or publishing marketing.
+- Brand contract: original client `archive/legacy-2026-10-09/BRIEF.md`, current Legacy logo and published studio photos, carbon/ivory/brass, Inter/DM Serif Display. LFNYC appears only as a small agency footer credit.
+- Business facts and booking: `src/data/site.ts`, verified official sources in the evidence folder. Never invent people, ratings, discounts, payment terms, turnaround or outcomes. The live calendar owns engineer availability.
+- Every route must render useful HTML without JavaScript. This duplicate Netlify property remains noindex. Preserve strict CSP and the honest unsent contact draft; email goes only to info@legacymusicgroup.com.
+- Use ports 52761/52762/52763 and installed Google Chrome with `channel: chrome`. No global installs or shared configuration.
+- Run `npm run verify`, `npm run test:browser` and `npm audit` after substantive changes. Never submit a real booking, payment or test email.
+- Production builds require `RELEASE_MODE=production`, `APPROVED_SITE_ID=d04515bf-0eb2-45ae-b71b-2a08dc92391a` and `SITE_ORIGIN=https://legacy-music-group.netlify.app` together. Preview builds default to the Legacy audit alias.
+- Git pushes run quality checks. Netlify Git builds are ignored; verified local artifact uploads are the release path. Do not republish documentation-only changes.
+- Never publish archive/, tools, evidence, credentials, dependencies or draft marketing. Superseded LFNYC material is historical and must not be restored.

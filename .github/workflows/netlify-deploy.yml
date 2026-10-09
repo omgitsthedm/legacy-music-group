@@ -24,7 +24,7 @@ jobs:
       - run: npm run verify
       - run: npm run test:browser
       - name: Upload this verified draft only
-        run: npx --yes netlify-cli@26.1.0 deploy --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --alias=lfnyc-audit-2026-10-09 --message="LFNYC reviewed draft $GITHUB_SHA"
+        run: npx --yes netlify-cli@26.1.0 deploy --no-build --dir=dist --site=d04515bf-0eb2-45ae-b71b-2a08dc92391a --alias=legacy-audit-2026-10-09 --message="Legacy reviewed draft $GITHUB_SHA"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 # No push trigger, no ambient site ID, no production flag, no paid AI review.

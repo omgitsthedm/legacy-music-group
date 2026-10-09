@@ -1,3 +1,21 @@
+# Scope correction — October 9, 2026
+
+The owner superseded the LFNYC rebrand: client and prospective-client projects retain their own identities; only abstract projects use LFNYC branding. Legacy Music Group is a real studio project. Its production host is still the original studio presentation; the LFNYC source merge was never deployed.
+
+Execute before the authorized live release:
+1. Preserve the current static stack, security, performance and validation work.
+2. Replace every active LFNYC identity, service, asset and contact with Legacy Music Group content verified against its project brief and official website; archive superseded material outside dist.
+3. Use Legacy’s carbon, ivory and brass direction, its actual published studio photography and people, and locally hosted Inter/DM Serif Display. Keep booking on the existing official Bookly destination. No placeholder people, invented rates, delivery guarantees, testimonials or new payment system.
+4. Restore useful studio/service/pricing/team/FAQ/contact routes; preserve historical URLs through explicit handoffs and actual 404s. Keep noindex on this duplicate Netlify property.
+5. Add identity and contact-recipient regression checks, run all local gates, and inspect desktop/mobile flows before publishing exactly once to the approved Netlify site.
+6. Update the report, screenshots, comparisons, social batch, case study and links for the Legacy-branded release. Retain superseded LFNYC evidence as history, clearly labeled; publish none of the marketing.
+
+Effort: M for brand/content/route correction, S for metadata/tests/docs, M for refreshed verification and marketing assets. No further owner response is required.
+
+---
+
+## Original audit plan (historical; LFNYC branding superseded)
+
 # LFNYC rebuild audit plan — 2026-10-09
 
 Written before implementation. Date command: Fri Oct 9 00:24:30 MST 2026.

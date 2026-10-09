@@ -35,4 +35,4 @@ const server = http.createServer(async (req, res) => {
   } catch { res.writeHead(400); res.end('Invalid request'); }
 });
 server.on('error', error => { console.error(error); process.exitCode = 1; });
-server.listen(port, '127.0.0.1', () => console.log(`LFNYC legacy preview: http://127.0.0.1:${port} from ${root}`));
+server.listen(port, '127.0.0.1', () => console.log(`Legacy Music Group local QA: http://127.0.0.1:${port} from ${root}`));
