@@ -15,4 +15,15 @@ The owner rejected the October 9 redesign and ordered the preceding version rest
 - This duplicate host remains noindex. Booking uses `https://legacymusicgroup.com/service-plus/`; contact uses `/contacts/` plus the existing studio phone/email. WordPress, DNS, billing and marketing publication remain unchanged.
 - Evidence: `../evidence/original-design-restored.json`, `restored-original-parity.json`, `recovered-source-provenance.json`, `recovered-build-parity.json`, and the `preserve-design-*` validation files.
 
-The earlier Astro/LFNYC rebuild and marketing package are rejected history. They are not the current site's design, metrics or release evidence. Final maintenance release identity is recorded after verification.
+The earlier Astro/LFNYC rebuild and marketing package are rejected history. They are not the current site's design, metrics or release evidence.
+
+## Current verified publication
+
+- Application source: `a678f61af6ea6d314f8309f16a6d00869cab6d44` (PR #18, merged).
+- Production deploy: `6ac8bba15461611aa56c8f05`, ready and published at 2026-10-09T10:02:11.241Z.
+- Immutable production: https://6ac8bba15461611aa56c8f05--legacy-music-group.netlify.app/.
+- Review alias: https://lfnyc-audit-2026-10-09--legacy-music-group.netlify.app/; deploy `6ac8bb58e900330f03b81466`; identical artifact, unpromoted review mirror.
+- Publish-tree SHA-256 excluding release.json: `92b068802262cf692c5a804f101f904703fa556a9d0064cb34506a942f60b247`.
+- Local and production Chrome suites: 13 passed each. Every public file (82) matches local bytes across both production URLs and both review URLs.
+- Final proof: `../evidence/preserved-final-provider.json`, `preserved-production-parity.json`, `preserved-review-parity.json`, `preserve-design-browser-production.txt`, and `production-release-archive.json`.
+- The publication record is followed only by documentation changes; the release marker retains the tested application-source SHA. Do not redeploy documentation.

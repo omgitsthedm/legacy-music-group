@@ -10,3 +10,4 @@
 - A menu focus race occurred during the existing visibility transition; defer focus until the next painted frame and verify the unchanged transition with browser tests.
 - Keep source pushes separate from production and correct the existing review alias with the same tested original-design artifact.
 - Mark the rejected redesign's marketing/report package as historical so its images and performance numbers cannot be mistaken for this release.
+- Published original-design repair a678f61 on exact site d04515bf-0eb2-45ae-b71b-2a08dc92391a as deploy 6ac8bba15461611aa56c8f05; all 82 public files match and all 13 production browser tests pass; record documentation without redeploying.
