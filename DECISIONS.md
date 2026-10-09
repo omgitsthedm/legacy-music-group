@@ -1,5 +1,9 @@
 # Decisions — 2026-10-09
 
+Current rule: client and prospective-client projects retain their own identity; only abstract projects use LFNYC branding. Early LFNYC-specific choices below are superseded history. The final release is Legacy Music Group.
+
+## Chronological decisions
+
 - Interpret the explicit rebrand request as a full LFNYC service-site preview; no studio pricing, testimonials, people or Dallas entity claims become LFNYC claims.
 - Isolate work in the requested output folder because the canonical checkout has 15 existing changes; use branch audit/2026-10-09 from b04c5e3.
 - Preserve previous source and assets outside the publish tree; no destructive cleanup of canonical files or unrelated projects.
@@ -45,3 +49,12 @@
 - Official booking instructions and recording terms disagree on full payment versus deposit; publish neither figure here and link to the studio’s terms with a direct contact fallback.
 - Sharp no longer exposes the old internal lib path; use its public package import for lossless logo sizing and favicon export.
 - Local QA caught an engineer wildcard redirect looping on its own destination and 200 percent magnification overflow; replace it with explicit historical profile redirects and use container-width reflow.
+
+- Final release uses the client brief for scoring: preserve Legacy identity; the original LFNYC-alignment score is historical and does not penalize a client for its own brand.
+- Build and publish merged source d58e09eff71904941b42c5a429ff08170a4046de once to exact site d04515bf-0eb2-45ae-b71b-2a08dc92391a; verified production deploy 6ac8b098350fdec4e6b7db41 serves the complete expected artifact.
+- Replace the previously shared review alias with the exact verified Legacy production artifact so the active review link no longer presents LFNYC; provider context remains an unpromoted branch deployment, with no second production upload.
+- Production and review mirrors share the same artifact marker; Netlify deploy records, not a renamed marker, establish each hosting context.
+- Report the final production Lighthouse sample, not the superseded LFNYC sample: performance 100, 192,997 transfer bytes, LCP 1.547 seconds; no field or commercial outcome claim.
+- The first Lighthouse profile launch failed before measurement; create the task-owned profile directory, stop only its failed Chrome process, and rerun successfully.
+- Refresh all current graphics, captions, screenshots, links and case-study copy as Legacy; retain old LFNYC materials only in the labeled superseded archive.
+- Commit documentation-only closeout without rebuilding or republishing the unchanged application; preserve the exact deployed source SHA separately from later documentation commits.

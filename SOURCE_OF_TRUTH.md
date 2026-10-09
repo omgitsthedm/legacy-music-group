@@ -15,4 +15,13 @@
 - Separate domain, DNS and WordPress booking remain untouched. This duplicate Netlify property remains noindex with an empty sitemap.
 - Fresh public evidence: `../evidence/legacy-official-current.json` and `../evidence/legacy-assets/provenance.json`. Archives, credentials, evidence, tools and marketing never enter dist.
 
-Final release identity and verification are recorded below after the approved upload.
+## Verified release
+
+- Live source: `d58e09eff71904941b42c5a429ff08170a4046de`; corrected PR #17 merged after passing CI.
+- Current production deploy: `6ac8b098350fdec4e6b7db41`, published October 9 at 09:15:07 UTC.
+- Publish-tree SHA-256 excluding release.json: `97a31014a4aab36121685af3448813e979b4e444a473bb330ad5a2d6e7a993b5`.
+- Primary and immutable production each match all 49 public files. The complete artifact has 51 files including provider headers/redirects.
+- Fourteen production browser tests and ten unit/artifact tests passed; 34 axe scans returned zero violations; dependency audit returned zero vulnerabilities.
+- The existing review alias now serves the same Legacy artifact as unpromoted deploy `6ac8b2255315a423c592a924`; its historical URL label is retained to correct already-shared links.
+- Full evidence: `../evidence/production-artifact-parity.json`, `../evidence/review-mirror-artifact-parity.json`, `../evidence/netlify-final-provider.json`, `../evidence/browser-production-results.json`.
+- Final measurements, package and external-policy follow-up: AUDIT-REPORT.md. Later documentation-only commits do not change the deployed source above.
