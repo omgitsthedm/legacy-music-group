@@ -10,22 +10,19 @@ import type { FaqEntry } from './schemas'
 // =========================================================================
 
 export const contact = {
-  phone: '(214) 377-9729',
-  phoneE164: '+12143779729',
-  email: 'info@legacymusicgroup.com',
-  addressLine1: '2815 Main St, Suite A',
-  addressLine2: 'Dallas, TX 75226',
-  // Owner-written tagline pulled from Google Business Profile
-  ownerTagline:
-    'Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right.',
-  // All social URLs confirmed real 2026-05-07.
-  social: {
-    instagram: 'https://www.instagram.com/legacymusicgroup/',
-    facebook: 'https://www.facebook.com/theLegacymusicgroup',
-    twitter: 'https://twitter.com/LegacyMusicGrp',
-    youtube: 'https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw',
-    linkedin: 'https://www.linkedin.com/company/legacymusicgroup',
-  },
+  "phone": "(214) 377-9729",
+  "phoneE164": "+12143779729",
+  "email": "info@legacymusicgroup.com",
+  "addressLine1": "2815 Main St, Suite A",
+  "addressLine2": "Dallas, TX 75226",
+  "ownerTagline": "Recording and music production at 2815 Main Street in Deep Ellum, Dallas. Vocals, mixing, mastering, and help with the business behind your music.",
+  "social": {
+    "instagram": "https://www.instagram.com/legacymusicgroup/",
+    "facebook": "https://www.facebook.com/theLegacymusicgroup",
+    "twitter": "https://twitter.com/LegacyMusicGrp",
+    "youtube": "https://www.youtube.com/channel/UCT43C_YONC9axTl3IMwgdVw",
+    "linkedin": "https://www.linkedin.com/company/legacymusicgroup"
+  }
 }
 
 // =========================================================================
@@ -60,66 +57,106 @@ export interface Engineer {
 // and need to be downloaded/uploaded. See PLACEHOLDERS.md §Engineers.
 export const engineers: Engineer[] = [
   {
-    id: 'matthew',
-    name: 'Matthew Medlock',
-    specialty: 'Studio Owner & Manager',
-    image: '/images/engineer-1.jpg', // PLACEHOLDER — real photo on live site
-    bio: 'A 10-year music industry veteran, Matthew Medlock attributes his diehard obsession with music to his upbringing near the cultural melting pot of Memphis, Tennessee. He earned a Business Administration degree in Music Business and was active in GRAMMYU. Matthew learned music management expertise from his father — a successful business owner who emphasized high standards and work ethics. His professionalism, industry connections, and instincts have established him as a respected figure in Dallas music management.',
-    stats: { experience: '10+ Years', projects: 'Studio Owner', highlight: 'GRAMMYU Member' },
-    genres: ['Studio Operations', 'Artist Development', 'Music Business'],
-    serviceSlugs: ['artist-development'],
-    samples: [
-      { title: 'Schedule a consultation', artist: 'Artist Development', duration: '60 min' },
+    "id": "matthew",
+    "name": "Matthew Medlock",
+    "specialty": "Studio Owner & Manager",
+    "image": "/images/engineer-1.jpg",
+    "bio": "Matthew owns and manages Legacy Music Group. Raised near Memphis, he studied Music Business and took part in GRAMMY U while in college. His work at Legacy includes music business consultation. Bring your music and the questions behind your next release.",
+    "stats": {
+      "experience": "Music",
+      "projects": "Owner",
+      "highlight": "Advice"
+    },
+    "genres": [
+      "Studio Operations",
+      "Artist Development",
+      "Music Business"
     ],
-    credits: [],
+    "serviceSlugs": [
+      "artist-development"
+    ],
+    "samples": [],
+    "credits": []
   },
   {
-    id: 'ray',
-    name: 'Ray Dallas',
-    specialty: 'Head Engineer',
-    image: '/images/engineer-2.jpg', // PLACEHOLDER — real photo on live site
-    bio: 'Ray handles the primary engineering work at Legacy Music Group, with deep expertise in mixing, tracking, editing, and Melodyne. He has been with Legacy for five years and has collaborated with numerous local and national clients including Mac Miller, B.o.B, Dorrough, and Young Jeezy. His preferred styles span rap, pop, and singer-songwriter sessions — he has a particular gift for getting the best performance out of vocalists.',
-    stats: { experience: '5+ Years at Legacy', projects: 'Major Label Credits', highlight: 'Mac Miller · B.o.B · Young Jeezy' },
-    genres: ['Rap', 'Pop', 'Songwriter'],
-    serviceSlugs: ['rap-recording', 'r-and-b', 'voiceover', 'podcasts'],
-    samples: [
-      { title: 'Mixing & Tracking', artist: 'Ray\'s specialty', duration: '—' },
-      { title: 'Editing & Melodyne', artist: 'Ray\'s specialty', duration: '—' },
+    "id": "ray",
+    "name": "Ray Dallas",
+    "specialty": "Head Engineer",
+    "image": "/images/engineer-2.jpg",
+    "bio": "Ray is Legacy’s head engineer. He works in tracking, mixing, editing, and Melodyne. His published client credits include Mac Miller, B.o.B, Dorrough, and Young Jeezy. His listed interests include rap, pop, and singer-songwriter music.",
+    "stats": {
+      "experience": "Tracking",
+      "projects": "Mixing",
+      "highlight": "Editing"
+    },
+    "genres": [
+      "Rap",
+      "Pop",
+      "Songwriter"
     ],
-    credits: [
-      { artist: 'Mac Miller' },
-      { artist: 'B.o.B' },
-      { artist: 'Dorrough' },
-      { artist: 'Young Jeezy' },
+    "serviceSlugs": [
+      "rap-recording",
+      "r-and-b",
+      "voiceover",
+      "podcasts"
     ],
+    "samples": [],
+    "credits": [
+      {
+        "artist": "Mac Miller"
+      },
+      {
+        "artist": "B.o.B"
+      },
+      {
+        "artist": "Dorrough"
+      },
+      {
+        "artist": "Young Jeezy"
+      }
+    ]
   },
   {
-    id: 'wayne',
-    name: 'Wayne',
-    specialty: 'Studio Engineer / Producer',
-    image: '/images/engineer-3.jpg', // PLACEHOLDER — real photo on live site
-    bio: 'Wayne has been with Legacy for 2 years with a main focus on mixing and production. Pro Tools is his go-to DAW, paired with an assortment of valuable plugins. He handles editing needs and final mixes for Legacy clients. Check his availability when booking a session.',
-    stats: { experience: '2+ Years at Legacy', projects: 'Mixing & Production', highlight: 'Pro Tools Specialist' },
-    genres: ['Mixing', 'Production', 'Editing'],
-    serviceSlugs: ['rap-recording', 'r-and-b'],
-    samples: [
-      { title: 'Mix & Production', artist: 'Wayne\'s focus', duration: '—' },
+    "id": "wayne",
+    "name": "Wayne",
+    "specialty": "Studio Engineer / Producer",
+    "image": "/images/engineer-3.jpg",
+    "bio": "Wayne is a studio engineer and producer at Legacy. His work focuses on mixing, production, and editing in Pro Tools. Ask the studio about his availability and the work your session needs.",
+    "stats": {
+      "experience": "Engineer",
+      "projects": "Mixing",
+      "highlight": "Pro Tools"
+    },
+    "genres": [
+      "Mixing",
+      "Production",
+      "Editing"
     ],
-    credits: [],
+    "serviceSlugs": [
+      "rap-recording",
+      "r-and-b"
+    ],
+    "samples": [],
+    "credits": []
   },
   {
-    id: 'terry',
-    name: 'Terry',
-    specialty: 'Maintenance Engineer',
-    image: '/images/engineer-4.jpg', // PLACEHOLDER — real photo on live site
-    // PLACEHOLDER: bio is brief on the live site. Confirm with owner.
-    bio: 'Terry keeps the room running. As Legacy\'s maintenance engineer, he\'s the reason the gear is dialed when you walk in — patch bays clean, signal flow tested, and rooms ready for whatever a session demands.',
-    stats: { experience: 'On the Legacy team', projects: 'Studio Maintenance', highlight: 'Keeps the Gear Dialed' },
-    genres: ['Studio Maintenance'],
-    serviceSlugs: [],
-    samples: [],
-    credits: [],
-  },
+    "id": "terry",
+    "name": "Terry",
+    "specialty": "Maintenance Engineer",
+    "image": "/images/engineer-4.jpg",
+    "bio": "Terry is Legacy’s maintenance engineer. For recording sessions and current team availability, contact the studio.",
+    "stats": {
+      "experience": "Team",
+      "projects": "Upkeep",
+      "highlight": "Studio"
+    },
+    "genres": [
+      "Studio Maintenance"
+    ],
+    "serviceSlugs": [],
+    "samples": [],
+    "credits": []
+  }
 ]
 
 // =========================================================================
@@ -150,235 +187,236 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: 'rap-recording',
-    name: 'Rap Recording in Dallas',
-    shortName: 'Rap Recording',
-    category: 'recording',
-    oneLiner: "Hit-quality rap sessions with Dallas' top-tier audio engineers. Major-label credits in the room.",
-    hero: '/images/studio-vocal-booth.jpg',
-    intro:
-      "Our head engineer Ray Dallas has tracked, mixed, and edited records for Mac Miller, B.o.B, Dorrough, and Young Jeezy. The same chain those records went through is the one your session runs on: Neumann U 87 or AKG C414, Avalon 737, UA Apollo, the room dialed for hip-hop articulation. Bring the bars — we'll have your sound just right.",
-    body: [
-      "Most rap sessions book through with-engineer time. You bring the beat (laptop, USB, producer in the room — works either way) and your engineer dials the chain, comps the takes, and gets the polish in-session. You walk out with stems plus a rough mix same day.",
-      "A four-hour block lands 1–2 finished records. A full eight-hour day gets you 3–5 depending on complexity. Add mixing & mastering ($150/song) and finished masters arrive in 5–7 business days with two rounds of revisions included.",
-      "Pricing is transparent: $75/hour with engineer, $45/hour without. Two-hour minimum. No setup fees, no engineer surcharges, no surprise costs at checkout.",
+    "slug": "rap-recording",
+    "name": "Rap Recording in Dallas",
+    "shortName": "Rap Recording",
+    "category": "recording",
+    "oneLiner": "Bring the verse. Make room for the details.",
+    "hero": "/images/studio-vocal-booth.jpg",
+    "intro": "The line is written. The beat is right. Now comes the work you hear between the words: a breath, a double, an ad-lib that lands just behind the lead. Record rap vocals at Legacy in Deep Ellum.",
+    "body": [
+      "Bring the current beat, your lyrics, and one or two tracks that show the sound you want. Tell the team whether you need to record, edit, mix, or finish a song. Each is a different part of the job.",
+      "Head engineer Ray Dallas works in tracking, mixing, editing, and Melodyne. His published client credits include Mac Miller, B.o.B, Dorrough, and Young Jeezy. Read his profile before you choose a session.",
+      "Recording is listed at $75 an hour with a two-hour minimum. Mixing starts at $150; mastering is listed at $30. Ask for the scope and total for your song before you book."
     ],
-    whatsIncluded: [
-      'Pro engineer at the board',
-      'Vocal chain tuned for rap delivery',
-      'Comping, tuning, light polish in-session',
-      'Stem-ready session files delivered after',
-      'Add mixing & mastering for radio-ready output',
+    "whatsIncluded": [
+      "Current beat and lyrics",
+      "Reference tracks and notes on the vocal sound",
+      "A list of lead parts, doubles, and ad-libs",
+      "Time for setup, takes, and playback",
+      "An agreed file list and delivery date"
     ],
-    startingPrice: '$75/hr',
-    targetQueries: [
-      'rap recording studio dallas',
-      'hip hop studio dallas',
-      'rap studio deep ellum',
-      'best rap recording studio in dallas',
-      'rap studio dallas tx',
+    "startingPrice": "$75/hr recording",
+    "targetQueries": [
+      "rap recording studio dallas",
+      "hip hop studio dallas",
+      "rap studio deep ellum",
+      "rap studio dallas tx"
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Can I bring my own producer or beat?',
-        answer: 'Yes. Bring beats on a USB drive, your laptop, or pull them from your email — we route audio in any way you need. If you want a producer in the room, that\'s a Without Engineer booking with the producer running the board.',
+        "question": "How many songs can I record in one session?",
+        "answer": "That depends on the parts, takes, and work each song needs. Send a demo and your goals to the studio so the team can help you choose enough time."
       },
       {
-        question: 'How many records can I track in a session?',
-        answer: 'A four-hour block typically lands 1–2 finished vocal tracks (recorded, comped, polished). A full eight-hour day can land 3–5 depending on complexity.',
+        "question": "Can Legacy mix and master my rap track?",
+        "answer": "Yes. Mixing and mastering are separate published services. Mixing starts at $150 and mastering is listed at $30. Confirm your track count, edits, revisions, and final file needs for a quote."
       },
       {
-        question: 'Do you do mixing and mastering for rap separately?',
-        answer: 'Yes — send your stems and we mix and master them out. Most artists bundle it with their recording session via the Mixing & Mastering add-on, but standalone projects are welcome.',
-      },
-      {
-        question: 'What\'s your turnaround for finished records?',
-        answer: 'Recording session files: same day. Mixing & mastering: 5–7 business days, with two rounds of revisions included.',
-      },
+        "question": "Can I bring my producer?",
+        "answer": "Tell the studio who is coming and who will run the session. Confirm the room, engineer, and guest arrangements before booking."
+      }
     ],
-    image: '/images/studio-vocal-booth.jpg',
-    recommendedEngineerIds: ['1', '4'],
+    "image": "/images/studio-vocal-booth.jpg",
+    "recommendedEngineerIds": [
+      "ray",
+      "wayne"
+    ]
   },
   {
-    slug: 'r-and-b',
-    name: 'R&B Recording in Dallas',
-    shortName: 'R&B Recording',
-    category: 'recording',
-    oneLiner: 'Vocal-forward R&B sessions with the warmth and harmony stacking the genre demands.',
-    hero: '/images/studio-control-room.jpg',
-    intro:
-      "Modern R&B lives or dies on the vocal — and we record it that way. Legacy's chain runs warm: Neumann U 87 into an Avalon 737, room tuned for layered vocals, harmony stacks, and the breathy ad-libs that hold up on Spotify and in a car system.",
-    body: [
-      "Whether you're cutting a slow-burn ballad or a bedroom-R&B groove, the workflow's the same. Lead vocal first, comped to feel natural. Harmony stack built next, layered and tuned. Final polish handled in-session before you walk out with stems.",
-      "Our R&B engineers come from the school of capturing the take, not engineering it from a click. Real comping, real harmony stacking, real attention to the breaths between phrases.",
-      "Pricing same as recording: $75/hr with engineer, $45/hr without, two-hour minimum. Bundle mixing & mastering for $150/song or grab the Pro Package ($999) for 5 hours plus 3 mixes + 3 masters + photoshoot.",
+    "slug": "r-and-b",
+    "name": "R&B Recording in Dallas",
+    "shortName": "R&B Recording",
+    "category": "recording",
+    "oneLiner": "A lead vocal worth listening to twice.",
+    "hero": "/images/studio-control-room.jpg",
+    "intro": "R&B can put a lot into a small space: one quiet lead, a stack of harmonies, a hook that opens up. Bring the song to Legacy and plan time for the parts that give it shape.",
+    "body": [
+      "Start with the lead melody and lyrics. Mark where you want harmonies, doubles, or a spoken line. A rough phone demo can help explain the idea before the session.",
+      "Legacy records vocals across genres. Its published equipment list includes a Neumann U 87, an AKG C414, and an Avalon 737. Talk through your voice and the sound you want with the engineer.",
+      "If your song needs live instruments, guest singers, or new production, discuss that scope before you book. Recording, mixing, and mastering each need their own place in the plan."
     ],
-    whatsIncluded: [
-      'Vocal chain for layered R&B production',
-      'Harmony stacking + comping in-session',
-      'Live instrument capture if you bring a band',
-      'Mixing & mastering as add-on or bundled',
-      'Stem files + reference mixes delivered same day',
+    "whatsIncluded": [
+      "Lead melody and lyrics",
+      "Harmony and backing-vocal notes",
+      "A current instrumental or demo",
+      "Reference tracks for tone and space",
+      "A plan for recording, edits, mix, and master"
     ],
-    startingPrice: '$75/hr',
-    targetQueries: [
-      'r&b recording studio dallas',
-      'r&b vocal recording dallas',
-      'soul recording studio dallas',
-      'best r&b studio in deep ellum',
+    "startingPrice": "$75/hr recording",
+    "targetQueries": [
+      "r&b recording studio dallas",
+      "r&b vocal recording dallas",
+      "soul recording studio dallas"
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Can you record live instruments alongside vocals?',
-        answer: 'Yes. We have a live room for guitar, keys, and small ensemble work. Drums need pre-booking discussion since the room setup takes longer.',
+        "question": "Can I record harmonies and backing vocals?",
+        "answer": "Yes, vocal recording is part of Legacy’s work. Tell the studio how many parts and singers you plan to record so the session can be scoped."
       },
       {
-        question: 'Do you offer harmony stacking as a service?',
-        answer: 'It\'s included in any with-engineer R&B session. We comp, double, and stack as part of the workflow rather than billing it separately.',
+        "question": "Is mixing included in the hourly recording rate?",
+        "answer": "Mixing and mastering have separate published prices. Some packages include both. Compare the package details on Pricing or ask for a quote for your song."
       },
       {
-        question: 'How much pre-production should I do before coming in?',
-        answer: 'Bring a clear demo, lyric sheet, and reference tracks. The cleaner your prep, the more time we spend on takes that matter instead of figuring out arrangement on the clock.',
-      },
+        "question": "Can I book a package for several songs?",
+        "answer": "Legacy publishes packages with studio time, mixes, masters, and artwork. The $999 package lists five studio hours, three mixes, three masters, a consultation, and a photoshoot."
+      }
     ],
-    image: '/images/studio-control-room.jpg',
-    recommendedEngineerIds: ['1', '4'],
+    "image": "/images/studio-control-room.jpg",
+    "recommendedEngineerIds": [
+      "ray",
+      "wayne"
+    ]
   },
   {
-    slug: 'podcasts',
-    name: 'Podcast Recording in Dallas',
-    shortName: 'Podcasts',
-    category: 'creative',
-    oneLiner: 'Studio-grade podcast capture with engineer-driven editing and audiogram-ready exports.',
-    hero: '/images/studio-live-room.jpg',
-    intro:
-      "Most 'podcast studios' in Dallas are coworking rooms with two USB mics on a table. Legacy is a real recording studio that records podcasts — Shure SM7B-grade mics, an acoustically treated vocal booth with floating-ceiling treatment, and an engineer who knows how to make conversation sit comfortably in the listener's ears.",
-    body: [
-      "Up to 4 hosts in the room with isolated capture per voice, plus remote-guest routing via Squadcast or Riverside if needed. Your engineer handles routing, level-setting, and rough edits in-session — you're not learning Pro Tools on the clock.",
-      "Editing is the part that kills DIY podcasters. We deliver edited episodes (filler-word removal, awkward-pause trims, basic music beds) within 5 business days. Audiograms and 60-second social cuts available as add-ons.",
-      "Recurring shows get block-discount pricing. If you're publishing weekly, we'll lock in a same-time-every-week slot with a templated workflow so each session takes less of your bandwidth.",
+    "slug": "podcasts",
+    "name": "Podcast Recording in Dallas",
+    "shortName": "Podcasts",
+    "category": "creative",
+    "oneLiner": "Keep the conversation. Plan the recording.",
+    "hero": "/images/studio-live-room.jpg",
+    "intro": "A good guest can take a conversation somewhere you did not expect. The recording plan should be clear before anyone sits down. Legacy offers podcast recording at its Deep Ellum studio.",
+    "body": [
+      "Send the team your show format, guest count, planned episode length, and a sample if you have one. Say whether you need audio only or want to discuss video as well.",
+      "Recording an episode and editing it are separate tasks. Ask what the quote covers: room time, engineer, edit, music, final files, and any clips you want to share.",
+      "For remote guests, name the connection tool and ask the studio to confirm a setup that fits. Arrange a check before the session; do not assume a specific remote platform is included."
     ],
-    whatsIncluded: [
-      'Up to 4 host mics + remote guest routing',
-      'Treated room — no echo, no HVAC noise',
-      'Engineer-driven rough edits in-session',
-      'Edited episode delivered in 5 days',
-      'Audiograms + social cuts as add-on',
+    "whatsIncluded": [
+      "Show outline and guest count",
+      "Episode length and recording goals",
+      "Audio or video requirements",
+      "Remote guest details, if needed",
+      "Editing scope and final file requirements"
     ],
-    startingPrice: '$75/hr',
-    targetQueries: [
-      'podcast studio dallas',
-      'podcast recording dallas',
-      'dallas podcast studio rental',
-      'professional podcast recording deep ellum',
+    "startingPrice": "$75/hr recording",
+    "targetQueries": [
+      "podcast studio dallas",
+      "podcast recording dallas",
+      "dallas podcast studio rental",
+      "professional podcast recording deep ellum"
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Can I record remote guests?',
-        answer: 'Yes. We integrate Squadcast or Riverside on the engineer\'s end so remote guests get isolated capture quality. You just need them on a decent mic.',
+        "question": "Does Legacy record podcasts?",
+        "answer": "Yes. Podcast recording is listed in Legacy’s services. Share your format and guest count with the team before choosing a session."
       },
       {
-        question: 'Do you edit and produce too, or just record?',
-        answer: 'Both. The default podcast booking includes engineer-driven rough editing in-session. Final edited episode delivered within 5 business days. Full sound design + music beds available as upgrades.',
+        "question": "Does the rate include editing or video?",
+        "answer": "The published recording rate does not define a podcast edit or video package. Ask for a quote that names the services and files you need."
       },
       {
-        question: 'Is there a discount for recurring weekly shows?',
-        answer: 'Yes — recurring weekly bookings get block-discount pricing. We\'ll set up a templated workflow so each session is faster than the last.',
-      },
+        "question": "Can I record a series?",
+        "answer": "Send your planned episode count, dates, and release schedule. The team can discuss the time and scope before you reserve sessions."
+      }
     ],
-    image: '/images/studio-live-room.jpg',
-    recommendedEngineerIds: ['3'],
+    "image": "/images/studio-live-room.jpg",
+    "recommendedEngineerIds": [
+      "ray"
+    ]
   },
   {
-    slug: 'voiceover',
-    name: 'Voiceover Recording in Dallas',
-    shortName: 'Voiceover',
-    category: 'creative',
-    oneLiner: 'Broadcast-ready voiceover sessions for commercials, audiobooks, narration, and animation.',
-    hero: '/images/studio-vocal-booth.jpg',
-    intro:
-      "Working voice actor with a regular client list or recording your first national spot — we run voiceover sessions like the broadcast clients they're for: tight, prepped, and ready for direction from your producer (in-room, on-line, or both).",
-    body: [
-      "Phone patch, ipDTL, Source-Connect, Zoom — pick your remote-direction stack and we'll have it tested before you walk in. Engineer-directed sessions and self-direction both supported.",
-      "We deliver broadcast-spec files (WAV, AIFF, MP3 — your spec) with leveling, de-noise, and edit cleanup applied. Tongue-clicks, breath edits, room tone — handled in-session so you walk out with usable audio.",
-      "Audiobooks book as full-day or half-day sessions with quiet-room reads and engineer-driven edit cleanup. ACX-compliant masters available as add-on.",
+    "slug": "voiceover",
+    "name": "Voiceover Recording in Dallas",
+    "shortName": "Voiceover",
+    "category": "creative",
+    "oneLiner": "A clear read starts with a clear brief.",
+    "hero": "/images/studio-vocal-booth.jpg",
+    "intro": "A voiceover may be thirty seconds long and still need several reads. Bring the final script, the audience, and the file requirements. Legacy records voiceovers and advertisements in Deep Ellum.",
+    "body": [
+      "Mark names, pronunciations, and any lines that must fit a time limit. A reference read helps show the pace and tone you want without asking the engineer to guess.",
+      "For client work, agree on who will approve the take. If a director needs to listen remotely, ask about the connection and test plan before the session.",
+      "An ad, audiobook, and training film may each need different files. Send the delivery specifications before booking and confirm any editing, pickups, and deadline in the quote."
     ],
-    whatsIncluded: [
-      'Broadcast-grade vocal chain',
-      'Source-Connect / ipDTL / Zoom remote direction',
-      'Edit cleanup + leveling in-session',
-      'Files delivered to spec',
-      'ACX-compliant audiobook masters available',
+    "whatsIncluded": [
+      "Final script with pronunciation notes",
+      "Timing and tone references",
+      "Client approval contact",
+      "Required file format and technical specifications",
+      "A plan for edits, pickups, and delivery"
     ],
-    startingPrice: '$75/hr',
-    targetQueries: [
-      'voiceover studio dallas',
-      'voiceover recording dallas',
-      'audiobook recording studio dallas',
-      'commercial vo recording deep ellum',
+    "startingPrice": "$75/hr recording",
+    "targetQueries": [
+      "voiceover studio dallas",
+      "voiceover recording dallas",
+      "audiobook recording studio dallas",
+      "commercial vo recording deep ellum"
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Do you support remote direction?',
-        answer: 'Yes — Source-Connect, ipDTL, Zoom, and phone patch are all supported. Tell us which one your client uses when you book.',
+        "question": "Can I record an ad or narration at Legacy?",
+        "answer": "Yes. Legacy lists voiceover and advertising recording among its services. Send the script and required files so the team can confirm the right session."
       },
       {
-        question: 'Can I do audiobook recording here?',
-        answer: 'Yes. Audiobooks book as full or half-day sessions in the quiet room. ACX-compliant masters are an add-on if you\'re publishing through Audible.',
+        "question": "Can my client direct the session remotely?",
+        "answer": "Ask the studio before booking. Share the client’s connection requirements and arrange a test; no specific remote platform is promised here."
       },
       {
-        question: 'How fast can I get files after the session?',
-        answer: 'Edit-cleanup audio walks out with you on a USB drive or arrives in your inbox same-day. Final mastered deliverables for commercials usually within 24 hrs.',
-      },
+        "question": "Can you meet my platform’s audio requirements?",
+        "answer": "Send the current requirements with your brief. The studio must confirm the recording, editing, and delivery scope before you rely on a deadline or format."
+      }
     ],
-    image: '/images/studio-vocal-booth.jpg',
-    recommendedEngineerIds: ['3'],
+    "image": "/images/studio-vocal-booth.jpg",
+    "recommendedEngineerIds": [
+      "ray"
+    ]
   },
   {
-    slug: 'artist-development',
-    name: 'Artist Development in Dallas',
-    shortName: 'Artist Development',
-    category: 'creative',
-    oneLiner: 'Strategy, branding, and creative direction beyond the recording booth.',
-    hero: '/images/about-studio-wide.jpg',
-    intro:
-      "Recording the song is the easy part. Releasing it, building an audience, and turning a song into a career is where most independent artists stall. Legacy's artist development is led by music business maven Matthew Medlock — a 10-year industry veteran with a Music Business degree and GRAMMYU background. Not a contract, not a percentage of your masters: a working relationship that helps you make the right decisions at the right time.",
-    body: [
-      "Engagement levels run from one-off consultations (you're stuck on a release plan, you need a second pair of ears on a brand identity) to multi-month creative-direction relationships (we help you plan the rollout, the visuals, the social strategy, the positioning).",
-      "We don't do management. We don't take points on your masters. We help you make better decisions and connect you with the right people in the Dallas scene — venues, photographers, designers, distributors — when you need them.",
-      "Best fit: artists with at least one solid record under their belt who want to take the next step seriously. If you're still finding your sound, book recording time first and let's talk after a few sessions.",
+    "slug": "artist-development",
+    "name": "Artist Development in Dallas",
+    "shortName": "Artist Development",
+    "category": "creative",
+    "oneLiner": "Bring the music. Talk through the next move.",
+    "hero": "/images/about-studio-wide.jpg",
+    "intro": "You may have a finished song and still have a page of questions. Which work comes next? What needs a budget? What can wait? A music business consultation gives those questions a place to start.",
+    "body": [
+      "Legacy is owned and operated by Matthew Medlock, whose background includes a Music Business degree. The studio publishes a $99 music business consultation.",
+      "Bring your music, a short account of what you have released, and the questions you want to cover. Set a budget and a near-term goal before the conversation.",
+      "Need artwork, production, or photos as well? Legacy lists those services and packages. Ask for a written scope so you can compare a consultation with a wider project."
     ],
-    whatsIncluded: [
-      'Release strategy + roadmap',
-      'Brand identity review',
-      'Creative direction for visuals + content',
-      'Connections to Dallas scene (venues, designers, photogs)',
-      'Multi-month engagements available',
+    "whatsIncluded": [
+      "Music or demos to discuss",
+      "A short release history",
+      "Your next goal and available budget",
+      "Questions about the business side of the work",
+      "An agreed consultation scope"
     ],
-    startingPrice: 'Consultation $99 / Multi-month engagements custom',
-    targetQueries: [
-      'artist development dallas',
-      'music branding dallas',
-      'independent artist support dallas',
-      'music career development deep ellum',
+    "startingPrice": "$99 consultation",
+    "targetQueries": [
+      "artist development dallas",
+      "music branding dallas",
+      "independent artist support dallas",
+      "music career development deep ellum"
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Is this management?',
-        answer: 'No. We don\'t take points on your masters, we don\'t book your shows, we don\'t sign you to anything. We\'re a working relationship for strategy and creative direction.',
+        "question": "What does an artist development consultation cost?",
+        "answer": "Legacy lists a music business consultation at $99. Confirm the duration, topics, and any follow-up work before you book."
       },
       {
-        question: 'Who is this best for?',
-        answer: 'Artists with at least one strong record finished who want to take the next step seriously — releasing intentionally, building real audience, and not winging the brand decisions.',
+        "question": "Does a consultation include management or a record deal?",
+        "answer": "The published offer is a consultation. Do not assume management, a record deal, rights terms, or promotion is part of it. Ask the studio for any wider proposal in writing."
       },
       {
-        question: 'How does pricing work?',
-        answer: 'One-off consultations are flat-rate. Multi-month engagements are custom-scoped — we start with a free intro call to see if it\'s a fit and what level of engagement makes sense.',
-      },
+        "question": "What should I bring?",
+        "answer": "Bring your music, release plans, budget, and a short list of questions. Pick the decisions you most need help making."
+      }
     ],
-    image: '/images/about-studio-wide.jpg',
-    recommendedEngineerIds: ['2', '4'],
-  },
+    "image": "/images/about-studio-wide.jpg",
+    "recommendedEngineerIds": [
+      "matthew"
+    ]
+  }
 ]
 
 // =========================================================================
@@ -397,58 +435,58 @@ export interface PricingTier {
 // Real pricing sourced from legacymusicgroup.com 2026-05-07.
 export const pricingTiers: PricingTier[] = [
   {
-    name: 'Recording',
-    price: '$75',
-    unit: '/hour · 2-hour minimum',
-    tagline: 'Vocals, voiceovers, podcasts.',
-    features: [
-      'Pro engineer at the board',
-      'Vocal booth with floating-ceiling treatment',
-      'Industry-standard tracking workflow',
-      'Discounts on 5+ hour blocks',
-      'Bring your beat, vocals, or podcast crew',
-    ],
+    "name": "Recording",
+    "price": "$75",
+    "unit": "/hour · 2-hour minimum",
+    "tagline": "Vocals, voiceovers, podcasts.",
+    "features": [
+      "Vocal, voiceover, and podcast recording",
+      "Two-hour minimum",
+      "Discounts begin at five-hour blocks",
+      "Confirm room and engineer when booking"
+    ]
   },
   {
-    name: 'Starter Package',
-    price: '$399',
-    unit: '2 hrs · 1 mix · 1 master · cover art',
-    tagline: 'Single-release ready.',
-    features: [
-      '2 hours of studio time',
-      '1 song mixed',
-      '1 song mastered',
-      'Cover art designed',
-      'Instagram story asset',
-    ],
+    "name": "Starter Package",
+    "price": "$399",
+    "unit": "2 hrs · 1 mix · 1 master · cover art",
+    "tagline": "Studio time and a finished-song package.",
+    "features": [
+      "2 hours of studio time",
+      "1 song mixed",
+      "1 song mastered",
+      "Cover art designed",
+      "Instagram story"
+    ]
   },
   {
-    name: 'Pro Package',
-    price: '$999',
-    unit: '5 hrs · 3 mixes · 3 masters · photoshoot',
-    tagline: 'Multi-track project, fully polished.',
-    features: [
-      '5 hours of studio time',
-      '3 mixes + 3 masters',
-      'Cover art + Instagram story',
-      'Music business consultation',
-      '1-hour photoshoot',
+    "name": "Pro Package",
+    "price": "$999",
+    "unit": "5 hrs · 3 mixes · 3 masters · photoshoot",
+    "tagline": "Studio time, songs, and a photoshoot.",
+    "features": [
+      "5 hours of studio time",
+      "3 mixes + 3 masters",
+      "Cover art + Instagram story",
+      "Music business consultation",
+      "1-hour photoshoot"
     ],
-    highlighted: true,
+    "highlighted": true
   },
   {
-    name: 'Album Package',
-    price: '$2,900',
-    unit: '10 hrs · 7 mixes · 7 masters · music video',
-    tagline: 'Album-ready, release-day ready.',
-    features: [
-      '10 hours of studio time',
-      '7 mixes + 7 masters',
-      'Full music video production',
-      'Photoshoot included',
-      'Social media content kit',
-    ],
-  },
+    "name": "Album Package",
+    "price": "$2,900",
+    "unit": "10 hrs · 7 mixes · 7 masters · music video",
+    "tagline": "A wider music and visual project.",
+    "features": [
+      "10 hours of studio time",
+      "7 mixes and 7 masters",
+      "Cover art, Instagram story and post",
+      "Consultation with Medlock",
+      "1-hour photoshoot",
+      "Music video with published 1080p scope"
+    ]
+  }
 ]
 
 // À la carte services — beyond the packages above.
@@ -460,55 +498,55 @@ export interface AlaCarteService {
 
 export const alaCarteServices: AlaCarteService[] = [
   {
-    name: 'Mixing',
-    price: '$150+',
-    description: 'Industry-leading mixing handled by experienced engineers.',
+    "name": "Mixing",
+    "price": "$150+",
+    "description": "Balance the parts of your song. Ask for a quote based on the tracks and edits."
   },
   {
-    name: 'Mastering',
-    price: '$30',
-    description: 'Final polish for singles or full projects.',
+    "name": "Mastering",
+    "price": "$30",
+    "description": "Final polish for singles or full projects."
   },
   {
-    name: 'Custom Production',
-    price: '$500',
-    description: 'One-on-one beat production with a Legacy producer.',
+    "name": "Custom Production",
+    "price": "$500",
+    "description": "One-on-one beat production with a Legacy producer."
   },
   {
-    name: 'Engineer Rate — Room A',
-    price: '$55/hour',
-    description: 'Hourly engineer rate when booking the A Room.',
+    "name": "Freelance Rate — Room A",
+    "price": "$55/hour",
+    "description": "Published freelance studio rate. Confirm room access and engineer arrangements."
   },
   {
-    name: 'Engineer Rate — Room B',
-    price: '$45/hour',
-    description: 'Hourly engineer rate when booking the B Room.',
+    "name": "Freelance Rate — Room B",
+    "price": "$45/hour",
+    "description": "Published freelance studio rate. Confirm room access and engineer arrangements."
   },
   {
-    name: 'Major Label Rate',
-    price: '$175/hour',
-    description: 'Rate for major-label artists or label-budgeted sessions.',
+    "name": "Major Label Rate",
+    "price": "$175/hour",
+    "description": "Rate for major-label artists or label-budgeted sessions."
   },
   {
-    name: 'Lessons',
-    price: '$100',
-    description: 'Recording and production lessons with a pro engineer.',
+    "name": "Lessons",
+    "price": "$100",
+    "description": "Recording and production lessons with a pro engineer."
   },
   {
-    name: 'Music Business Consultation',
-    price: '$99',
-    description: 'Personalized guidance on music business questions.',
+    "name": "Music Business Consultation",
+    "price": "$99",
+    "description": "Personalized guidance on music business questions."
   },
   {
-    name: 'Listening Parties',
-    price: '$125',
-    description: 'Lounge-space hosting · 3-hour minimum.',
+    "name": "Listening Parties",
+    "price": "$125",
+    "description": "Lounge-space hosting · 3-hour minimum."
   },
   {
-    name: 'Graphic Design',
-    price: 'Call for Quote',
-    description: 'Album covers, song artwork, marketing materials.',
-  },
+    "name": "Graphic Design",
+    "price": "Call for Quote",
+    "description": "Album covers, song artwork, marketing materials."
+  }
 ]
 
 // =========================================================================
@@ -525,175 +563,168 @@ export interface GearItem {
 
 // Real gear list sourced from legacymusicgroup.com/equipment 2026-05-07.
 export const gearList: GearItem[] = [
-  // Microphones
   {
-    name: 'Neumann U 87',
-    brand: 'Neumann',
-    category: 'microphone',
-    description: 'The vocal mic. Lives in the vocal booth.',
+    "name": "Neumann U 87",
+    "brand": "Neumann",
+    "category": "microphone",
+    "description": "Listed for the vocal booth."
   },
   {
-    name: 'AKG C414',
-    brand: 'AKG',
-    category: 'microphone',
-    description: 'Versatile workhorse condenser — vocals, instruments, room.',
+    "name": "AKG C414",
+    "brand": "AKG",
+    "category": "microphone",
+    "description": "Listed in B Room."
   },
   {
-    name: 'Kaotica Eyeball',
-    brand: 'Kaotica',
-    category: 'microphone',
-    description: 'Portable iso ball for tighter vocal capture when needed.',
-  },
-  // Preamps & Outboard
-  {
-    name: 'Avalon 737',
-    brand: 'Avalon',
-    category: 'preamp',
-    description: 'Tube preamp + EQ + opto compressor in one — silky vocal chain.',
+    "name": "Kaotica Eyeball",
+    "brand": "Kaotica",
+    "category": "microphone",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Purple Audio Compressor',
-    brand: 'Purple Audio',
-    category: 'compressor',
-    description: 'High-end outboard compression for vocals and bus work.',
-  },
-  // Audio Interfaces
-  {
-    name: 'UA Apollo',
-    brand: 'Universal Audio',
-    category: 'preamp',
-    description: 'Front-end interface with UAD plugin processing for tracking.',
+    "name": "Avalon 737",
+    "brand": "Avalon",
+    "category": "preamp",
+    "description": "Listed in A Room."
   },
   {
-    name: 'UA Satellite Expansion CPU',
-    brand: 'Universal Audio',
-    category: 'outboard',
-    description: 'Extra UAD horsepower for plugin-heavy mix sessions.',
+    "name": "Purple Audio Compressor",
+    "brand": "Purple Audio",
+    "category": "compressor",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Focusrite Scarlett',
-    brand: 'Focusrite',
-    category: 'preamp',
-    description: 'Secondary interface for routing and scratch tracking.',
+    "name": "UA Apollo",
+    "brand": "Universal Audio",
+    "category": "preamp",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Stagesnake 16-Input',
-    brand: 'Stagesnake',
-    category: 'outboard',
-    description: 'Multi-input snake for live drum and band sessions.',
-  },
-  // Monitoring
-  {
-    name: 'Focal Duo Monitors',
-    brand: 'Focal',
-    category: 'monitor',
-    description: 'Mains. Detailed top-end and tight low-mid translation.',
+    "name": "UA Satellite Expansion CPU",
+    "brand": "Universal Audio",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Adams Studio 10 Monitors',
-    brand: 'Adams',
-    category: 'monitor',
-    description: 'Alternate mix-check monitoring.',
+    "name": "Focusrite Scarlett",
+    "brand": "Focusrite",
+    "category": "preamp",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Presonus Sceptre S6',
-    brand: 'Presonus',
-    category: 'monitor',
-    description: 'Coaxial monitors in B Room and the Vocal Booth.',
+    "name": "Stagesnake 16-Input",
+    "brand": "Stagesnake",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Mackie Thump 12 PA + 18" Sub',
-    brand: 'Mackie',
-    category: 'monitor',
-    description: 'PA system for listening parties and group playback.',
+    "name": "Focal Duo Monitors",
+    "brand": "Focal",
+    "category": "monitor",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Digimax Headphone Amp',
-    brand: 'Presonus',
-    category: 'outboard',
-    description: 'Distribution amp for multi-headphone monitoring.',
+    "name": "Adams Studio 10 Monitors",
+    "brand": "Adams",
+    "category": "monitor",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Presonus HP60 Headphone Amp',
-    brand: 'Presonus',
-    category: 'outboard',
-    description: 'Six-channel headphone amp for full-band sessions.',
-  },
-  // Software
-  {
-    name: 'Pro Tools',
-    brand: 'Avid',
-    category: 'software',
-    description: 'Default DAW for tracking and mixing.',
+    "name": "Presonus Sceptre S6",
+    "brand": "Presonus",
+    "category": "monitor",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Studio One',
-    brand: 'Presonus',
-    category: 'software',
-    description: 'Alternate DAW available on request.',
+    "name": "Mackie Thump 12 PA + 18\" Sub",
+    "brand": "Mackie",
+    "category": "monitor",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Logic Pro X',
-    brand: 'Apple',
-    category: 'software',
-    description: 'Available for songwriters and producers who came up in Logic.',
+    "name": "Digimax Headphone Amp",
+    "brand": "Presonus",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'UAD Plugins',
-    brand: 'Universal Audio',
-    category: 'software',
-    description: 'Full UAD plugin library running on the Apollo + Satellite.',
+    "name": "Presonus HP60 Headphone Amp",
+    "brand": "Presonus",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
   },
   {
-    name: 'Waves Bundle',
-    brand: 'Waves',
-    category: 'software',
-    description: 'Industry-standard mixing and processing plugins.',
+    "name": "Pro Tools",
+    "brand": "Avid",
+    "category": "software",
+    "description": "Used by engineer and producer Wayne."
   },
   {
-    name: 'Slate Digital',
-    brand: 'Slate Digital',
-    category: 'software',
-    description: 'Modern modeling plugins for vocal and drum chains.',
-  },
-  // Control / Computing
-  {
-    name: 'C24 Control Surface',
-    brand: 'Avid',
-    category: 'console',
-    description: 'Pro Tools control surface — physical faders, EQ, and routing.',
+    "name": "Studio One",
+    "brand": "Presonus",
+    "category": "software",
+    "description": "Ask the studio to confirm the DAW and version for your project."
   },
   {
-    name: 'iMac 27"',
-    brand: 'Apple',
-    category: 'instrument',
-    description: 'Workstation in A Room and the Vocal Booth.',
+    "name": "Logic Pro X",
+    "brand": "Apple",
+    "category": "software",
+    "description": "Listed among the studio’s recording software."
   },
   {
-    name: 'Akai MAX 49 MIDI Controller',
-    brand: 'Akai',
-    category: 'instrument',
-    description: 'For producers tracking with virtual instruments in-room.',
-  },
-  // Treatment + amenities
-  {
-    name: 'Vocal Booth — Floating Ceiling',
-    brand: 'Custom',
-    category: 'outboard',
-    description: 'Iso-treated booth with floating ceiling acoustic treatment.',
+    "name": "UAD Plugins",
+    "brand": "Universal Audio",
+    "category": "software",
+    "description": "Listed plugin tools; ask about any specific plugin."
   },
   {
-    name: 'Two Producer Workstations',
-    brand: 'Legacy Music Group',
-    category: 'instrument',
-    description: 'Producer-side desks for collab sessions or beat-finishing.',
+    "name": "Waves Bundle",
+    "brand": "Waves",
+    "category": "software",
+    "description": "Listed mixing software; confirm the version your project needs."
   },
   {
-    name: 'Prime Acoustics Treatment',
-    brand: 'Prime Acoustics',
-    category: 'outboard',
-    description: 'Acoustic treatment throughout the studio.',
+    "name": "Slate Digital",
+    "brand": "Slate Digital",
+    "category": "software",
+    "description": "Listed plugin tools; check your session’s needs."
   },
+  {
+    "name": "C24 Control Surface",
+    "brand": "Avid",
+    "category": "console",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  },
+  {
+    "name": "iMac 27\"",
+    "brand": "Apple",
+    "category": "instrument",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  },
+  {
+    "name": "Akai MAX 49 MIDI Controller",
+    "brand": "Akai",
+    "category": "instrument",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  },
+  {
+    "name": "Vocal Booth — Floating Ceiling",
+    "brand": "Custom",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  },
+  {
+    "name": "Two Producer Workstations",
+    "brand": "Legacy Music Group",
+    "category": "instrument",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  },
+  {
+    "name": "Prime Acoustics Treatment",
+    "brand": "Prime Acoustics",
+    "category": "outboard",
+    "description": "Part of Legacy’s published equipment list. Confirm availability for your session."
+  }
 ]
 
 // =========================================================================
@@ -709,136 +740,192 @@ export interface Neighborhood {
   intro: string
   body: string[]
   highlights: { label: string; detail: string }[]
-  geo: { latitude: number; longitude: number }
+  geo?: { latitude: number; longitude: number }
   image?: string
 }
 
 export const neighborhoods: Neighborhood[] = [
   {
-    slug: 'deep-ellum',
-    name: 'Deep Ellum',
-    fullName: 'Deep Ellum, Dallas',
-    oneLiner: 'Where Legacy Music Group lives — Dallas\'s historic music neighborhood.',
-    driveTime: '0 minutes — we\'re right here',
-    intro:
-      "Deep Ellum has been the heartbeat of Dallas music for over a century. Legendary blues sessions, punk shows in the 80s, hip-hop and indie waves through every decade since — the neighborhood is the reason Legacy exists.",
-    body: [
-      "Walk a block in any direction from the studio and you'll pass venues that have hosted every kind of artist: Trees, Three Links, Stubbs, Bomb Factory. The mural-covered walls and late-night food spots that fuel the creativity inside our walls.",
-      "Deep Ellum sits in 75226 — accessible from the Deep Ellum DART rail station, just east of downtown Dallas. Most artists who book at Legacy plan their session around dinner at a Main Street restaurant or a show at a nearby venue afterward.",
-      "Recording studios in Deep Ellum have a particular character: smaller rooms, more individual attention, and a tighter connection to the Dallas music scene than the bigger commercial studios in North Dallas or Garland. Legacy is built squarely in that tradition with a 2026 modern-luxury upgrade.",
+    "slug": "deep-ellum",
+    "name": "Deep Ellum",
+    "fullName": "Deep Ellum, Dallas",
+    "oneLiner": "Record on Main Street.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "Legacy is at 2815 Main St, Suite A, in Deep Ellum. Use this address for your session, whether you are coming to record a verse, finish a mix, or talk through a project.",
+    "body": [
+      "A studio visit has a few moving parts: your start time, the files, the people, and the way into the building. Save the studio phone number before you set out.",
+      "Parking near the studio includes meters and paid lots. Check the posted rules where you park and leave time to reach Suite A. Ask the team about entry and loading gear."
     ],
-    highlights: [
-      { label: 'DART Station', detail: 'Deep Ellum Station — short walk from studio' },
-      { label: 'ZIP Code', detail: '75226' },
-      { label: 'Drive from Downtown', detail: '5 minutes from the heart of Dallas' },
-      { label: 'Nearby Venues', detail: 'Trees · Three Links · Bomb Factory · Stubbs' },
-      { label: 'Late-Night Food', detail: 'Easy walk to multiple late-hours spots' },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
     ],
-    geo: { latitude: 32.7842, longitude: -96.7841 },
-    image: '/images/studio-lobby.jpg',
+    "image": "/images/studio-lobby.jpg"
   },
   {
-    slug: 'uptown',
-    name: 'Uptown Dallas',
-    fullName: 'Uptown Dallas',
-    oneLiner: "A 10-minute drive south for the artists building careers from Dallas's growth corridor.",
-    driveTime: '10 min · 4 miles',
-    intro:
-      "Uptown is where a lot of Dallas's working creative class lives — designers, musicians, producers all sharing rent in the same towers and walk-up brownstones. Legacy is a quick highway hop or a 10-minute Lyft from anywhere in Uptown.",
-    body: [
-      "If you live in Uptown, you have your pick of recording studios in the metro area, but most of the bigger commercial ones are 25–40 minutes north or east. Legacy in Deep Ellum is the closest premium studio with engineer-driven sessions.",
-      "Uptown artists typically book evening sessions — leave work, hit the studio for a four-hour block, grab dinner in Deep Ellum after. Sessions that start at 6 or 7 PM and run to 10 or 11 are the most common booking pattern from Uptown.",
-      "Free street parking in Deep Ellum after 6 PM and a dedicated lot for sessions makes the 10-minute hop frictionless even on weeknights.",
+    "slug": "uptown",
+    "name": "Uptown Dallas",
+    "fullName": "Uptown Dallas",
+    "oneLiner": "From Uptown to a session in Deep Ellum.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "Planning studio time from Uptown Dallas? Legacy records at 2815 Main St, Suite A, in Deep Ellum. Put the session time and address in your calendar before planning the rest of the evening.",
+    "body": [
+      "An after-work session needs a realistic start time. Check the route from your actual address and allow time for parking and arrival.",
+      "Have the beat or session files ready before you leave. Send your goals to the studio so you can discuss the work and available times together."
     ],
-    highlights: [
-      { label: 'Drive time', detail: '10 minutes via Woodall Rodgers Fwy' },
-      { label: 'Distance', detail: 'Approximately 4 miles' },
-      { label: 'Best session times', detail: 'Evening blocks (6–10 PM) work well from Uptown' },
-      { label: 'Parking', detail: 'Free street parking in Deep Ellum after 6 PM' },
-    ],
-    geo: { latitude: 32.8014, longitude: -96.8021 },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
+    ]
   },
   {
-    slug: 'bishop-arts',
-    name: 'Bishop Arts',
-    fullName: 'Bishop Arts District, Dallas',
-    oneLiner: 'A 12-minute drive across the river for the Oak Cliff creative community.',
-    driveTime: '12 min · 6 miles',
-    intro:
-      "Bishop Arts has its own creative density — independent artists, working musicians, design studios, and the kind of small-business culture that breeds collaboration. Legacy is a quick crossing of the Trinity River away.",
-    body: [
-      "Recording studios in Oak Cliff itself are limited, and most Bishop Arts artists end up booking either at home setups or trekking to North Dallas. Legacy in Deep Ellum is the nearest premium studio — close enough for weeknight sessions without the commitment of a north-side drive.",
-      "Bishop Arts is heavy on R&B, soul, and Latin music — Legacy's engineering chain runs particularly well for those genres. We have engineers who specialize in soul and R&B production specifically.",
-      "Cross the Margaret Hunt Hill Bridge or hit Houston Street and you're at the studio in 12 minutes. Park in our lot, work, eat in Deep Ellum, head home.",
+    "slug": "bishop-arts",
+    "name": "Bishop Arts",
+    "fullName": "Bishop Arts District, Dallas",
+    "oneLiner": "An Oak Cliff project. A Deep Ellum session.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "For artists coming from Bishop Arts, Legacy offers recording and production across town at its Deep Ellum studio. There is one studio address: 2815 Main St, Suite A, Dallas.",
+    "body": [
+      "If a song brings several people into the room, sort out who needs to attend before you book. Share the guest count and any instruments with the studio.",
+      "Bring a demo that shows the parts you want to keep and the ones you want to work on. That is more useful than trying to fit the song into a genre label."
     ],
-    highlights: [
-      { label: 'Drive time', detail: '12 minutes' },
-      { label: 'Distance', detail: 'Approximately 6 miles via Margaret Hunt Hill Bridge' },
-      { label: 'Genre fit', detail: 'R&B, soul, Latin — engineers experienced in all three' },
-    ],
-    geo: { latitude: 32.7501, longitude: -96.8276 },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
+    ]
   },
   {
-    slug: 'plano',
-    name: 'Plano',
-    fullName: 'Plano, TX',
-    oneLiner: 'A 25-minute drive south on the Tollway for the North Dallas artist community.',
-    driveTime: '25 min · 19 miles',
-    intro:
-      "Plano artists looking for a real recording studio with engineer-driven sessions usually have one of two paths: stay local at the smaller Plano-area studios, or come down to Deep Ellum for the deeper Dallas music infrastructure. Legacy is the case for the second option.",
-    body: [
-      "The drive is direct — Dallas North Tollway south to Woodall Rodgers, exit on the Deep Ellum side, you're at the studio. 25 minutes off-peak, 35–40 in rush traffic.",
-      "Most Plano clients book full-day sessions or 4-hour evening blocks specifically because the drive makes it worth doing more in one trip. We accommodate the schedule — full-day sessions get a dedicated parking spot and we're happy to coordinate dinner orders mid-day.",
-      "If you're recording in Plano regularly and the local options aren't hitting the mark on engineering depth or genre specialization, the Deep Ellum drive is worth doing once to feel the difference.",
+    "slug": "plano",
+    "name": "Plano",
+    "fullName": "Plano, TX",
+    "oneLiner": "Plan the music and the trip from Plano.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "If you are weighing a Dallas session from Plano, start with the work you need done. Legacy offers recording, mixing, mastering, and production at its Deep Ellum address.",
+    "body": [
+      "Compare the full scope before comparing hourly rates. Does the quote include an engineer, editing, a mix, or just recording time? Ask for the same details from each studio.",
+      "Once the session is confirmed, check travel time from your part of Plano. Back up your files and agree on what you will receive, so the trip has a clear purpose."
     ],
-    highlights: [
-      { label: 'Drive time', detail: '25 minutes off-peak via Dallas North Tollway' },
-      { label: 'Distance', detail: 'Approximately 19 miles' },
-      { label: 'Best booking pattern', detail: 'Full-day or 4-hour evening blocks' },
-      { label: 'Parking', detail: 'Dedicated lot for full-day sessions' },
-    ],
-    geo: { latitude: 33.0198, longitude: -96.6989 },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
+    ]
   },
   {
-    slug: 'frisco',
-    name: 'Frisco',
-    fullName: 'Frisco, TX',
-    oneLiner: 'A 35-minute drive for North Dallas artists who want serious studio infrastructure.',
-    driveTime: '35 min · 30 miles',
-    intro:
-      "Frisco is one of the fastest-growing music markets in the metro — and one of the most underserved by serious recording studios. Most working artists end up driving to Plano, Garland, or Dallas proper for engineer-driven sessions. Legacy is the Deep Ellum option.",
-    body: [
-      "Tollway south to Woodall Rodgers, ~35 minutes door-to-door. Worth doing for sessions where the engineering depth matters more than convenience.",
-      "Frisco artists tend to book full-day sessions and stack work — we'll record vocals in the morning, mix and master after lunch, and have you driving home with finished records by evening. This works particularly well for hip-hop and R&B artists juggling work schedules.",
-      "If you're looking for the kind of studio that has a real console, real engineers, and a real connection to the Dallas music scene — and the closer Frisco/Plano options aren't hitting that mark — Legacy is built for that exact gap.",
+    "slug": "frisco",
+    "name": "Frisco",
+    "fullName": "Frisco, TX",
+    "oneLiner": "Make the Dallas session worth the trip.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "Coming from Frisco? Give the studio your song list, demos, and priorities before you choose a block of time. Legacy is in Deep Ellum, Dallas, at 2815 Main St, Suite A.",
+    "body": [
+      "A longer trip can make it tempting to fit everything into one day. Separate the work you need to record from the mixing and mastering that may follow.",
+      "Legacy publishes a two-hour recording minimum and discounts starting at five-hour blocks. Ask for the available dates and a quote for your plan; a longer booking does not guarantee a fixed number of finished songs."
     ],
-    highlights: [
-      { label: 'Drive time', detail: '35 minutes off-peak via Dallas North Tollway' },
-      { label: 'Distance', detail: 'Approximately 30 miles' },
-      { label: 'Best booking pattern', detail: 'Full-day sessions to maximize the drive' },
-    ],
-    geo: { latitude: 33.1507, longitude: -96.8236 },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
+    ]
   },
   {
-    slug: 'richardson',
-    name: 'Richardson',
-    fullName: 'Richardson, TX',
-    oneLiner: 'A 20-minute drive south for the inner-ring North Dallas creative scene.',
-    driveTime: '20 min · 15 miles',
-    intro:
-      "Richardson sits between the deeper-suburb music scenes (Plano, Frisco) and the Dallas-proper studios. Most Richardson artists end up at home setups or making the trek south. Legacy is 20 minutes away — manageable for a weeknight session.",
-    body: [
-      "75 South to Woodall Rodgers, exit Live Oak/Pacific, you're at the studio. 20 minutes off-peak, 25 in traffic.",
-      "Richardson has a sizable hip-hop and R&B scene from UTD and surrounding communities — Legacy's engineering depth in those genres makes the trip worthwhile for serious work. Evening blocks work well; we accommodate weekday post-work schedules.",
-      "If you're recording in Richardson regularly and want to step up to engineer-driven sessions in a treated room with real outboard gear, Legacy is the closest premium option south of LBJ.",
+    "slug": "richardson",
+    "name": "Richardson",
+    "fullName": "Richardson, TX",
+    "oneLiner": "A recording plan before the drive from Richardson.",
+    "driveTime": "Studio in Deep Ellum, Dallas",
+    "intro": "Legacy welcomes project enquiries from Richardson at its Deep Ellum recording studio. Share your music, voiceover script, or podcast plan before you reserve time.",
+    "body": [
+      "For a project made partly at home, ask how to prepare the files. Include the software you used, any plugins the session needs, and a rough mix for reference.",
+      "Book around the work you need next: a new vocal, a mix, a master, or a consultation. Check the route and parking before you leave Richardson."
     ],
-    highlights: [
-      { label: 'Drive time', detail: '20 minutes off-peak via 75' },
-      { label: 'Distance', detail: 'Approximately 15 miles' },
-      { label: 'Genre fit', detail: 'Strong for hip-hop, R&B from UTD-area communities' },
-    ],
-    geo: { latitude: 32.9483, longitude: -96.7299 },
-  },
+    "highlights": [
+      {
+        "label": "Studio address",
+        "detail": "2815 Main St, Suite A"
+      },
+      {
+        "label": "City and ZIP",
+        "detail": "Dallas, TX 75226"
+      },
+      {
+        "label": "Recording",
+        "detail": "$75/hour · two-hour minimum"
+      },
+      {
+        "label": "Before you travel",
+        "detail": "Confirm the session, entry, and parking"
+      }
+    ]
+  }
 ]
 
 // =========================================================================
@@ -995,6 +1082,7 @@ export interface BlogPost {
   excerpt: string
   category: string
   datePublished: string
+  dateModified?: string
   readMins: number
   image: string
   /** Sections rendered as <section> with h2 + body paragraphs */
@@ -1007,340 +1095,342 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'recording-studios-in-deep-ellum-guide',
-    title: 'Recording Studios in Deep Ellum: A Guide',
-    excerpt:
-      'Deep Ellum has been the heartbeat of Dallas music for over a century. Here\'s what\'s worth knowing if you\'re recording in the neighborhood.',
-    category: 'Neighborhood',
-    datePublished: '2026-05-06',
-    readMins: 6,
-    image: '/images/studio-lobby.jpg',
-    sections: [
+    "slug": "recording-studios-in-deep-ellum-guide",
+    "title": "Recording in Deep Ellum: Plan Your Session",
+    "excerpt": "The address, the files, and the booking details to sort out before a Deep Ellum session.",
+    "category": "Neighborhood",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/studio-lobby.jpg",
+    "sections": [
       {
-        heading: 'Why Deep Ellum is different',
-        paragraphs: [
-          'Deep Ellum sits east of downtown Dallas in zip code 75226. It\'s been a music neighborhood since the 1920s — blues clubs in the Jim Crow era, punk and new wave in the \'80s, hip-hop and indie waves ever since.',
-          'For a recording artist, what makes Deep Ellum specifically valuable is the density. Within a 10-minute walk of any studio in the neighborhood you have working venues, mural-coated walls for visual content, late-night food, and a working creative class that\'s been here for decades.',
-        ],
+        "heading": "Start with the room and the work",
+        "paragraphs": [
+          "A studio name on a map is a starting point. Ask what the room can handle, who will run the session, and which parts of the project the quote covers.",
+          "For Legacy Music Group, the address is 2815 Main St, Suite A, Dallas, TX 75226. The studio records vocals, bands, voiceovers, and podcasts, and offers mixing and mastering."
+        ]
       },
       {
-        heading: 'What kind of studios live here',
-        paragraphs: [
-          'Deep Ellum studios tend to be smaller than the bigger commercial rooms in North Dallas or Garland. That\'s a feature: smaller rooms mean more individual attention, more flexible workflows, and tighter connection to the local music scene.',
-          'Studios in the neighborhood typically serve a mix of hip-hop, R&B, indie rock, and singer-songwriter projects. Bigger genre-specific specialization lives further out — Deep Ellum is about general musical density.',
-        ],
+        "heading": "Plan your arrival",
+        "paragraphs": [
+          "Save the address and phone number. Ask how to enter and where to unload instruments before you set out.",
+          "Allow time to park. Read the signs at the meter or paid lot you use; a studio booking does not reserve a parking space."
+        ]
       },
       {
-        heading: 'Things to plan for if you\'re recording in Deep Ellum',
-        paragraphs: [
-          'Parking: most studios have a dedicated lot, but you\'ll also see street parking after 6 PM. Check ahead for game days or weekend nights when the neighborhood gets full.',
-          'Access: Deep Ellum is one stop from downtown on the DART green line. Most studios are walking distance from the Deep Ellum station, so a session-and-DART-back-to-Uptown is genuinely doable.',
-          'Scene context: if you can, plan to grab dinner or a show in the neighborhood before or after your session. Builds your context for the music you\'re making.',
-        ],
-      },
-      {
-        heading: 'How Legacy fits in',
-        paragraphs: [
-          'Legacy Music Group is a Deep Ellum studio in the modern-luxury tier — engineer-driven sessions, transparent pricing, and a workflow built for fast booking. Our address sits in 75226, walking distance from venues like Trees, Three Links, and Bomb Factory.',
-          'If you\'re considering Deep Ellum studios for your next session, we\'d love to be on your shortlist. Booking takes about a minute through our calendar.',
-        ],
-      },
+        "heading": "Make a useful shortlist",
+        "paragraphs": [
+          "Compare the engineer, room, available time, and full project cost. Listen to work that fits what you are making. A name on a gear list cannot tell you how your session will feel.",
+          "Legacy publishes rates and packages. Use those to start the conversation, then confirm the scope of your own session."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'How many recording studios are in Deep Ellum?',
-        answer: 'There are 5–8 active recording studios in the Deep Ellum neighborhood depending on how strictly you define the boundary. Most are independent and engineer-led.',
+        "question": "Where is Legacy in Deep Ellum?",
+        "answer": "The studio is at 2815 Main St, Suite A, Dallas, TX 75226."
       },
       {
-        question: 'Is Deep Ellum a safe place to record at night?',
-        answer: 'Yes. The neighborhood has a heavy nighttime venue scene which keeps it active and well-lit. Most studios have dedicated parking and many sessions run until 10–11 PM without issue.',
-      },
-      {
-        question: 'How do I book a session in Deep Ellum?',
-        answer: 'Contact Legacy Music Group directly or use the studio’s current booking page to confirm the right session for your project.',
-      },
+        "question": "Does a session include parking?",
+        "answer": "Do not assume it does. Check posted meter or lot rules and ask the studio about arrival and loading gear."
+      }
     ],
-    related: [
-      { label: 'Inside Legacy: gear, rooms, workflow', href: '/blog/inside-legacy-studio' },
-      { label: 'The Studio (about page)', href: '/studio' },
-      { label: 'Deep Ellum neighborhood page', href: '/neighborhoods/deep-ellum' },
+    "related": [
+      {
+        "label": "Inside Legacy: gear, rooms, workflow",
+        "href": "/blog/inside-legacy-studio"
+      },
+      {
+        "label": "The Studio (about page)",
+        "href": "/studio"
+      },
+      {
+        "label": "Deep Ellum neighborhood page",
+        "href": "/neighborhoods/deep-ellum"
+      }
     ],
+    "dateModified": "2026-10-12"
   },
   {
-    slug: 'first-studio-session-dallas',
-    title: 'What to Expect on Your First Studio Session in Dallas',
-    excerpt:
-      'A practical first-timer\'s guide: what to bring, what to expect from the engineer, and how to walk in prepared.',
-    category: 'Getting Started',
-    datePublished: '2026-05-06',
-    readMins: 5,
-    image: '/images/studio-vocal-booth.jpg',
-    sections: [
+    "slug": "first-studio-session-dallas",
+    "title": "Your First Studio Session in Dallas",
+    "excerpt": "Bring the right files, make a short plan, and leave room to listen.",
+    "category": "Getting Started",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/studio-vocal-booth.jpg",
+    "sections": [
       {
-        heading: 'Before you walk in',
-        paragraphs: [
-          'Have your music ready. If you\'re a vocalist, that means a clear demo of the song with a click track, your lyric sheet printed (in case the screen distracts you), and reference tracks of where you want the song to land sonically.',
-          'If you\'re using a beat from a producer, make sure it\'s the latest version, in WAV (not MP3), and that you have the stems if mixing is part of the plan.',
-          'Hydrate and warm up. Vocal sessions are physical — your voice will fatigue after 90 minutes of takes if you didn\'t warm up. Most engineers don\'t want to spend studio time on vocal warm-ups.',
-        ],
+        "heading": "Pick one clear goal",
+        "paragraphs": [
+          "Finish a lead vocal. Record a demo. Capture an interview. A clear goal makes it easier to choose a service and talk about time.",
+          "Send a rough version or outline to the studio. List the parts you have and the parts you still need."
+        ]
       },
       {
-        heading: 'What the engineer\'s actually doing',
-        paragraphs: [
-          'Setting levels, comping (combining the best parts of multiple takes), tuning where appropriate, and giving you direction on performance. A good engineer is a quiet, persistent voice in your headphones telling you what worked and what to try next.',
-          'You\'re paying for their ear, not just their gear. The pickier they are, the better the record will sound.',
-        ],
+        "heading": "Pack the files before the bag",
+        "paragraphs": [
+          "Bring the latest beat or audio files, lyrics or script, and a reference track. Keep a backup somewhere you can reach. Ask the engineer which format to use.",
+          "For a song made in another app, name the app and any plugins. Do not assume every studio can open the original project."
+        ]
       },
       {
-        heading: 'How long things take',
-        paragraphs: [
-          'Setup + sound check: 15–30 minutes for vocals, longer for instruments.',
-          'Tracking: 60–90 minutes per song for a confident vocalist, 2–3 hours for someone still finding the part.',
-          'Comping + light polish: 30 minutes per song in-session. Final mix and master are separate sessions or a separate timeline.',
-        ],
+        "heading": "Leave time for playback",
+        "paragraphs": [
+          "A session includes setup and listening as well as recording. Tell the engineer what you like and which moments you want to try again.",
+          "Before you leave, confirm what files you will get, when to expect them, and how to keep your own backup."
+        ]
       },
       {
-        heading: 'What you\'ll walk out with',
-        paragraphs: [
-          'Stem files. A reference mix (rough). Possibly a bounce of the lead vocal in-the-box for sharing. Final mixed and mastered records typically arrive 5–7 days after the session.',
-        ],
-      },
+        "heading": "Know what you are paying for",
+        "paragraphs": [
+          "Legacy lists recording at $75 an hour with a two-hour minimum. Mixing and mastering have separate prices; some packages include them.",
+          "Ask for the whole project quote before booking. Two booked hours do not promise a finished song."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'How much should I budget for my first session?',
-        answer: 'A reasonable first session for a single song is a 4-hour block with engineer ($280 at Legacy). That gets you tracked, comped, and a rough mix. Add $150 for a final mixed and mastered record.',
+        "question": "How much is the minimum recording time?",
+        "answer": "Legacy publishes a two-hour minimum at $75 an hour. That is $150 of recording time before any other agreed work or charges."
       },
       {
-        question: 'Do I need to bring anything physical?',
-        answer: 'Bring water, your lyrics on paper, your beat or stems on a USB drive (and as a backup in your email), headphones if you have a preference, and a positive attitude. Studio gear and software is all on us.',
+        "question": "Will I leave with a finished song?",
+        "answer": "That depends on the work booked. Confirm whether the plan covers recording only or also editing, mixing, and mastering."
+      }
+    ],
+    "related": [
+      {
+        "label": "Booking policies",
+        "href": "/policies"
       },
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "See our engineers",
+        "href": "/engineers"
+      }
     ],
-    related: [
-      { label: 'Booking policies', href: '/policies' },
-      { label: 'Pricing', href: '/pricing' },
-      { label: 'See our engineers', href: '/engineers' },
-    ],
+    "dateModified": "2026-10-12"
   },
   {
-    slug: 'rap-recording-dallas',
-    title: 'Rap Recording in Dallas: Studios, Engineers, Pricing',
-    excerpt:
-      'A full guide to rap recording in DFW — what to look for in a studio, how engineers shape the modern Dallas sound, and what sessions actually cost.',
-    category: 'Hip-Hop',
-    datePublished: '2026-05-06',
-    readMins: 8,
-    image: '/images/studio-control-room.jpg',
-    sections: [
+    "slug": "rap-recording-dallas",
+    "title": "Rap Recording in Dallas: Choose the Right Session",
+    "excerpt": "What to ask about the engineer, vocal parts, session time, and final files.",
+    "category": "Hip-Hop",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/studio-control-room.jpg",
+    "sections": [
       {
-        heading: 'What makes a studio good for rap',
-        paragraphs: [
-          'Three things: vocal chain, engineer experience, and workflow speed.',
-          'Vocal chain matters because rap delivery sits in a specific frequency range — tight low-mids, controlled sibilance, breathy presence — and a chain dialed for a different genre will fight you. The right chain is a Sony C-800G or U87 or SM7B into an LA-2A or 1176 with a tasteful bit of distortion compression for color.',
-          'Engineer experience matters because hip-hop comping and stacking is its own skill. An engineer who came up on rock won\'t necessarily know how to handle ad-libs, doubles, and harmony stacks the way the genre demands.',
-          'Workflow speed matters because rap sessions are dense — you\'re tracking multiple takes per line, stacking, comping, polishing, all under a clock. A studio with friction (slow setup, slow file delivery, hard-to-recall sessions) is just expensive.',
-        ],
+        "heading": "Listen for the work you need",
+        "paragraphs": [
+          "Listen to an engineer’s examples with your own song in mind. Hear how the lead sits against the beat and how the doubles and ad-libs fit.",
+          "Credits can start a conversation. Ask who will be in the room for your session and what that person will handle."
+        ]
       },
       {
-        heading: 'How much a real Dallas rap session costs',
-        paragraphs: [
-          'Hourly with engineer: $75–$125/hr at the premium tier. Cheaper rooms exist but you\'re typically paying for less engineering attention.',
-          '4-hour block with engineer: $280–$500 for a session that gets you 1–2 finished tracked records.',
-          'Full project bundles (recording + mixing + mastering + promo content): $500–$1,000 depending on the scope. The bundle usually saves 15–25% over piecing it together.',
-        ],
+        "heading": "Bring a vocal plan",
+        "paragraphs": [
+          "Mark the lead, doubles, ad-libs, and guest parts in your lyrics. You can change the plan in the room; having one helps everyone follow the song.",
+          "Bring the right version of the beat. Ask your producer about separate audio tracks if the song will need a full mix."
+        ]
       },
       {
-        heading: 'Studios in Dallas that record rap',
-        paragraphs: [
-          'There are 10+ studios in DFW that handle rap regularly. The differentiation is engineering depth, gear, and pricing transparency. Most rooms hide their pricing behind contact forms — Legacy publishes ours.',
-          'Heritage studios like Audio Dallas (Garland) and The Kitchen (Lakewood) have decades of credits including major-label rap acts. Newer studios like Greenville Ave Recording have built brand around genre-specific landing pages. Legacy positions in the modern-luxury tier — engineer-driven sessions, real Deep Ellum location, transparent rates.',
-        ],
-      },
-      {
-        heading: 'How Legacy approaches rap sessions',
-        paragraphs: [
-          'Default booking is 4-hour with engineer at $280. The engineer dials your chain to your delivery in the first 10 minutes. We track multiple takes per verse, stack ad-libs and doubles, comp in-session, and you walk out with stems plus a rough mix.',
-          'Add the Mixing & Mastering bundle ($150/song) and final masters arrive in 5–7 business days. Add the Full Package ($500) and you also get 3 promo content clips for your release.',
-        ],
-      },
+        "heading": "Compare the whole quote",
+        "paragraphs": [
+          "An hourly rate, a mix price, and a release package pay for different work. Compare like with like, including edits, revisions, files, and delivery dates.",
+          "Legacy lists recording at $75 an hour, mixing from $150, and mastering at $30. Start with the service page, then ask for a quote for your song."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Can I bring my producer to my Dallas rap session?',
-        answer: 'Yes. Producers in the room are common. Either book a "with engineer" session and the producer rides along, or book "without engineer" and the producer runs the board with our gear.',
+        "question": "How many songs fit in a session?",
+        "answer": "The answer depends on the song parts, takes, and edits. Send demos and priorities so the studio can help you choose time."
       },
       {
-        question: 'How many records can I track in a 4-hour rap session?',
-        answer: 'A confident artist with prep can finish 1–2 records in a 4-hour block (tracked, comped, lightly polished). A full 8-hour day can land 3–5.',
-      },
-      {
-        question: 'Do you offer mixing and mastering as a separate service?',
-        answer: 'Yes. $150/song for mixing and mastering combined. Send your stems, we deliver mastered records in 5–7 days with two rounds of revisions included.',
-      },
+        "question": "Who handles rap at Legacy?",
+        "answer": "Head engineer Ray Dallas lists rap among his interests. Read the team profiles and confirm who is available for your session."
+      }
     ],
-    related: [
-      { label: 'Rap Recording service page', href: '/services/rap-recording' },
-      { label: 'Pricing breakdown', href: '/pricing' },
-      { label: 'Hip-hop engineers at Legacy', href: '/engineers' },
+    "related": [
+      {
+        "label": "Rap Recording service page",
+        "href": "/services/rap-recording"
+      },
+      {
+        "label": "Pricing breakdown",
+        "href": "/pricing"
+      },
+      {
+        "label": "Hip-hop engineers at Legacy",
+        "href": "/engineers"
+      }
     ],
+    "dateModified": "2026-10-12"
   },
   {
-    slug: 'mixing-mastering-pricing-dallas',
-    title: 'How Mixing & Mastering Pricing Works in Dallas (2026)',
-    excerpt:
-      'Most studios hide their mixing and mastering rates. Here\'s what you should actually expect to pay in DFW — and why pricing varies so much.',
-    category: 'Mixing & Mastering',
-    datePublished: '2026-05-06',
-    readMins: 6,
-    image: '/images/studio-control-room.jpg',
-    sections: [
+    "slug": "mixing-mastering-pricing-dallas",
+    "title": "Mixing and Mastering Prices: Read the Scope",
+    "excerpt": "A useful quote tells you what work, revisions, and files the price covers.",
+    "category": "Mixing & Mastering",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/studio-control-room.jpg",
+    "sections": [
       {
-        heading: 'Why studios hide mixing and mastering pricing',
-        paragraphs: [
-          'Two reasons. First, prices vary by complexity — a 3-stem podcast master is not the same as a 64-track album mix. Hiding price lets the studio quote per-project.',
-          'Second, hiding price filters serious clients from price-shoppers. If you have to email to get a number, you\'re probably more committed than someone scrolling for a deal.',
-          'The downside of hidden pricing is artists with budgets can\'t shop intelligently. Legacy publishes our rates because we think the trade-off is worth it.',
-        ],
+        "heading": "Two different parts of the job",
+        "paragraphs": [
+          "Mixing brings the recorded parts together. Mastering works on the final mix for delivery. Ask whether the price covers one or both.",
+          "Legacy lists mixing from $150 and mastering at $30. Those are separate published services, not a combined $150 promise."
+        ]
       },
       {
-        heading: 'What a typical mix and master actually costs in Dallas',
-        paragraphs: [
-          'Per song, mixing alone: $100–$250 in DFW for a competent engineer. Major-credit engineers charge $400–$1,000+ per song.',
-          'Per song, mastering alone: $50–$150 for analog/digital mastering. Mastering-only houses (no mixing) live in this range.',
-          'Per song, mix + master bundled: $150–$300 at most premium DFW studios. Legacy charges $150/song for the bundle.',
-          'Album rates (8–12 songs): typically a 15–25% discount over per-song rates. $1,000–$2,500 for a full album mix and master at the indie tier.',
-        ],
+        "heading": "Explain the work before asking for a total",
+        "paragraphs": [
+          "Send a rough mix and a track count. Say whether the project needs timing edits, vocal tuning, clean versions, or instrumentals.",
+          "Name a reference track and explain what you hear in it. Clear notes help the engineer understand the result you want."
+        ]
       },
       {
-        heading: 'What the rate actually buys',
-        paragraphs: [
-          'A real mix involves: gain staging, EQ, compression, saturation, parallel processing, automation, busing, master bus chain, reference comparison, revisions. A typical song takes 6–10 hours of engineer time.',
-          'A real master involves: corrective EQ, multi-band compression, limiting to streaming-spec, reference matching, format conversion. Typical: 1–2 hours per song.',
-          'Cheaper rates usually mean fewer hours per song. The result: less detailed, less commercial-feeling final product. The lift between $50 and $200 mastering is enormous.',
-        ],
-      },
+        "heading": "Agree on the finish line",
+        "paragraphs": [
+          "Ask how revisions work, which files you receive, and when they are due. Put a real release deadline in the brief before the work is booked.",
+          "Some studios charge by the hour; others quote per song or project. The useful comparison is the full scope and total, not just the first number."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Why does Dallas mixing cost less than Nashville or LA?',
-        answer: 'Lower studio overhead and a less concentrated client base. Same talent tier of engineer charges 30–50% less in DFW than in major music markets — which is good for artists.',
+        "question": "Does Legacy bundle mixing and mastering?",
+        "answer": "Some published packages include mixes and masters. The standalone menu lists mixing from $150 and mastering at $30; ask which option fits your work."
       },
       {
-        question: 'Can I get my mix and master done in a day?',
-        answer: 'For a single song, sometimes yes. The standard turnaround at Legacy is 5–7 business days for stems-to-master with two rounds of revisions included. Rush options exist but cost extra.',
+        "question": "How long will the mix take?",
+        "answer": "Confirm a delivery date with the studio after it has seen the project. Do not plan a release around an unconfirmed turnaround."
+      }
+    ],
+    "related": [
+      {
+        "label": "Pricing page",
+        "href": "/pricing"
       },
+      {
+        "label": "Services overview",
+        "href": "/services"
+      }
     ],
-    related: [
-      { label: 'Pricing page', href: '/pricing' },
-      { label: 'Services overview', href: '/services' },
-    ],
+    "dateModified": "2026-10-12"
   },
   {
-    slug: 'artist-development-dallas-choosing-studio',
-    title: 'Artist Development in Dallas: Choosing the Right Studio',
-    excerpt:
-      'How to evaluate studios when you\'re past your first record and looking to actually build a career in Dallas.',
-    category: 'Artist Development',
-    datePublished: '2026-05-06',
-    readMins: 7,
-    image: '/images/about-studio-wide.jpg',
-    sections: [
+    "slug": "artist-development-dallas-choosing-studio",
+    "title": "Artist Development: Choose the Next Step",
+    "excerpt": "Use a music business consultation to work through a clear set of questions.",
+    "category": "Artist Development",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/about-studio-wide.jpg",
+    "sections": [
       {
-        heading: 'What "artist development" actually means',
-        paragraphs: [
-          'Stripped of music industry vocabulary: artist development is the work of turning a song into a career. Release strategy, brand identity, audience-building, scene relationships, the long-term decisions that compound.',
-          'It\'s not management — managers handle the day-to-day operations and bookings. It\'s not a label — labels finance and distribute. Artist development is the strategic layer in between.',
-        ],
+        "heading": "Bring a decision, not just a dream",
+        "paragraphs": [
+          "A finished song can open a new set of questions. What should the next release cost? Which parts can you do yourself? What help do you need?",
+          "Write down the decisions you want to make. Bring your music, budget, and any release plans."
+        ]
       },
       {
-        heading: 'When you actually need it',
-        paragraphs: [
-          'You don\'t need artist development for your first song. You need it when you have a body of work that\'s working — at least one record getting traction, a sense of your sound, and the willingness to invest in next steps.',
-          'Most artists hit a wall around their second or third release: streams plateau, content output gets exhausting, brand decisions start contradicting each other. That\'s the point where development pays for itself.',
-        ],
+        "heading": "Ask what the work includes",
+        "paragraphs": [
+          "Artist development can mean different things to different providers. Ask what happens in the meeting and what, if anything, follows it.",
+          "If a proposal includes artwork, photos, promotion, or ongoing work, ask for those items and their costs in writing. Do not infer a record deal or management relationship from the name of a service."
+        ]
       },
       {
-        heading: 'How to evaluate a studio for development work',
-        paragraphs: [
-          'First: do they actually do development, or just say they do? Ask for specifics — what does an engagement look like, what deliverables come out, what does month 3 look like vs month 1.',
-          'Second: are they local? Dallas-specific scene knowledge matters. A development partner who knows the right venues, photographers, designers, and DSPs in DFW is worth more than a remote service that knows none of them.',
-          'Third: do they have alignment with your music? If they specialize in country and you make hip-hop, the connections won\'t carry. Match genre and aesthetic.',
-        ],
-      },
-      {
-        heading: 'How Legacy approaches development',
-        paragraphs: [
-          'We start with a free intro call. If it makes sense, we scope a one-off consultation ($150) or a multi-month engagement (custom-priced based on scope). We don\'t take points on your masters, we don\'t book your shows, we don\'t sign you to anything.',
-          'The work is decision-support and connection-making. Release plans, brand reviews, creative direction, intros to people in the Dallas scene who can help you. You get a working relationship, not a contract.',
-        ],
-      },
+        "heading": "Start at Legacy",
+        "paragraphs": [
+          "Legacy lists a $99 music business consultation. Owner Matthew Medlock has a Music Business background and runs the studio.",
+          "Ask about the topics, duration, and next steps before booking. A consultation can help you consider a plan; it cannot promise an audience or a career outcome."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'Is Legacy artist development management?',
-        answer: 'No. We don\'t take percentages or sign artists. We provide strategy, creative direction, and Dallas scene connections on a flat-fee or month-to-month basis.',
+        "question": "How much is a consultation at Legacy?",
+        "answer": "The published music business consultation is $99. Confirm its duration and scope with the studio."
       },
       {
-        question: 'How long does a typical engagement run?',
-        answer: 'One-off consultations are 1–2 hours flat-rate. Multi-month engagements are typically 3–6 months and customized to the artist\'s release timeline.',
+        "question": "Should I book a package or a consultation?",
+        "answer": "Start with the work you need. A package lists production items; a consultation is for music business questions. Ask the team if you are unsure which fits."
+      }
+    ],
+    "related": [
+      {
+        "label": "Artist Development service",
+        "href": "/services/artist-development"
       },
+      {
+        "label": "Contact us to talk about your project",
+        "href": "/contact"
+      }
     ],
-    related: [
-      { label: 'Artist Development service', href: '/services/artist-development' },
-      { label: 'Contact us to talk about your project', href: '/contact' },
-    ],
+    "dateModified": "2026-10-12"
   },
   {
-    slug: 'inside-legacy-studio',
-    title: 'Inside the Legacy Studio: Gear, Rooms, Workflow',
-    excerpt:
-      'A behind-the-scenes look at how a Legacy session actually runs — the gear chain, the room setup, and the workflow that makes us fast.',
-    category: 'Studio',
-    datePublished: '2026-05-06',
-    readMins: 5,
-    image: '/images/studio-control-room.jpg',
-    sections: [
+    "slug": "inside-legacy-studio",
+    "title": "Inside Legacy: Rooms, Gear, and Session Planning",
+    "excerpt": "Use the published equipment list to ask better questions about your project.",
+    "category": "Studio",
+    "datePublished": "2026-05-06",
+    "readMins": 3,
+    "image": "/images/studio-control-room.jpg",
+    "sections": [
       {
-        heading: 'The rooms',
-        paragraphs: [
-          'Legacy runs three primary spaces: a control room, a vocal booth, and a live room.',
-          'The control room hosts the SSL console, monitoring, and the engineer\'s seat. Acoustically tuned with broadband absorption on the walls and ceiling. Genelecs as mains, NS-10s as reference, MixCubes for the unforgiving second opinion.',
-          'The vocal booth is a treated isolation space tuned for the modern hip-hop and R&B vocal sound. Tighter low-mids than a typical broadcast booth, designed to capture rap delivery without fighting the chain.',
-          'The live room handles guitar, keys, small ensemble work, and acoustic projects. Two of our engineers specialize in live band tracking — bring a band, we\'ll set up.',
-        ],
+        "heading": "Match the room to the work",
+        "paragraphs": [
+          "Legacy’s equipment page lists A Room, B Room, a vocal booth, and a lounge. Describe your setup before booking so the team can discuss the space you need.",
+          "A solo vocal and a band session need different plans. Share the number of people, instruments, and inputs before you arrive."
+        ]
       },
       {
-        heading: 'The chain',
-        paragraphs: [
-          'Default vocal chain runs Neumann U87 or SM7B into a Neve 1073-style preamp into an LA-2A and 1176 in series, then into Pro Tools through a Universal Audio Apollo. UAD plugins available for tracking-time effects.',
-          'For modern hip-hop, the SM7B into an 1176 with the Distressor in mod-button mode is our default — clean low-end, expressive top, the kind of present-but-controlled sound the modern rap chart demands.',
-          'For R&B and singer-songwriter, the U87 into the Neve 1073 with light LA-2A compression is the go-to. Warm, bright, forgiving on dynamics.',
-        ],
+        "heading": "Ask about the tools that matter",
+        "paragraphs": [
+          "The published list includes a Neumann U 87 in the vocal booth, an AKG C414 in B Room, and an Avalon 737 and UA Apollo in A Room.",
+          "If your session depends on a specific mic, plugin, or app version, confirm it in advance. A gear list is useful context, not a promise that every item is in every room."
+        ]
       },
       {
-        heading: 'The workflow',
-        paragraphs: [
-          'A typical session at Legacy starts with a 10–15 minute setup: chain dialed, headphone cue mix built, rough levels set against the reference track. The engineer walks through any gear questions or production thoughts so you\'re not figuring it out on the clock.',
-          'Tracking happens in passes — full takes from top to bottom rather than punching in line by line. Comping happens in-session at the end of tracking. Light polish (de-ess, breath cleanup, level rides) gets baked in before you walk out.',
-          'Stem files and a reference mix are delivered same-day. Final mix and master, if booked, arrive in 5–7 business days.',
-        ],
-      },
+        "heading": "Plan the handoff",
+        "paragraphs": [
+          "Ask how to send your files and what the engineer needs to open them. Include a rough mix and a note about any missing parts.",
+          "Before the session ends, agree on the files and delivery date. Keep your own backup rather than treating studio storage as your only copy."
+        ]
+      }
     ],
-    faqs: [
+    "faqs": [
       {
-        question: 'What DAW does Legacy run?',
-        answer: 'Pro Tools is the default. Logic Pro is available on request. We can match whatever your producer\'s session uses.',
+        "question": "Can I bring a project from another app?",
+        "answer": "Tell the studio which app and plugins you used. Ask whether to bring the original project, exported audio tracks, or both."
       },
       {
-        question: 'Can I bring my own plugins or session files?',
-        answer: 'Yes. We\'ll import session files from Pro Tools, Logic, Ableton, FL Studio, Reaper. Bring stems on a USB drive or in a Dropbox link.',
+        "question": "Where can I see the equipment list?",
+        "answer": "See the Gear page for the published list, then confirm the tools and room you need for your session."
+      }
+    ],
+    "related": [
+      {
+        "label": "See the full gear list",
+        "href": "/gear"
       },
+      {
+        "label": "The Studio (about page)",
+        "href": "/studio"
+      }
     ],
-    related: [
-      { label: 'See the full gear list', href: '/gear' },
-      { label: 'The Studio (about page)', href: '/studio' },
-    ],
-  },
+    "dateModified": "2026-10-12"
+  }
 ]
 
 // =========================================================================
@@ -1355,83 +1445,50 @@ export interface FaqItem {
 
 export const faqs: FaqItem[] = [
   {
-    category: 'Booking',
-    question: 'How do I book a session?',
-    answer:
-      "Use Legacy Music Group’s current booking page, call the studio, or email the team to confirm your session details.",
+    "category": "Booking",
+    "question": "How do I book a session?",
+    "answer": "Use Legacy’s booking page or call (214) 377-9729. Choose your service and check the session details before paying."
   },
   {
-    category: 'Booking',
-    question: 'Can I book without an engineer?',
-    answer:
-      'Yes. If you know the room and want to run the board yourself, choose a Without Engineer session. Best for experienced artists and producers.',
+    "category": "Pricing",
+    "question": "What does recording cost?",
+    "answer": "The published rate is $75 per hour with a two-hour minimum. Mixing starts at $150, and mastering is listed at $30. Ask for the full quote for your project."
   },
   {
-    category: 'Booking',
-    question: 'How far in advance should I book?',
-    answer:
-      'Booking lead times vary by season and room. Use the current booking page, call the studio at (214) 377-9729, or email the team to ask about current availability.',
+    "category": "Sessions",
+    "question": "What should I bring?",
+    "answer": "Bring the current beat or session files, lyrics or script, and a reference for the sound you want. Keep a backup and ask which file format the engineer needs."
   },
   {
-    category: 'Booking',
-    question: 'What is your cancellation policy?',
-    answer:
-      'Cancellations more than 48 hours before your session are fully refundable. Inside 48 hours, your deposit is non-refundable but transferable to a future session. (Placeholder policy — final terms confirmed with owner.)',
+    "category": "Sessions",
+    "question": "Can I bring a producer or guests?",
+    "answer": "Tell the studio who will attend and who will run the session. Review the guest terms and confirm any extra people before you arrive."
   },
   {
-    category: 'Sessions',
-    question: 'What gear do you have?',
-    answer:
-      'Pro Tools, Logic Pro, top-shelf microphones (Neumann U87, SM7B, Sony C-800G), outboard preamps and compressors (Neve, API, LA-2A, 1176, Distressor), and tuned monitoring (Genelec, NS-10, MixCubes). Full list on /gear.',
+    "category": "Booking",
+    "question": "What if I need to cancel or move my session?",
+    "answer": "Read the studio’s published terms and contact the team before changing a booking. Confirm the notice period, any fee, and how the terms apply to your payment."
   },
   {
-    category: 'Sessions',
-    question: 'Can I bring my own producer or engineer?',
-    answer:
-      'Yes. Without Engineer sessions are designed exactly for that. Just be ready to run the board yourself or with your team.',
+    "category": "Payment",
+    "question": "Is a deposit or full payment required?",
+    "answer": "Check the payment terms for the booking option you choose. Ask the team to confirm the amount due and the cancellation terms before you pay."
   },
   {
-    category: 'Sessions',
-    question: 'How many people can I bring?',
-    answer:
-      'Standard sessions accommodate up to 4 people in the room. Larger groups can be arranged — let us know in advance.',
+    "category": "Location",
+    "question": "Where is the studio?",
+    "answer": "Legacy is at 2815 Main St, Suite A, Dallas, TX 75226, in Deep Ellum. All location pages on this site refer to this one studio."
   },
   {
-    category: 'Mixing & Mastering',
-    question: 'How does mixing & mastering work?',
-    answer:
-      'Send us your stems or a rough session, tell us the reference tracks you want it to sit alongside, and one of our engineers takes it from there. Two rounds of revisions included. Turnaround is typically 5–7 business days.',
+    "category": "Location",
+    "question": "Where can I park?",
+    "answer": "There are meters and paid lots near the studio. Check the posted rates and hours where you park. Ask the team about entry and loading equipment."
   },
   {
-    category: 'Mixing & Mastering',
-    question: "Can I add mixing & mastering to my recording session?",
-    answer:
-      'Yes — pick the Mixing & Mastering add-on during booking, or upgrade to the Full Package for recording + mix/master + 3 social clips bundled together.',
-  },
-  {
-    category: 'Artist Development',
-    question: 'What does artist development mean here?',
-    answer:
-      'Strategy and creative direction beyond just recording — release planning, branding, content, and connecting you with the right people in the Dallas scene. Currently offered as consultation; reach out via Contact to see if it fits your project.',
-  },
-  {
-    category: 'Location',
-    question: 'Where is the studio located?',
-    answer:
-      'Deep Ellum, Dallas — the heart of the city\'s music district in zip code 75226. Walking distance from Trees, Three Links, Bomb Factory, and the Deep Ellum DART station.',
-  },
-  {
-    category: 'Location',
-    question: 'Is parking available?',
-    answer:
-      'Yes — street parking and a dedicated lot for sessions. Details sent with your booking confirmation. (Parking specifics pending owner confirmation.)',
-  },
-  {
-    category: 'Payment',
-    question: 'How do I pay?',
-    answer:
-      'Payment and scheduling details are confirmed directly with Legacy Music Group through its current booking or contact channels.',
-  },
+    "category": "Delivery",
+    "question": "When will I receive my files?",
+    "answer": "Agree on the files, edits, and delivery date before the work begins. Recording, mixing, and mastering are different services; the schedule depends on your project."
+  }
 ]
 
 // =========================================================================
@@ -1439,9 +1496,29 @@ export const faqs: FaqItem[] = [
 // =========================================================================
 
 export const pricing = [
-  { service: 'Hourly Recording', withEngineer: '$75/hr', withoutEngineer: '$45/hr' },
-  { service: '4-Hour Block', withEngineer: '$280', withoutEngineer: '$170' },
-  { service: '8-Hour Day', withEngineer: '$520', withoutEngineer: '$320' },
-  { service: 'Mixing & Mastering', withEngineer: '$150/song', withoutEngineer: '$150/song' },
-  { service: 'Full Package', withEngineer: '$500', withoutEngineer: 'N/A' },
+  {
+    "service": "Recording",
+    "withEngineer": "$75/hr",
+    "withoutEngineer": "2-hour min."
+  },
+  {
+    "service": "Mixing",
+    "withEngineer": "$150+",
+    "withoutEngineer": "Quote by scope"
+  },
+  {
+    "service": "Mastering",
+    "withEngineer": "$30",
+    "withoutEngineer": "Confirm scope"
+  },
+  {
+    "service": "Production",
+    "withEngineer": "$500",
+    "withoutEngineer": "One-on-one"
+  },
+  {
+    "service": "Consultation",
+    "withEngineer": "$99",
+    "withoutEngineer": "Music business"
+  }
 ]

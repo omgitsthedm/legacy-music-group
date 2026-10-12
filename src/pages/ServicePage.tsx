@@ -16,7 +16,7 @@ export default function ServicePage() {
   useSeo({
     title: service ? service.name : 'Service',
     description: service
-      ? `${service.oneLiner} ${service.intro.slice(0, 80)}...`
+      ? `${service.name} at Legacy Music Group in Deep Ellum. ${service.oneLiner}`
       : 'Service page.',
     path: service ? `/services/${service.slug}` : '/services',
     ogImage: service?.image,
@@ -69,7 +69,7 @@ export default function ServicePage() {
               <ChevronLeft size={16} /> All Services
             </Link>
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-              {service.category === 'recording' ? 'Recording' : service.category === 'production' ? 'Production' : 'Creative Services'}
+              · {service.category === 'recording' ? 'Recording' : service.category === 'production' ? 'Production' : 'Creative Services'}
             </span>
             <h1
               data-speakable
@@ -88,7 +88,7 @@ export default function ServicePage() {
                 Book a Session
               </button>
               <span className="font-body text-[0.9rem] text-[#A38F7B]">
-                Starting from <span className="text-[#F5F0E8] font-medium">{service.startingPrice}</span>
+                Published rate: <span className="text-[#F5F0E8] font-medium">{service.startingPrice}</span>
               </span>
             </div>
           </ScrollReveal>
@@ -132,7 +132,7 @@ export default function ServicePage() {
               data-speakable
               className="font-body text-[1.5rem] font-medium text-[#F5F0E8] mb-6"
             >
-              What's Included
+              Plan Your Session
             </h2>
             <ul className="space-y-3">
               {service.whatsIncluded.map((f) => (
@@ -154,7 +154,7 @@ export default function ServicePage() {
                 data-speakable
                 className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-6"
               >
-                Engineers for {service.shortName}
+                Meet the Team
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {recommendedEngineers.map((eng) => (
@@ -165,7 +165,7 @@ export default function ServicePage() {
                   >
                     <img
                       src={eng.image}
-                      alt={eng.name}
+                      alt="Illustrative studio portrait"
                       className="w-14 h-14 rounded-full object-cover"
                       loading="lazy"
                     />
@@ -174,7 +174,7 @@ export default function ServicePage() {
                         {eng.name}
                       </h3>
                       <p className="font-body text-[0.8rem] text-[#A38F7B] uppercase tracking-[1px] mt-0.5">
-                        {eng.specialty}
+                        {eng.specialty} · Portrait illustration
                       </p>
                     </div>
                     <ChevronRight size={16} className="text-[#A38F7B]" />
@@ -228,7 +228,7 @@ export default function ServicePage() {
               Ready to book {service.shortName.toLowerCase()}?
             </h2>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-3 mb-7 max-w-[520px] mx-auto">
-              From {service.startingPrice}. Booking takes a minute.
+              Check session options and confirm the work your project needs.
             </p>
             <button
               onClick={openBooking}

@@ -16,7 +16,7 @@ export default function NeighborhoodPage() {
   useSeo({
     title: place ? `Recording Studio Near ${place.name}` : 'Neighborhood',
     description: place
-      ? `Legacy Music Group serves ${place.fullName} — ${place.driveTime} from the studio in Deep Ellum. ${place.oneLiner}`
+      ? `Recording for artists from ${place.fullName} at Legacy Music Group in Deep Ellum, Dallas. Plan your session at 2815 Main St, Suite A.`
       : 'Neighborhood page.',
     path: place ? `/neighborhoods/${place.slug}` : '/neighborhoods',
   })
@@ -70,7 +70,7 @@ export default function NeighborhoodPage() {
               data-speakable
               className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3"
             >
-              {place.fullName}
+              Recording for Recording for Recording for {place.fullName}
             </h1>
             <p className="font-body text-[1.1rem] text-[#A38F7B] mt-4 max-w-[640px] leading-[1.7]">
               {place.oneLiner}
@@ -86,7 +86,7 @@ export default function NeighborhoodPage() {
               <div className="aspect-[16/8] rounded-xl overflow-hidden">
                 <img
                   src={place.image}
-                  alt={`Legacy Music Group near ${place.name}`}
+                  alt="Studio lounge illustration"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -144,10 +144,10 @@ export default function NeighborhoodPage() {
         <div className="mx-auto max-w-[700px] text-center">
           <ScrollReveal>
             <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-              Easy from {place.name}.
+              Plan Your Session.
             </h2>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-3 mb-7 max-w-[520px] mx-auto">
-              {place.driveTime} away — use the studio’s current booking page to confirm session details.
+              Use the booking page to check session options at the Deep Ellum studio.
             </p>
             <button
               onClick={openBooking}

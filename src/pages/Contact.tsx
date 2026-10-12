@@ -24,7 +24,7 @@ export default function Contact() {
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">Get in Touch</span>
             <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3">Let&apos;s talk about your project.</h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[620px] mx-auto">
-              This site does not store contact or booking details. Use Legacy&apos;s current contact page, call, or email the studio directly.
+              Tell us what you are making, where the project stands, and when you hope to work. Call, email, or use the studio’s contact page.
             </p>
           </ScrollReveal>
         </div>
@@ -49,7 +49,7 @@ export default function Contact() {
               <Phone size={22} className="text-[#E8A33D] mb-5" aria-hidden="true" />
               <h2 className="font-display text-2xl text-[#F5F0E8]">Schedule a session</h2>
               <p className="font-body text-[0.95rem] text-[#A38F7B] leading-[1.7] mt-3 mb-7">
-                Scheduling stays with Legacy&apos;s current booking page. Availability and confirmation are handled there.
+                Check session options on the booking page. Have your service, dates, and project details ready.
               </p>
               <a href={BOOKING_HANDOFF_URL} className={`${actionClass} mt-auto bg-[#E8A33D] text-[#0A0A0A] hover:bg-[#D4873C]`}>
                 Open booking page <ArrowUpRight size={16} aria-hidden="true" />

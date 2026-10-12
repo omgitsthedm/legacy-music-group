@@ -20,8 +20,8 @@ export default function Footer() {
               Legacy
             </Link>
             <p className="font-body text-[0.9rem] text-[#A38F7B] leading-relaxed max-w-[320px]">
-              Deep Ellum recording studio and artist development brand. Built to help
-              independent artists make professional music in Dallas.
+              Recording and music production on Main Street in Deep Ellum.
+              Plan the session, work on the song, and talk through what comes next.
             </p>
             <a
               href={BOOKING_HANDOFF_URL}

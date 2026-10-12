@@ -25,12 +25,12 @@ export default function EngineerProfile() {
   const engineer = engineers.find((e) => e.id === id)
 
   useSeo({
-    title: engineer ? `${engineer.name} — Engineer` : 'Engineer Not Found',
+    title: engineer ? `${engineer.name} — ${engineer.specialty}` : 'Engineer Not Found',
     description: engineer
-      ? `${engineer.name} — ${engineer.specialty} engineer at Legacy Music Group. ${engineer.stats.experience}, ${engineer.stats.projects}. Book a session.`
+      ? `${engineer.name}, ${engineer.specialty} at Legacy Music Group in Deep Ellum, Dallas. Read the profile and contact the studio.`
       : 'Engineer profile not found.',
     path: engineer ? `/engineers/${engineer.id}` : '/engineers',
-    ogImage: engineer?.image,
+    ogImage: '/images/studio-control-room.jpg',
     ogType: 'profile',
   })
 
@@ -71,7 +71,7 @@ export default function EngineerProfile() {
               <div className="rounded-xl overflow-hidden">
                 <img
                   src={engineer.image}
-                  alt={`${engineer.name} — ${engineer.specialty} engineer at Legacy Music Group`}
+                  alt="Illustrative studio portrait"
                   className="w-full h-auto object-cover aspect-[4/3] lg:aspect-[16/10]"
                 />
               </div>
@@ -79,7 +79,7 @@ export default function EngineerProfile() {
             <div className="lg:col-span-2 space-y-6">
               <ScrollReveal>
                 <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">
-                  Engineer
+                  Studio Team · Portrait Illustration
                 </span>
                 <h1 className="font-display text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-2">
                   {engineer.name}
@@ -98,7 +98,7 @@ export default function EngineerProfile() {
                   onClick={openBooking}
                   className="mt-6 bg-[#E8A33D] text-[#0A0A0A] font-body text-[0.95rem] font-medium px-8 py-3 rounded-full hover:bg-[#D4873C] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,163,61,0.3)]"
                 >
-                  Book with {engineer.name.split(' ')[0]}
+                  Check Session Options
                 </button>
               </ScrollReveal>
             </div>
@@ -121,7 +121,7 @@ export default function EngineerProfile() {
                 <div key={key} className="text-center">
                   <p className="font-body text-[1.1rem] font-medium text-[#F5F0E8]">{value}</p>
                   <p className="font-body text-[0.75rem] uppercase tracking-[1px] text-[#A38F7B] mt-1">
-                    {key === 'experience' ? 'Experience' : key === 'projects' ? 'Projects' : 'Highlight'}
+                    {key === 'experience' ? 'Work' : key === 'projects' ? 'Role' : 'Focus'}
                   </p>
                 </div>
               ))}
@@ -170,7 +170,7 @@ export default function EngineerProfile() {
           <ScrollReveal>
             <h2 className="font-body text-[1.5rem] font-medium text-[#F5F0E8] mb-2">Sound Samples</h2>
             <p className="font-body text-[0.85rem] text-[#A38F7B] mb-8">
-              Audio playback wires up when real samples are added. (Placeholder titles below.)
+              Ask the studio for listening examples that match your project.
             </p>
           </ScrollReveal>
           <div className="space-y-0">

@@ -45,6 +45,7 @@ export default function BlogPost() {
           title: post.title,
           description: post.excerpt,
           datePublished: post.datePublished,
+          dateModified: post.dateModified,
           image: post.image,
         })}
       />
@@ -212,7 +213,7 @@ export default function BlogPost() {
               Ready to make your record?
             </h2>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-3 mb-7">
-              Booking takes about a minute.
+              Choose a service, check the session details, and book with Legacy.
             </p>
             <button
               onClick={openBooking}

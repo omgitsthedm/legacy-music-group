@@ -30,7 +30,7 @@ export default function Home() {
   useSeo({
     title: 'Recording Studio in Deep Ellum, Dallas',
     description:
-      'Legacy Music Group is a Dallas recording studio and production company in Deep Ellum. Call, email, or use the studio’s current booking page.',
+      'Legacy records vocals, bands, voiceovers, and podcasts on Main Street in Deep Ellum. Call, email, or use the studio’s current booking page.',
     path: '/',
   })
 
@@ -139,13 +139,13 @@ export default function Home() {
                   What Legacy Is
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-                  Dallas' studio for serious artists.
+                  A place to work on the song.
                 </h2>
                 <p data-speakable className="font-body text-[1.05rem] text-[#A38F7B] leading-[1.8] max-w-[540px]">
-                  Legacy Music Group is a Dallas recording studio and production company in Deep Ellum.
+                  Legacy records vocals, bands, voiceovers, and podcasts on Main Street in Deep Ellum.
                 </p>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7] max-w-[540px]">
-                  Use the studio’s current booking page, phone number, or email to confirm the right option for your project.
+                  Bring the song you have and the sound you want. Talk through the recording, mix, or production work with the team.
                 </p>
                 <Link
                   to="/studio"
@@ -222,17 +222,17 @@ export default function Home() {
               {
                 icon: Mic,
                 title: 'Recording',
-                body: 'Recording is currently published from $75 per hour. Confirm the right session with the studio.',
+                body: 'Recording is listed at $75 an hour, with a two-hour minimum. Plan the time your project needs.',
               },
               {
                 icon: Sliders,
                 title: 'Mixing & Mastering',
-                body: 'Mixing is currently published from $150. Confirm deliverables directly with the studio.',
+                body: 'Mixing starts at $150. Mastering is listed separately at $30. Ask about files, revisions, and delivery.',
               },
               {
                 icon: Star,
                 title: 'Custom Production',
-                body: 'Custom production is currently published at $500 per beat. Confirm details with the studio.',
+                body: 'Work one-on-one with a Legacy producer. Custom production is listed at $500; discuss the scope before booking.',
               },
             ].map((service, i) => (
               <ScrollReveal key={service.title} delay={i * 100}>

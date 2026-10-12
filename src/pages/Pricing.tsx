@@ -10,30 +10,25 @@ import { buildBreadcrumbSchema, buildFaqSchema } from '../lib/schemas'
 
 const pricingFaqs = [
   {
-    question: 'Why is your pricing public when most studios hide theirs?',
-    answer:
-      "We think pricing transparency is a feature. You can shop intelligently, plan a budget, and walk in knowing what to expect. The trade-off is we get fewer 'how much' emails and more confirmed bookings.",
+    "question": "What is the recording rate?",
+    "answer": "Legacy lists recording at $75 an hour with a two-hour minimum. Confirm the room, engineer, and scope when you book."
   },
   {
-    question: 'Are taxes and fees included?',
-    answer:
-      'Texas state tax is added at checkout. There are no other fees — no booking fees, no engineer surcharges, no equipment rental fees. The number you see is what you pay.',
+    "question": "Are mixing and mastering separate?",
+    "answer": "Yes. The standalone menu lists mixing from $150 and mastering at $30. Packages may include both; compare the items in each option."
   },
   {
-    question: 'Do you offer discounts for recurring or block bookings?',
-    answer:
-      'Yes. Recurring weekly sessions (podcasts, ongoing projects) get block-discount pricing. Multi-session album bookings get a 15–25% discount over per-session rates.',
+    "question": "Are block discounts available?",
+    "answer": "The published menu lists discounts starting at five-hour blocks. Ask for the current quote for your dates and project."
   },
   {
-    question: 'What\'s your refund policy?',
-    answer:
-      'Full refund 48+ hours before your session. Inside 48 hours, deposits are non-refundable but transferable to a future session. Full policy at /policies.',
+    "question": "What will my full project cost?",
+    "answer": "Ask for a quote that covers recording time, edits, mixes, masters, any visual work, and applicable charges. A starting rate is not the total for every project."
   },
   {
-    question: 'Can I pay in installments?',
-    answer:
-      'Yes for full-package and album bookings. We accept a deposit at booking and balance before the session. Talk to us about payment plans for larger projects.',
-  },
+    "question": "What if I need to change my booking?",
+    "answer": "Review Legacy’s current booking terms and confirm the payment, notice period, and any fee with the studio before you pay."
+  }
 ]
 
 export default function Pricing() {
@@ -42,7 +37,7 @@ export default function Pricing() {
   useSeo({
     title: 'Pricing — Recording, Mixing, Mastering Rates',
     description:
-      'Transparent rates for Legacy Music Group: $75/hr with engineer, $280 4-hour block, $520 8-hour day, $150/song mixing & mastering. Full Package $500.',
+      'Legacy Music Group recording is listed at $75/hour, mixing from $150, and mastering at $30. Compare studio packages and ask for your project quote.',
     path: '/pricing',
   })
 
@@ -70,8 +65,8 @@ export default function Pricing() {
               Pricing
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[640px] mx-auto">
-              Most Dallas studios hide their rates behind contact forms. We don’t. Here’s
-              what a session at Legacy actually costs — no surprises, no surcharges.
+              Start with the published rates below. Then match the time, files, and
+              services to your project before you book.
             </p>
           </ScrollReveal>
         </div>
@@ -91,7 +86,7 @@ export default function Pricing() {
                 >
                   {tier.highlighted && (
                     <span className="font-body text-[0.7rem] uppercase tracking-[2px] text-[#E8A33D] font-medium mb-3">
-                      Most Popular
+                      Music + Photos
                     </span>
                   )}
                   <h2 className="font-body text-[1.05rem] font-medium text-[#F5F0E8]">
@@ -122,7 +117,7 @@ export default function Pricing() {
                         : 'border border-[rgba(245,240,232,0.2)] text-[#F5F0E8] hover:border-[#E8A33D] hover:text-[#E8A33D]'
                     }`}
                   >
-                    Book this
+                    Check this option
                   </button>
                 </div>
               </ScrollReveal>

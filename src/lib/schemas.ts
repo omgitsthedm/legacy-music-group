@@ -2,10 +2,7 @@ import { SITE } from './seo'
 
 const BUSINESS = {
   legalName: 'Legacy Music Group',
-  // Description mirrored from the owner's Google Business Profile copy
-  // for consistency with the Knowledge Graph entity.
-  description:
-    'Professional recording and production studio in Downtown Dallas (Deep Ellum). We offer hit quality recordings at affordable rates. Our top tier audio engineers will have your sound just right. Artists, producers, and engineers find this setting perfect for quality professional work.',
+  description: 'Recording and music production at 2815 Main St, Suite A, in Deep Ellum, Dallas. Vocals, mixing, mastering, and music business consultation.',
   address: {
     street: '2815 Main St, Suite A',
     city: 'Dallas',
@@ -16,11 +13,6 @@ const BUSINESS = {
   },
   phone: '+1-214-377-9729',
   email: 'info@legacymusicgroup.com',
-  geo: {
-    // Approximate coords for 2815 Main St, Dallas, TX 75226 (Deep Ellum)
-    latitude: 32.7837,
-    longitude: -96.7780,
-  },
   priceRange: '$$',
   sameAs: [
     'https://www.instagram.com/legacymusicgroup/',
@@ -54,7 +46,7 @@ export const organizationSchema = {
 
 export const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'MusicVenue'],
+  '@type': 'LocalBusiness',
   '@id': LOCAL_REF,
   name: BUSINESS.legalName,
   description: BUSINESS.description,
@@ -71,11 +63,6 @@ export const localBusinessSchema = {
     addressRegion: BUSINESS.address.region,
     postalCode: BUSINESS.address.postal,
     addressCountry: BUSINESS.address.country,
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: BUSINESS.geo.latitude,
-    longitude: BUSINESS.geo.longitude,
   },
   areaServed: [
     { '@type': 'City', name: 'Dallas' },
@@ -115,10 +102,6 @@ export interface FaqEntry {
 export const buildFaqSchema = (entries: FaqEntry[]) => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  speakable: {
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['[data-speakable]', 'h1', 'h2'],
-  },
   mainEntity: entries.map((e) => ({
     '@type': 'Question',
     name: e.question,
@@ -143,9 +126,8 @@ export const buildPersonSchema = (engineer: {
   '@type': 'Person',
   '@id': `${SITE.url}/engineers/${engineer.id}#person`,
   name: engineer.name,
-  jobTitle: `Recording Engineer — ${engineer.specialty}`,
+  jobTitle: engineer.specialty,
   worksFor: { '@id': ORG_REF },
-  image: `${SITE.url}${engineer.image}`,
   description: engineer.bio,
   url: `${SITE.url}/engineers/${engineer.id}`,
   ...(engineer.credits && engineer.credits.length > 0
@@ -204,11 +186,11 @@ export const buildServiceSchema = (s: ServiceSchemaInput) => ({
           price: s.startingPrice,
           priceCurrency: 'USD',
           priceSpecification: {
-            '@type': 'PriceSpecification',
+            '@type': 'UnitPriceSpecification',
+            unitText: s.slug === 'artist-development' ? 'consultation' : 'hour',
             price: s.startingPrice,
             priceCurrency: 'USD',
           },
-          availability: 'https://schema.org/InStock',
         },
       }
     : {}),
@@ -300,10 +282,6 @@ export const buildArticleSchema = (a: ArticleSchemaInput) => ({
     '@type': 'WebPage',
     '@id': `${SITE.url}/blog/${a.slug}`,
   },
-  speakable: {
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['[data-speakable]', 'h1', 'h2'],
-  },
 })
 
 // --- Event ---------------------------------------------------------------
@@ -362,7 +340,6 @@ export const buildEventSchema = (e: EventSchemaInput) => ({
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
-          availability: 'https://schema.org/InStock',
         },
       }
     : {}),

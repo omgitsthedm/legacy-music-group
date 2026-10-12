@@ -36,7 +36,7 @@ export default function Gear() {
   useSeo({
     title: 'Studio Gear — Console, Microphones, Outboard',
     description:
-      'The full gear list at Legacy Music Group: SSL console, Pro Tools, Neumann U87, Sony C-800G, Shure SM7B, Neve, API, LA-2A, 1176, Distressor, Genelec monitors, and more.',
+      'Legacy’s published equipment includes a Neumann U 87, AKG C414, Avalon 737, UA Apollo, and C24 control surface. Confirm tools for your session.',
     path: '/gear',
   })
 
@@ -97,7 +97,7 @@ export default function Gear() {
               Studio Gear
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[640px]">
-              Real consoles, broadcast-grade microphones, classic outboard, and modern DAWs. The chain that makes the difference between a session that sounds like a session and one that sounds like a record.
+              A useful session starts with the right setup. Explore Legacy’s published gear list, then ask about the tools your project needs.
             </p>
           </ScrollReveal>
         </div>
@@ -143,10 +143,7 @@ export default function Gear() {
           <ScrollReveal>
             <div className="bg-[rgba(232,163,61,0.08)] border border-[rgba(232,163,61,0.25)] rounded-xl p-6 sm:p-8 mt-12">
               <p className="font-body text-[0.85rem] text-[#A38F7B] leading-[1.6]">
-                <strong className="text-[#F5F0E8]">A note on the list:</strong> this is a working
-                inventory. We rotate gear in and out as projects demand. If you need something
-                specific that isn’t listed (a particular ribbon, a vintage compressor, a specific
-                amp), tell us when you book — we can usually source it for the session.
+                <strong className="text-[#F5F0E8]">A note on the list:</strong> this follows Legacy’s published equipment page. If your project needs a specific mic, plugin, or app version, confirm it with the studio before booking.
               </p>
             </div>
           </ScrollReveal>

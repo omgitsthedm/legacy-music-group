@@ -66,20 +66,13 @@ export default function Studio() {
                   About Legacy
                 </span>
                 <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-1px] text-[#F5F0E8]">
-                  Owned and operated by music business maven Matthew Medlock.
+                  A Dallas studio run by Matthew Medlock.
                 </h2>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  Legacy is a full-service recording studio and production company in the
-                  heart of Deep Ellum. Founder Matthew Medlock — a Memphis-raised music
-                  business veteran with a degree in Music Business and a GRAMMYU
-                  background — built Legacy to be the studio he wished existed for
-                  serious independent artists in Dallas.
+                  Legacy is a recording studio and production company on Main Street in Deep Ellum. Owner Matthew Medlock grew up near Memphis and studied Music Business. The studio brings recording and music business support into the same place.
                 </p>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  We specialize in vocals across genres but handle anything you need:
-                  tracking, mixing, mastering, drum and band sessions, voiceovers,
-                  podcasts, and advertisements. In-house producers and songwriters are
-                  ready to support whatever the song calls for.
+                  Vocals are a core part of the work. Legacy also records bands, voiceovers, podcasts, and ads, with mixing, mastering, production, and songwriting services. Tell the team what you have and what the project needs next.
                 </p>
                 <Link
                   to="/services"
@@ -126,10 +119,10 @@ export default function Studio() {
                   Rooted in Deep Ellum.
                 </h2>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  We're proud to be part of Dallas' most historic creative district. Deep Ellum has been the heartbeat of the city's music scene for decades, and Legacy was built to continue that story.
+                  You will find Legacy at 2815 Main St, Suite A, in Deep Ellum. Save the address, prepare your files, and leave time to park before the session.
                 </p>
                 <p className="font-body text-[1rem] text-[#A38F7B] leading-[1.7]">
-                  Walk out of a session and into legendary venues, art galleries, and late-night food spots. The neighborhood fuels the creativity that happens inside our walls.
+                  Need to load instruments or bring several people? Ask about entry and guest arrangements before you set out.
                 </p>
                 <div className="flex flex-wrap gap-4 pt-2">
                   <div className="text-center px-4 py-3 bg-[#1A1A1A] rounded-lg border border-[rgba(245,240,232,0.08)]">
@@ -200,7 +193,7 @@ export default function Studio() {
                 About Deep Ellum
               </p>
               <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2">
-                The history, the venues, and why we built Legacy here.
+                The address, parking, and what to plan before you arrive.
               </p>
             </Link>
             <Link
@@ -214,7 +207,7 @@ export default function Studio() {
                 See pricing
               </p>
               <p className="font-body text-[0.85rem] text-[#A38F7B] mt-2">
-                Hourly, blocks, day rates, and packages — all published.
+                Recording, mixing, mastering, and package prices.
               </p>
             </Link>
           </div>

@@ -46,8 +46,7 @@ export default function Blog() {
               The Legacy Journal
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[640px] leading-[1.7]">
-              Recording, mixing, mastering, and the Dallas music scene — from the
-              engineers, producers, and team at Legacy.
+              Practical notes for your next studio session: what to bring, what to ask, and how to compare the work behind a quote.
             </p>
           </ScrollReveal>
         </div>

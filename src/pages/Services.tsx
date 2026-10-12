@@ -12,22 +12,22 @@ const services = [
   {
     icon: Mic,
     title: 'Recording',
-    body: 'Acoustically tuned rooms equipped with industry-standard mics, preamps, and converters. Track vocals, instruments, or full bands with engineers who know how to capture your best performance.',
+    body: 'Record the parts your project needs: a lead vocal, a band, a voiceover, or a podcast. Tell the team what you want to capture so you can plan the room and session.',
     features: ['Vocal tracking', 'Instrument recording', 'Full band sessions', 'Pro Tools & Logic Pro'],
     image: '/images/studio-vocal-booth.jpg',
   },
   {
     icon: Sliders,
     title: 'Mixing & Mastering',
-    body: 'Take raw recordings to radio-ready quality. Our engineers use a hybrid analog-digital workflow to give your tracks depth, clarity, and competitive loudness. Two rounds of revisions included.',
-    features: ['Analog summing', 'Stem mixing', 'Mastering for streaming', 'Revision rounds included'],
+    body: 'Bring the recorded parts together, then prepare the final mix for delivery. Mixing and mastering are separate services. Share your tracks, references, and deadline for a quote.',
+    features: ['Mixing from $150', 'Mastering listed at $30', 'Agree on revisions', 'Confirm files and delivery'],
     image: '/images/studio-control-room.jpg',
   },
   {
     icon: Star,
-    title: 'Full Package',
-    body: 'The complete artist experience — recording, professional mix and master, plus three promotional content clips for social. Everything you need to release your next single with confidence.',
-    features: ['Recording session', 'Mixing & mastering', '3 promo clips', 'Release strategy consult'],
+    title: 'Music & Visual Packages',
+    body: 'Plan the song and its visual side together. Published packages combine studio time, mixes, masters, and artwork. Larger options add a consultation, photos, and video.',
+    features: ['Studio time', 'Mixes and masters', 'Cover art', 'Compare package details'],
     image: '/images/studio-live-room.jpg',
   },
 ]
@@ -38,7 +38,7 @@ export default function ServicesPage() {
   useSeo({
     title: 'Services',
     description:
-      'Recording, mixing, mastering, and full artist packages at Legacy Music Group in Deep Ellum, Dallas. Hourly rates from $45/hr. Add-ons available for any session.',
+      'Recording, mixing, mastering, and music business support in Deep Ellum, Dallas. See published rates and plan your next session with Legacy.',
     path: '/services',
   })
 
@@ -80,7 +80,7 @@ export default function ServicesPage() {
               Studio Services
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[600px] leading-[1.7]">
-              Recording, mixing & mastering, full release packages, and artist development support — pick what you need, bundle if you want.
+              Record a song, finish a mix, or talk through what comes next. Start with the work your project needs.
             </p>
           </ScrollReveal>
         </div>
@@ -143,7 +143,7 @@ export default function ServicesPage() {
               Genre &amp; format-specific recording
             </h2>
             <p className="font-body text-[0.95rem] text-[#A38F7B] mt-3 max-w-[560px] mx-auto">
-              Sessions tuned for what you actually do — rap, R&amp;B, podcasts, voiceover, artist development.
+              Plan a rap vocal, R&amp;B track, podcast, voiceover, or music business consultation.
             </p>
           </ScrollReveal>
 
@@ -170,7 +170,7 @@ export default function ServicesPage() {
                       {s.oneLiner}
                     </p>
                     <p className="font-body text-[0.75rem] text-[#E8A33D] mt-3 font-medium">
-                      From {s.startingPrice}
+                      {s.startingPrice}
                     </p>
                   </div>
                 </Link>
@@ -180,6 +180,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Published rate table. */}
       <section className="py-16 px-[clamp(1.5rem,5vw,4rem)] bg-[#111111]">
         <div className="mx-auto max-w-[800px]">
           <ScrollReveal className="text-center mb-3">
@@ -189,7 +190,7 @@ export default function ServicesPage() {
           </ScrollReveal>
           <ScrollReveal className="text-center mb-10">
             <p className="font-body text-[0.85rem] text-[#A38F7B]">
-              Placeholder pricing for design preview. Final rates pending owner confirmation.
+              Published service prices. Confirm the full scope and total with the studio before booking.
             </p>
           </ScrollReveal>
 
@@ -197,8 +198,8 @@ export default function ServicesPage() {
             <div className="border border-[rgba(245,240,232,0.08)] rounded-xl overflow-hidden">
               <div className="grid grid-cols-3 bg-[#1A1A1A] px-6 py-4">
                 <span className="font-body text-[0.8rem] uppercase tracking-[1px] text-[#A38F7B]">Service</span>
-                <span className="font-body text-[0.8rem] uppercase tracking-[1px] text-[#A38F7B] text-center">With Engineer</span>
-                <span className="font-body text-[0.8rem] uppercase tracking-[1px] text-[#A38F7B] text-center">Without Engineer</span>
+                <span className="font-body text-[0.8rem] uppercase tracking-[1px] text-[#A38F7B] text-center">Rate</span>
+                <span className="font-body text-[0.8rem] uppercase tracking-[1px] text-[#A38F7B] text-center">Details</span>
               </div>
               {pricing.map((row, i) => (
                 <div

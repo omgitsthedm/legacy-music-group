@@ -10,7 +10,7 @@ export default function Engineers() {
   useSeo({
     title: 'Engineers',
     description:
-      'Meet the engineers and producers behind Legacy Music Group — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, and Soul specialists in Deep Ellum, Dallas.',
+      'Meet Legacy Music Group’s studio team: Matthew Medlock, Ray Dallas, Wayne, and Terry. Explore roles and ask about session availability.',
     path: '/engineers',
   })
 
@@ -34,7 +34,7 @@ export default function Engineers() {
               Meet the Engineers
             </h1>
             <p className="font-body text-[1rem] text-[#A38F7B] mt-4 max-w-[600px] leading-[1.7]">
-              Our team of producers and engineers bring decades of combined experience across every major genre — Hip-Hop, R&B, Pop, Electronic, Rock, Folk, Soul, and beyond.
+              Meet the people behind the studio. Read their roles, then ask who is available for the work you have in mind. Portraits on this page are illustrations.
             </p>
           </ScrollReveal>
         </div>
@@ -52,7 +52,7 @@ export default function Engineers() {
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={eng.image}
-                      alt={`${eng.name} — ${eng.specialty} engineer`}
+                      alt="Illustrative studio portrait"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />

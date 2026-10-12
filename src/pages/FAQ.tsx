@@ -3,14 +3,7 @@ import JsonLd from '../components/JsonLd'
 import { useSeo } from '../lib/seo'
 import { buildBreadcrumbSchema, buildFaqSchema } from '../lib/schemas'
 import { BOOKING_HANDOFF_URL } from '../lib/handoff'
-import { contact } from '../lib/data'
-
-const faqs = [
-  { question: 'How do I schedule a session?', answer: 'Use Legacy Music Group’s current booking page, call the studio, or email the team. This website does not show availability or complete bookings.' },
-  { question: 'What rates are currently published?', answer: 'Legacy’s current site lists recording at $75 per hour, mixing from $150, custom production at $500 per beat, and a two-hour minimum. Confirm the right option directly with the studio.' },
-  { question: 'Where is the studio?', answer: 'Legacy Music Group lists 2815 Main St, Suite A, Dallas, TX 75226.' },
-  { question: 'Can I ask about my project first?', answer: 'Yes. Call or email the studio directly so the team can confirm the current options for your project.' },
-]
+import { contact, faqs } from '../lib/data'
 
 export default function FAQ() {
   useSeo({ title: 'Studio FAQ', description: 'Current contact, booking, and location information for Legacy Music Group.', path: '/faq' })
@@ -23,7 +16,7 @@ export default function FAQ() {
           <ScrollReveal>
             <span className="font-body text-[0.75rem] uppercase tracking-[2px] text-[#E8A33D] font-medium">Answers</span>
             <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.0] tracking-[-1.5px] text-[#F5F0E8] mt-3">Studio FAQ</h1>
-            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[620px]">Straightforward information from Legacy&apos;s currently published details. Confirm project-specific questions with the studio.</p>
+            <p className="font-body text-[1rem] text-[#A38F7B] mt-4 leading-[1.7] max-w-[620px]">Start here for rates, files, arrival, and booking. For the details of your project, call or email the studio.</p>
           </ScrollReveal>
         </div>
       </section>

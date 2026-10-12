@@ -1,5 +1,9 @@
 import { access, mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import ts from 'typescript'
+
+const moduleCode = ts.transpileModule(await readFile('src/lib/data.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext } }).outputText
+const data = await import('data:text/javascript;base64,' + Buffer.from(moduleCode).toString('base64'))
 
 const site = (process.env.VITE_SITE_URL || 'https://legacy-music-group.netlify.app').replace(/\/$/, '')
 const dist = path.resolve('dist')
@@ -11,60 +15,20 @@ const fixedRoutes = [
   ['engineers', 'Studio Engineers', 'Meet the engineers and studio team behind recording, mixing and production at Legacy Music Group.'],
   ['gear', 'Studio Gear', 'Explore the recording, monitoring and production tools available at Legacy Music Group in Deep Ellum.'],
   ['pricing', 'Studio Pricing', 'Published recording session rates and project options for Legacy Music Group in Dallas.'],
-  ['blog', 'Newsroom and Studio Notes', 'Verified coverage of Legacy Music Group plus a growing archive of owner-reviewed studio notes.'],
-  ['reviews', 'Client Reviews', 'Read client feedback and the dated Google rating snapshot for Legacy Music Group.'],
-  ['events', 'Legacy Live and Studio Events', 'Find the next Legacy Music Group artist showcase through the studio social feed or direct contact.'],
-  ['contact', 'Contact the Studio', 'Call, email or request a callback from Legacy Music Group at 2815 Main Street in Dallas.'],
+  ['blog', 'The Legacy Journal', 'Practical notes on recording, mixing, mastering, and planning your next Dallas studio session.'],
+  ['reviews', 'Client Reviews', 'Read selected client feedback published on Legacy Music Group’s website.'],
+  ['events', 'Studio Updates', 'Check Legacy’s current social posts for studio news and confirmed event details.'],
+  ['contact', 'Contact the Studio', 'Call or email Legacy Music Group at 2815 Main St, Suite A, Dallas, TX 75226.'],
   ['faq', 'Recording Studio FAQ', 'Straight answers about sessions, rates, location, gear and booking at Legacy Music Group.'],
   ['policies', 'Studio Policies', 'Read the current studio policy information published by Legacy Music Group.'],
   ['privacy', 'Privacy', 'Read the Legacy Music Group website privacy notice.'],
   ['terms', 'Terms', 'Read the Legacy Music Group website terms.'],
 ]
 
-const engineerRoutes = [
-  ['matthew', 'Matthew Medlock'],
-  ['ray', 'Ray Dallas'],
-  ['wayne', 'Wayne'],
-  ['terry', 'Terry'],
-].map(([slug, name]) => [
-  `engineers/${slug}`,
-  `${name} | Studio Team`,
-  `Learn about ${name} and their role at Legacy Music Group in Deep Ellum, Dallas.`,
-])
-
-const serviceRoutes = [
-  ['rap-recording', 'Rap Recording in Dallas'],
-  ['r-and-b', 'R&B Recording in Dallas'],
-  ['podcasts', 'Podcast Recording in Dallas'],
-  ['voiceover', 'Voiceover Recording in Dallas'],
-  ['artist-development', 'Artist Development in Dallas'],
-].map(([slug, title]) => [
-  `services/${slug}`,
-  title,
-  `${title} at Legacy Music Group in Deep Ellum, with published rates and direct studio contact.`,
-])
-
-const neighborhoodRoutes = [
-  ['deep-ellum', 'Deep Ellum, Dallas', "Legacy Music Group is based in Deep Ellum — Dallas's historic music neighborhood."],
-  ['uptown', 'Uptown Dallas', 'Legacy Music Group serves Uptown Dallas artists from its Deep Ellum recording studio.'],
-  ['bishop-arts', 'Bishop Arts District, Dallas', 'Legacy Music Group serves Bishop Arts artists from its Deep Ellum recording studio.'],
-  ['plano', 'Plano, TX', 'Legacy Music Group serves Plano artists from its Deep Ellum recording studio.'],
-  ['frisco', 'Frisco, TX', 'Legacy Music Group serves Frisco artists from its Deep Ellum recording studio.'],
-  ['richardson', 'Richardson, TX', 'Legacy Music Group serves Richardson artists from its Deep Ellum recording studio.'],
-].map(([slug, name, description]) => [
-  `neighborhoods/${slug}`,
-  `Recording Studio Near ${name}`,
-  description,
-])
-
-const blogRoutes = [
-  ['recording-studios-in-deep-ellum-guide', 'Recording Studios in Deep Ellum: A Guide', 'A guide to recording studios in Deep Ellum and what artists should plan for.'],
-  ['first-studio-session-dallas', 'What to Expect on Your First Studio Session in Dallas', 'A practical first-timer’s guide to preparing for a Dallas studio session.'],
-  ['rap-recording-dallas', 'Rap Recording in Dallas: Studios, Engineers, Pricing', 'A guide to Dallas rap recording, engineers, studios, and published rates.'],
-  ['mixing-mastering-pricing-dallas', 'How Mixing & Mastering Pricing Works in Dallas (2026)', 'A guide to Dallas mixing and mastering prices and what each service includes.'],
-  ['artist-development-dallas-choosing-studio', 'Artist Development in Dallas: Choosing the Right Studio', 'How to evaluate artist development and recording studios in Dallas.'],
-  ['inside-legacy-studio', 'Inside the Legacy Studio: Gear, Rooms, Workflow', 'A behind-the-scenes look at Legacy Music Group’s rooms, gear, and workflow.'],
-].map(([slug, title, description]) => [`blog/${slug}`, title, description])
+const engineerRoutes = data.engineers.map(e => [`engineers/${e.id}`, `${e.name} — ${e.specialty}`, `${e.name}, ${e.specialty} at Legacy Music Group in Deep Ellum, Dallas. Read the profile and contact the studio.`])
+const serviceRoutes = data.services.map(s => [`services/${s.slug}`, s.name, `${s.name} at Legacy Music Group in Deep Ellum. ${s.oneLiner}`])
+const neighborhoodRoutes = data.neighborhoods.map(p => [`neighborhoods/${p.slug}`, `Recording Studio Near ${p.name}`, `Recording for artists from ${p.fullName} at Legacy Music Group in Deep Ellum, Dallas. Plan your session at 2815 Main St, Suite A.`])
+const blogRoutes = data.blogPosts.map(b => [`blog/${b.slug}`, b.title, b.excerpt])
 
 const routes = [
   ...fixedRoutes,
